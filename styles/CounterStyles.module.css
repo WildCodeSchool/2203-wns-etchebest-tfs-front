@@ -1,0 +1,13 @@
+.button {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 24px;
+  color: #39424e;
+  font-weight: bold;
+}
+
+.count {
+  font-size: 45px;
+  color: white;
+}
