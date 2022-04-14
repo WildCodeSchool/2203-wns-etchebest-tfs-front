@@ -7,7 +7,7 @@ const Button = (props: any) => {
 		`inline-flex items-center border border-transparent font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 `,
 		className
 			? className
-			: 'rounded-md text-white bg-emerald-600 hover:bg-emerald-700 focus:ring-emerald-500'
+			: 'rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:ring-primary-500'
 	)
 
 	switch (size) {
