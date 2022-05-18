@@ -18,28 +18,22 @@ const links = [
 
 const Sidebar = ({ children }: any): ReactElement => {
 	return (
-		<div
-			className={
-				'relative flex h-full max-w-sm flex-col bg-gray-800 py-10 px-10'
-			}
-		>
-			<div>Logo</div>
+		<div className={'relative flex h-full flex-col bg-gray-800 py-10 px-10'}>
+			<div className={'mb-12 text-white'}>Logo</div>
 			<nav>
 				<ul className={'mt-2 flex flex-col space-y-1'}>
 					{links.map(item => (
-						<li key={item.name} className={'pr-8'}>
-							<SidebarLink href={item.href} icon={item.icon}>
-								<div className={'flex'}>
-									<item.icon
-										className={
-											'mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300'
-										}
-										aria-hidden='true'
-									/>
-									{item.name}
-								</div>
-							</SidebarLink>
-						</li>
+						<SidebarLink key={item.name} href={item.href} icon={item.icon}>
+							<>
+								<item.icon
+									className={
+										'mr-4 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-300'
+									}
+									aria-hidden='true'
+								/>
+								{item.name}
+							</>
+						</SidebarLink>
 					))}
 				</ul>
 			</nav>
