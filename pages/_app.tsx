@@ -8,6 +8,7 @@ import {
 	useQuery,
 	gql
 } from '@apollo/client'
+import Head from 'next/head'
 
 const client = new ApolloClient({
 	uri: process.env.API_URI,
@@ -17,6 +18,10 @@ const client = new ApolloClient({
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<ApolloProvider client={client}>
+			<Head>
+				<link rel='icon' href='/favicon.ico' />
+				<link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
+			</Head>
 			<Component {...pageProps} />
 		</ApolloProvider>
 	)
