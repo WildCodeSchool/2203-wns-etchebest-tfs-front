@@ -2,17 +2,27 @@ export interface ITicketsProps {
 	title: String
 	description: String
 	status: String
+	createdAt: Date
 	//Relation aves l'utilisateur
 	user: String
-	comments: string
+	//comments: string
 }
 
-const Ticket = ({ title, description, status, user }: ITicketsProps) => (
+const Ticket = ({
+	title,
+	description,
+	status,
+	createdAt,
+	user
+}: ITicketsProps) => (
 	<div>
-		<h2>{title}</h2>
-		<p>{description}</p>
-		<span>{status}</span>
-		<span> {user}</span>
+		<h2>Titre : {title}</h2>
+		<p>Déscription : {description}</p>
+		<span>Status : {status}</span>
+		<span>
+			{' '}
+			Créé par {user} le {createdAt}
+		</span>
 
 		{/* Les commentaires
          <div>
