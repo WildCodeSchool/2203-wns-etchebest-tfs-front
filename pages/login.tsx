@@ -8,7 +8,6 @@ const LoginPage: NextPage = () => {
 			<Head>
 				<title>Login</title>
 			</Head>
-			<BaseLayout></BaseLayout>
 		</div>
 	)
 }
