@@ -4,7 +4,7 @@ import styles from '../styles/CounterStyles.module.css'
 import { gql, useQuery } from '@apollo/client'
 import { listenerCount } from 'process'
 
-const GET_TICKETS = gql`
+export const GET_TICKETS = gql`
 	query Tickets {
 		tickets {
 			id
