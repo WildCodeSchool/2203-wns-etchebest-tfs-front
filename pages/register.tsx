@@ -8,7 +8,6 @@ const RegisterPage: NextPage = () => {
 			<Head>
 				<title>Register</title>
 			</Head>
-			<BaseLayout></BaseLayout>
 		</div>
 	)
 }

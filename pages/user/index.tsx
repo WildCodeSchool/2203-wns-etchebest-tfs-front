@@ -8,7 +8,7 @@ const UserPage: NextPage = () => {
 			<Head>
 				<title>Utilisateurs</title>
 			</Head>
-			<BaseLayout></BaseLayout>
+			<BaseLayout name={'Utilisateurs'}></BaseLayout>
 		</div>
 	)
 }
