@@ -1,9 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import Button from '../components/Button'
 import BaseLayout from '../layout/BaseLayout'
-import Logo from '../public/logo.png'
 
 const Home: NextPage = () => {
 	return (
