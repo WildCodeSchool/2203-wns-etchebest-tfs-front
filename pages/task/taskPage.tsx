@@ -9,8 +9,8 @@ const TaskPage: NextPage = () => {
 			<Head>
 				<title>Tache</title>
 			</Head>
-			<BaseLayout>
-				<Ticket { } />
+			<BaseLayout name={'Tache'}>
+				<Ticket title={title} />
 			</BaseLayout>
 		</div>
 	)

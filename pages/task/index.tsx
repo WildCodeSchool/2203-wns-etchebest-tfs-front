@@ -8,7 +8,7 @@ const ListTaskPage: NextPage = () => {
 			<Head>
 				<title>Liste des Taches</title>
 			</Head>
-			<BaseLayout name={'Taches'}></BaseLayout>
+			<BaseLayout name={'Liste des taches'}></BaseLayout>
 		</div>
 	)
 }
