@@ -12,7 +12,7 @@ const Home: NextPage = () => {
 				<link rel='icon' href='/favicon.ico' />
 				<link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
 			</Head>
-			<BaseLayout>
+			<BaseLayout name={'Accueil'}>
 				<Button>Test</Button>
 			</BaseLayout>
 		</div>
