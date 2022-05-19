@@ -11,7 +11,7 @@ import {
 import Head from 'next/head'
 
 const client = new ApolloClient({
-	uri: process.env.API_URI,
+	uri: process.env.NEXT_PUBLIC_API_URI,
 	cache: new InMemoryCache()
 })
 
