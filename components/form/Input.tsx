@@ -10,13 +10,8 @@ interface Properties {
 	required?: boolean
 }
 
-const Input = ({
-	label,
-	id,
-	name,
-	type,
-	required
-}: Properties): ReactElement => {
+const Input = (props: Properties): ReactElement => {
+	const { label, id, name, type, required, ...rest } = props
 	return (
 		<div>
 			<label htmlFor={name} className='block text-sm font-medium text-gray-700'>
@@ -29,6 +24,7 @@ const Input = ({
 					type={type}
 					required={required}
 					className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
+					{...rest}
 				/>
 			</div>
 		</div>

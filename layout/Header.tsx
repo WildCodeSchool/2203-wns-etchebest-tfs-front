@@ -1,4 +1,7 @@
+import { BellIcon, SearchIcon } from '@heroicons/react/outline'
 import type { ReactElement } from 'react'
+import Notification from '../components/Notification'
+import Search from '../components/Search'
 
 interface Properties {
 	name: String
@@ -7,9 +10,19 @@ interface Properties {
 
 const Header = ({ name, button }: Properties): ReactElement => {
 	return (
-		<div className={'w-full bg-white px-16 py-4 shadow-md'}>
-			{name}
-			{button}
+		<div
+			className={
+				'flex w-full items-center justify-between bg-white px-16 py-4 shadow-md'
+			}
+		>
+			<div className={'flex flex-col'}>
+				{name}
+				{button}
+			</div>
+			<div className={'flex'}>
+				<Search />
+				<Notification />
+			</div>
 		</div>
 	)
 }

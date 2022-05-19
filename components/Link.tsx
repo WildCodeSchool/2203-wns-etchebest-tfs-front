@@ -1,8 +1,16 @@
 import { useRouter } from 'next/router'
-import classNames from '../utils/classNames'
+import type { ReactElement } from 'react'
 
-function SidebarLink({ children, href, icon }: any) {
+interface Properties {
+	children: ReactElement | string
+	href: string
+	className?: string
+}
+
+function SidebarLink(props: Properties) {
 	const router = useRouter()
+
+	const { children, href, className, ...rest } = props
 
 	const handleClick = (e: any) => {
 		e.preventDefault()
@@ -13,7 +21,8 @@ function SidebarLink({ children, href, icon }: any) {
 		<a
 			href={href}
 			onClick={handleClick}
-			className={'font-medium text-green-600 hover:text-green-500'}
+			className={className ?? 'font-medium text-green-600 hover:text-green-500'}
+			{...rest}
 		>
 			{children}
 		</a>
