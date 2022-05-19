@@ -8,7 +8,7 @@ const ProjectPage: NextPage = () => {
 			<Head>
 				<title>Projets</title>
 			</Head>
-			<BaseLayout name={'Projets'}></BaseLayout>
+			<BaseLayout name={'Projets'} button={<div>Button</div>}></BaseLayout>
 		</div>
 	)
 }
