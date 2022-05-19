@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import Button from '../../components/Button'
 import BaseLayout from '../../layout/BaseLayout'
 
 const ProjectPage: NextPage = () => {
@@ -8,7 +9,7 @@ const ProjectPage: NextPage = () => {
 			<Head>
 				<title>Projets</title>
 			</Head>
-			<BaseLayout name={'Projets'}></BaseLayout>
+			<BaseLayout name={'Projets'} button={<Button>Test</Button>}></BaseLayout>
 		</div>
 	)
 }
