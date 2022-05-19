@@ -1,20 +1,23 @@
-import Ticket from './TicketComponent'
+import Ticket, { ITicketsProps } from './Ticket'
 
-const ticketList = ({ ticket }) => {
-	return (
-		<div className='Tickets'>
-			{tickets.map(ticket => {
-				return (
-					<article className='ticketList'>
-						<p>{ticket.title}</p>
-						<p>{ticket.description}</p>
-						<p>{ticket.status}</p>
-						<p>{ticket.user}</p>
-					</article>
-				)
-			})}
-		</div>
-	)
+export interface ITicketsListProps {
+	tickets: ITicketsProps[]
 }
 
-export default ticketList
+const TicketList = ({ tickets }: ITicketsListProps) => (
+	<div className='TicketsList'>
+		{tickets.map(ticket => {
+			return (
+				<Ticket
+					title={ticket.title}
+					description={ticket.description}
+					status={ticket.status}
+					createdAt={ticket.createdAt}
+					user={ticket.user}
+				/>
+			)
+		})}
+	</div>
+)
+
+export default TicketList
