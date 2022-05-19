@@ -9,6 +9,8 @@ const TicketList = ({ tickets }: ITicketsListProps) => (
 		{tickets.map(ticket => {
 			return (
 				<Ticket
+					key={ticket.id}
+					id={ticket.id}
 					title={ticket.title}
 					description={ticket.description}
 					status={ticket.status}
