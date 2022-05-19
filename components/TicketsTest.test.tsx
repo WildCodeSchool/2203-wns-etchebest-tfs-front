@@ -1,7 +1,7 @@
 import { getByText, render, screen, waitFor } from '@testing-library/react'
 import { MockedProvider } from '@apollo/client/testing'
-import Tickets from './Tickets'
-import { GET_TICKETS } from './Tickets'
+import Tickets from './TicketsTest'
+import { GET_TICKETS } from './TicketsTest'
 
 const mocks = [
 	{
