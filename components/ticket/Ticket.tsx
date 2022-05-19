@@ -1,30 +1,32 @@
 export interface ITicketsProps {
+	id: number
 	title: String
 	description: String
 	status: String
-	createdAt: Date
+	createdAt?: Date
 	//Relation aves l'utilisateur
-	user: String
+	user?: String
 	//comments: string
 }
 
 const Ticket = ({
+	id,
 	title,
 	description,
 	status,
 	createdAt,
 	user
-}: ITicketsProps) => (
-	<div>
-		<h2>Titre : {title}</h2>
-		<p>Déscription : {description}</p>
-		<span>Status : {status}</span>
-		<span>
-			{' '}
-			Créé par {user} le {createdAt}
-		</span>
+}: ITicketsProps) => {
+	return (
+		<div>
+			<h2>Titre : {title}</h2>
+			<p>Déscription : {description}</p>
+			<span>Status : {status}</span>
+			<span>
+				Créé par {user} le {createdAt}
+			</span>
 
-		{/* Les commentaires
+			{/* Les commentaires
          <div>
 			<ul>
 				{comments.map(comment => {
@@ -32,7 +34,7 @@ const Ticket = ({
 				})}
 			</ul>
 		</div> */}
-	</div>
-)
-
+		</div>
+	)
+}
 export default Ticket

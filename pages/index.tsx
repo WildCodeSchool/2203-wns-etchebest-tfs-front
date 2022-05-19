@@ -1,8 +1,6 @@
 import type { NextPage } from 'next'
-
 import Head from 'next/head'
 import Image from 'next/image'
-import Tickets from '../components/TicketsTest'
 import BaseLayout from '../layout/BaseLayout'
 
 const Home: NextPage = () => {
@@ -14,9 +12,7 @@ const Home: NextPage = () => {
 				<link rel='icon' href='/favicon.ico' />
 				{/* 	<link rel='stylesheet' href='https://rsms.me/inter/inter.css' /> */}
 			</Head>
-			<BaseLayout>
-				<Tickets />
-			</BaseLayout>
+			<BaseLayout name={'STRUCTURE'}></BaseLayout>
 		</div>
 	)
 }
