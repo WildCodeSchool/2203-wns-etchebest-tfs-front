@@ -32,10 +32,6 @@ export function Project(){
 }
 
 export function CardProject({project}:{project:Project}){
-	const { loading, error, data } = useQuery(GET_PROJECTS)
-
-	if (loading) return <p>'Loading...'</p>
-	if (error) return <p>{`Error! ${error.message}`}</p>
 
 	return (
 		<article className='bg-gray-200 hover:bg-gray-300 p-6 rounded cursor-pointer transition-all'>
