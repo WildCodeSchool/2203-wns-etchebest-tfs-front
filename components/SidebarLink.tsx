@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { ReactChild, SVGProps } from 'react'
+import { ReactChild } from 'react'
 import classNames from '../utils/classNames'
 
-function SidebarLink({ children, href, icon }: {children:ReactChild, href: string, icon:(props: SVGProps<SVGSVGElement>)=> JSX.Element}) {
+function SidebarLink({ children, href }: {children:ReactChild, href: string}) {
 	
 	const router = useRouter()
 

@@ -20,7 +20,7 @@ const Sidebar = () => {
 			<nav>
 				<ul className={'mt-2 flex flex-col space-y-1'}>
 					{links.map(item => (
-						<SidebarLink key={item.name} href={item.href} icon={item.icon}>
+						<SidebarLink key={item.name} href={item.href}>
 							<>
 								<item.icon
 									className={
