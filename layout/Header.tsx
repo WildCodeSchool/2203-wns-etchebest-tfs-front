@@ -19,7 +19,7 @@ const Header = ({ name, button }: Properties): ReactElement => {
 				{name}
 				{button}
 			</div>
-			<div className={'flex'}>
+			<div className={'flex space-x-5'}>
 				<Search />
 				<Notification />
 			</div>
