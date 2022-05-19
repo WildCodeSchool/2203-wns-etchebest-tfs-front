@@ -30,7 +30,7 @@ describe('Tickets', () => {
 				<Tickets />
 			</MockedProvider>
 		)
-		const e = await waitFor(() => screen.getByText(/ddfdf/i))
+		const e = await waitFor(() => screen.getByText(/WIP/i))
 		expect(e).toBeInTheDocument()
 	})
 })

@@ -1,8 +1,6 @@
-import { useState } from 'react'
-import styles from '../styles/CounterStyles.module.css'
 
 import { gql, useQuery } from '@apollo/client'
-import { listenerCount } from 'process'
+
 
 export const GET_TICKETS = gql`
 	query Tickets {
