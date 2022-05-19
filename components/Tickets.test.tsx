@@ -24,12 +24,13 @@ const mocks = [
 ]
 
 describe('Tickets', () => {
-	it('Should display status', () => {
+	it('Should display status', async () => {
 		render(
 			<MockedProvider mocks={mocks} addTypename={false}>
 				<Tickets />
 			</MockedProvider>
 		)
-		waitFor(() => expect(screen.getByText(/ddfdf/i)).toBeInTheDocument())
+		const e = await waitFor(() => screen.getByText(/ddfdf/i))
+		expect(e).toBeInTheDocument()
 	})
 })
