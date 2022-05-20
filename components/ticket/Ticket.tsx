@@ -16,20 +16,16 @@ const Ticket = ({
 	title,
 	description,
 	status,
-	createdAt,
-	user
+	user,
+	createdAt
 }: ITicketsProps) => {
 	return (
 		<tr className={'group h-20'}>
 			<td className={''}>{title}</td>
-			<td>PRojet osef</td>
-			<td>En cours</td>
-			<td>Teddy</td>
-			<td>21/05/2022</td>
-			<td className={''}>
-				<Link href='#'>Test</Link>
-				<Link href='#'>Test</Link>
-			</td>
+			<td className={''}>{description}</td>
+			<td className={''}>{status}</td>
+			<td className={''}>{user}</td>
+			<td className={''}>{createdAt}</td>
 		</tr>
 		// <div>
 		// 	<h2>Titre : {title}</h2>

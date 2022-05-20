@@ -5,17 +5,17 @@ export interface ITicketsListProps {
 }
 
 const TicketList = ({ tickets }: ITicketsListProps) => (
-	<table className='TicketsList'>
-		<thead>
+	<table className='TicketsList w-full '>
+		<thead className={'bg-gray-100'}>
 			<tr>
 				<td>Nom</td>
 				<td>Projet</td>
 				<td>Status</td>
 				<td>Assigné</td>
 				<td>Date</td>
-				<td></td>
 			</tr>
 		</thead>
+
 		{tickets.map(ticket => (
 			<Ticket
 				key={ticket.id}
