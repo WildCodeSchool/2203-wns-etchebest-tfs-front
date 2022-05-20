@@ -6,9 +6,7 @@ export interface ITicketsListProps {
 
 const TicketList = ({ tickets }: ITicketsListProps) => (
 	<div className='TicketsList'>
-		{tickets.map(ticket => {
-			return (
-				<>
+		{tickets.map(ticket =>(
 					<Ticket
 						key={ticket.id}
 						id={ticket.id}
@@ -18,9 +16,8 @@ const TicketList = ({ tickets }: ITicketsListProps) => (
 						createdAt={ticket.createdAt}
 						user={ticket.user}
 					/>
-				</>
 			)
-		})}
+		)}
 	</div>
 )
 
