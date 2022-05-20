@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export interface ITicketsProps {
 	id: number
 	title: String
@@ -25,6 +27,9 @@ const Ticket = ({
 			<span>
 				Créé par {user} le {createdAt}
 			</span>
+			<Link href={`/task/${id}`}>
+				<button>Voir le ticket</button>
+			</Link>
 
 			{/* Les commentaires
          <div>
