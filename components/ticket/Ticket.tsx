@@ -20,26 +20,37 @@ const Ticket = ({
 	user
 }: ITicketsProps) => {
 	return (
-		<div>
-			<h2>Titre : {title}</h2>
-			<p>Déscription : {description}</p>
-			<span>Status : {status}</span>
-			<span>
-				Créé par {user} le {createdAt}
-			</span>
-			<Link href={`/task/${id}`}>
-				<button>Voir le ticket</button>
-			</Link>
+		<tr className={'group h-20'}>
+			<td className={''}>{title}</td>
+			<td>PRojet osef</td>
+			<td>En cours</td>
+			<td>Teddy</td>
+			<td>21/05/2022</td>
+			<td className={''}>
+				<Link href='#'>Test</Link>
+				<Link href='#'>Test</Link>
+			</td>
+		</tr>
+		// <div>
+		// 	<h2>Titre : {title}</h2>
+		// 	<p>Déscription : {description}</p>
+		// 	<span>Status : {status}</span>
+		// 	<span>
+		// 		Créé par {user} le {createdAt}
+		// 	</span>
+		// 	<Link href={`/task/${id}`}>
+		// 		<button>Voir le ticket</button>
+		// 	</Link>
 
-			{/* Les commentaires
-         <div>
-			<ul>
-				{comments.map(comment => {
-					return <Comment />
-				})}
-			</ul>
-		</div> */}
-		</div>
+		// 	{/* Les commentaires
+		//      <div>
+		// 	<ul>
+		// 		{comments.map(comment => {
+		// 			return <Comment />
+		// 		})}
+		// 	</ul>
+		// </div> */}
+		// </div>
 	)
 }
 export default Ticket
