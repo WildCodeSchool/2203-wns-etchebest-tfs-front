@@ -8,15 +8,17 @@ const TicketList = ({ tickets }: ITicketsListProps) => (
 	<div className='TicketsList'>
 		{tickets.map(ticket => {
 			return (
-				<Ticket
-					key={ticket.id}
-					id={ticket.id}
-					title={ticket.title}
-					description={ticket.description}
-					status={ticket.status}
-					createdAt={ticket.createdAt}
-					user={ticket.user}
-				/>
+				<>
+					<Ticket
+						key={ticket.id}
+						id={ticket.id}
+						title={ticket.title}
+						description={ticket.description}
+						status={ticket.status}
+						createdAt={ticket.createdAt}
+						user={ticket.user}
+					/>
+				</>
 			)
 		})}
 	</div>
