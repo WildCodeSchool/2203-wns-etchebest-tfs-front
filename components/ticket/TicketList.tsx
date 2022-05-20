@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Ticket, { ITicketsProps } from './Ticket'
 
 export interface ITicketsListProps {
@@ -13,6 +14,7 @@ const TicketList = ({ tickets }: ITicketsListProps) => (
 				<td>Status</td>
 				<td>Assigné</td>
 				<td>Date</td>
+				<td></td>
 			</tr>
 		</thead>
 

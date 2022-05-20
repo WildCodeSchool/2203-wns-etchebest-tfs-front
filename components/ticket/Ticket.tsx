@@ -1,13 +1,15 @@
 import Link from 'next/link'
+import Button from '../Button'
+import formatDate from '../../utils/formatDate/formatDate'
 
 export interface ITicketsProps {
 	id: number
-	title: String
-	description: String
-	status: String
-	createdAt?: Date
+	title: string
+	description: string
+	status: string
+	createdAt: string
 	//Relation aves l'utilisateur
-	user?: String
+	user?: string
 	//comments: string
 }
 
@@ -25,7 +27,12 @@ const Ticket = ({
 			<td className={''}>{description}</td>
 			<td className={''}>{status}</td>
 			<td className={''}>{user}</td>
-			<td className={''}>{createdAt}</td>
+			<td className={''}>{formatDate(createdAt)}</td>
+			<td>
+				<Link href={`/task/${id}`}>
+					<Button>Voir le ticket</Button>
+				</Link>
+			</td>
 		</tr>
 		// <div>
 		// 	<h2>Titre : {title}</h2>
