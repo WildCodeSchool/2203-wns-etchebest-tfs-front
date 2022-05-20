@@ -1,6 +1,3 @@
-import type { ReactElement } from 'react'
-import Link from 'next/link'
-
 import {
 	HomeIcon,
 	UserIcon,
@@ -16,14 +13,14 @@ const links = [
 	{ name: 'Utilisateurs', href: '/user', icon: UserIcon }
 ]
 
-const Sidebar = ({ children }: any): ReactElement => {
+const Sidebar = () => {
 	return (
 		<div className={'relative flex h-full flex-col bg-gray-800 py-10 px-10'}>
 			<div className={'mb-12 text-white'}>Logo</div>
 			<nav>
 				<ul className={'mt-2 flex flex-col space-y-1'}>
 					{links.map(item => (
-						<SidebarLink key={item.name} href={item.href} icon={item.icon}>
+						<SidebarLink key={item.name} href={item.href}>
 							<>
 								<item.icon
 									className={
