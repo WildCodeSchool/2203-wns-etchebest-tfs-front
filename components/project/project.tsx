@@ -1,6 +1,6 @@
 
 import { gql, useQuery } from '@apollo/client'
-import formatDate from '../../utils/formatDate'
+import formatDate from '../../utils/formatDate/formatDate'
 
 interface Project{
     createdAt: string

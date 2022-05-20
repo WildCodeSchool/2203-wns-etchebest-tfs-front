@@ -1,4 +1,4 @@
-import { getByText, render, screen, waitFor } from '@testing-library/react'
+import {  render, screen, waitFor } from '@testing-library/react'
 import { MockedProvider } from '@apollo/client/testing'
 import Tickets from './TicketsTest'
 import { GET_TICKETS } from './TicketsTest'

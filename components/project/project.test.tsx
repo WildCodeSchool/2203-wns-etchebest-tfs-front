@@ -1,8 +1,7 @@
-import { getByText, render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { MockedProvider } from '@apollo/client/testing'
 import {Project} from './project'
 import { GET_PROJECTS } from './project'
-import { clearConfigCache } from 'prettier'
 
 const mocks = [
 	{
