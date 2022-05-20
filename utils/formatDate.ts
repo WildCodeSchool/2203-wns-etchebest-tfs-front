@@ -1,3 +1,3 @@
-export default function formatDate(date:string):string {
-    return new Date(date).toLocaleDateString('FR-fr',{ timeZone: 'UTC' })
+export default function formatDate(date: string): string {
+	return new Date(date).toLocaleDateString('FR-fr', { timeZone: 'UTC' })
 }
