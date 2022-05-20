@@ -2,9 +2,7 @@ import type { NextPage } from 'next'
 import { gql, useQuery } from '@apollo/client'
 import Head from 'next/head'
 import Image from 'next/image'
-import TicketList, {
-	ITicketsListProps
-} from '../../components/ticket/TicketList'
+import TicketList from '../../components/ticket/TicketList'
 import BaseLayout from '../../layout/BaseLayout'
 
 export const GET_TICKETS = gql`
