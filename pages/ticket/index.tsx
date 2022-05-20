@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
 import { gql, useQuery } from '@apollo/client'
 import Head from 'next/head'
-import Image from 'next/image'
 import TicketList from '../../components/ticket/TicketList'
 import BaseLayout from '../../layout/BaseLayout'
 
@@ -19,9 +18,6 @@ export const GET_TICKETS = gql`
 const ListTaskPage: NextPage = () => {
 	const { loading, error, data } = useQuery(GET_TICKETS)
 
-	if (loading) return <p> En cours de chargement...</p>
-	if (error) return <p>'Une erreur est survenue'</p>
-	console.log(data.tickets)
 	return (
 		<div className={'flex min-h-screen flex-col justify-between bg-gray-50'}>
 			<Head>
@@ -31,7 +27,11 @@ const ListTaskPage: NextPage = () => {
 				{/* 	<link rel='stylesheet' href='https://rsms.me/inter/inter.css' /> */}
 			</Head>
 			<BaseLayout name={'Liste des Tickets'}>
-				<TicketList tickets={data.tickets} />
+				<>
+					{loading && <p> En cours de chargement...</p>}
+					{error && <p>'Une erreur est survenue'</p>}
+					{!loading && !error && <TicketList tickets={data.tickets} />}
+				</>
 			</BaseLayout>
 		</div>
 	)

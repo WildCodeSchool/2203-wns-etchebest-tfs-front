@@ -29,31 +29,11 @@ const Ticket = ({
 			<td className={''}>{user}</td>
 			<td className={''}>{formatDate(createdAt)}</td>
 			<td>
-				<Link href={`/task/${id}`}>
-					<Button>Voir le ticket</Button>
-				</Link>
+				<Button>
+					<Link href={`/task/${id}`}>Voir le ticket</Link>
+				</Button>
 			</td>
 		</tr>
-		// <div>
-		// 	<h2>Titre : {title}</h2>
-		// 	<p>Déscription : {description}</p>
-		// 	<span>Status : {status}</span>
-		// 	<span>
-		// 		Créé par {user} le {createdAt}
-		// 	</span>
-		// 	<Link href={`/task/${id}`}>
-		// 		<button>Voir le ticket</button>
-		// 	</Link>
-
-		// 	{/* Les commentaires
-		//      <div>
-		// 	<ul>
-		// 		{comments.map(comment => {
-		// 			return <Comment />
-		// 		})}
-		// 	</ul>
-		// </div> */}
-		// </div>
 	)
 }
 export default Ticket

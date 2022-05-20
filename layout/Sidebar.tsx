@@ -8,7 +8,7 @@ import SidebarLink from '../components/SidebarLink'
 
 const links = [
 	{ name: 'Accueil', href: '/', icon: HomeIcon },
-	{ name: 'Tickets', href: '/task', icon: ClipboardCheckIcon },
+	{ name: 'Tickets', href: '/ticket', icon: ClipboardCheckIcon },
 	{ name: 'Projets', href: '/project', icon: BookmarkIcon },
 	{ name: 'Utilisateurs', href: '/user', icon: UserIcon }
 ]

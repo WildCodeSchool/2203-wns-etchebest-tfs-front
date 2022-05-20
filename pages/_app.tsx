@@ -1,13 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
-import {
-	ApolloClient,
-	InMemoryCache,
-	ApolloProvider,
-	useQuery,
-	gql
-} from '@apollo/client'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import Head from 'next/head'
 
 const client = new ApolloClient({

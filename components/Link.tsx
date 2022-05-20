@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import type { ReactElement } from 'react'
+import classNames from '../utils/classNames'
 
 interface Properties {
 	children: ReactElement | string
@@ -7,7 +8,7 @@ interface Properties {
 	className?: string
 }
 
-function SidebarLink(props: Properties) {
+function Link(props: Properties) {
 	const router = useRouter()
 
 	const { children, href, className, ...rest } = props
@@ -18,15 +19,17 @@ function SidebarLink(props: Properties) {
 	}
 
 	return (
-		<a
-			href={href}
+		<div
 			onClick={handleClick}
-			className={className ?? 'font-medium text-green-600 hover:text-green-500'}
+			className={classNames(
+				className ?? 'font-medium text-green-600 hover:text-green-500',
+				'cursor-pointer'
+			)}
 			{...rest}
 		>
 			{children}
-		</a>
+		</div>
 	)
 }
 
-export default SidebarLink
+export default Link

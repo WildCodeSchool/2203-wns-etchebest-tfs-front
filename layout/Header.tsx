@@ -1,4 +1,3 @@
-import { BellIcon, SearchIcon } from '@heroicons/react/outline'
 import type { ReactElement } from 'react'
 import Notification from '../components/Notification'
 import Search from '../components/Search'

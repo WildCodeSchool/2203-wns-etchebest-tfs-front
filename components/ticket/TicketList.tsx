@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import Ticket, { ITicketsProps } from './Ticket'
 
 export interface ITicketsListProps {
@@ -17,18 +16,19 @@ const TicketList = ({ tickets }: ITicketsListProps) => (
 				<td></td>
 			</tr>
 		</thead>
-
-		{tickets.map(ticket => (
-			<Ticket
-				key={ticket.id}
-				id={ticket.id}
-				title={ticket.title}
-				description={ticket.description}
-				status={ticket.status}
-				createdAt={ticket.createdAt}
-				user={ticket.user}
-			/>
-		))}
+		<tbody>
+			{tickets.map(ticket => (
+				<Ticket
+					key={ticket.id}
+					id={ticket.id}
+					title={ticket.title}
+					description={ticket.description}
+					status={ticket.status}
+					createdAt={ticket.createdAt}
+					user={ticket.user}
+				/>
+			))}
+		</tbody>
 	</table>
 )
 

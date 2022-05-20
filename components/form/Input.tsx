@@ -1,7 +1,5 @@
 import type { ReactElement, HTMLInputTypeAttribute } from 'react'
 
-type Type = 'text' | 'password' | 'email'
-
 interface Properties {
 	label: string
 	id: string | undefined
