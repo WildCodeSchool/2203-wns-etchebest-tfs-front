@@ -7,7 +7,7 @@ const LoginPage: NextPage = () => {
 	return (
 		<>
 			<Head>
-				<title>Login</title>
+				<title>Inscription</title>
 			</Head>
 			<div className={'relative h-screen w-screen bg-gray-50 pt-32'}>
 				<div
