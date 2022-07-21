@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import Head from 'next/head'
 import Link from '../components/Link'
-import Input from '../components/form/Input'
+
 import Button from '../components/Button'
 import { useRouter } from 'next/router'
 
@@ -37,36 +37,39 @@ const LoginPage: NextPage = () => {
 						<h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
 							Se connecter
 						</h2>
-						<p className='mt-2 text-center text-sm text-gray-600'>
-							Ou <Link href={'/register'}>S'inscrire</Link>
-						</p>
+						<Link href={'/register'}>
+							<p className='mt-2 text-center text-sm text-gray-600'>
+								Ou S'inscrire
+							</p>
+						</Link>
 					</div>
 					<form className='space-y-6' onSubmit={onSubmit}>
-						<Input
-							id={'email'}
-							type={'email'}
-							label={'Adresse Mail'}
-							{...register('email', {
-								required: true,
-								pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
-							})}
-						/>
+						<label
+							htmlFor='email'
+							className=' text-sm font-medium text-gray-700'
+						>
+							Email
+						</label>
+						<div>
+							<input
+								className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
+								{...register('email', {
+									required: true,
+									pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
+								})}
+							/>
+						</div>
 						{errors.email && (
-							<span className='text-red-500'>Adresse email invalide</span>
+							<span className='text-red-500'>Adresse email non valid</span>
 						)}
-
-						<Input
-							id={'password'}
-							type={'password'}
-							label={'Mot de passe'}
-							{...register('password', {
-								required: true
-							})}
-						/>
-						{errors.password && (
-							<span className='text-red-500'>Mot de passe incorrect</span>
-						)}
-
+						<label htmlFor='password'>Mot de passe</label>
+						<div>
+							<input
+								type='password'
+								className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
+								{...register('password', { required: true })}
+							/>
+						</div>
 						<div>
 							<Button type='submit'>Connexion</Button>
 						</div>
