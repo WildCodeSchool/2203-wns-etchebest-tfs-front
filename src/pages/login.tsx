@@ -1,29 +1,9 @@
 import type { NextPage } from 'next'
-import { useForm } from 'react-hook-form'
-
 import Head from 'next/head'
 import Link from '../components/Link'
-
-import Button from '../components/Button'
-import { useRouter } from 'next/router'
-
-interface IFormData {
-	email: String
-	password: String
-}
+import Login from '../components/Login'
 
 const LoginPage: NextPage = () => {
-	const {
-		register,
-		handleSubmit,
-		formState: { errors }
-	} = useForm<IFormData>()
-	const router = useRouter()
-	const onSubmit = handleSubmit(data => {
-		console.log(data)
-		router.push('/')
-	})
-
 	return (
 		<>
 			<Head>
@@ -43,37 +23,7 @@ const LoginPage: NextPage = () => {
 							</p>
 						</Link>
 					</div>
-					<form className='space-y-6' onSubmit={onSubmit}>
-						<label
-							htmlFor='email'
-							className=' text-sm font-medium text-gray-700'
-						>
-							Email
-						</label>
-						<div>
-							<input
-								className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
-								{...register('email', {
-									required: true,
-									pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
-								})}
-							/>
-						</div>
-						{errors.email && (
-							<span className='text-red-500'>Adresse email non valid</span>
-						)}
-						<label htmlFor='password'>Mot de passe</label>
-						<div>
-							<input
-								type='password'
-								className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
-								{...register('password', { required: true })}
-							/>
-						</div>
-						<div>
-							<Button type='submit'>Connexion</Button>
-						</div>
-					</form>
+					<Login />
 				</div>
 			</div>
 		</>
