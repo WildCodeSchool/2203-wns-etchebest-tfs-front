@@ -27,10 +27,8 @@ const Login = () => {
 	})
 	return (
 		<form className='space-y-6' onSubmit={onSubmit}>
-			<label htmlFor='email' className=' text-sm font-medium text-gray-700'>
-				Email
-			</label>
 			<div>
+				<label htmlFor='email'>Email</label>
 				<input
 					value={email}
 					className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
@@ -41,12 +39,12 @@ const Login = () => {
 					onChange={e => setEmail(e.target.value)}
 				/>
 				{errors.email && (
-					<p className='text-red-500'>Adresse email non valide</p>
+					<span className='text-red-500'>Adresse email non valide</span>
 				)}
 			</div>
 
-			<label htmlFor='password'>Mot de passe</label>
 			<div>
+				<label htmlFor='password'>Mot de passe</label>
 				<input
 					value={password}
 					type='password'

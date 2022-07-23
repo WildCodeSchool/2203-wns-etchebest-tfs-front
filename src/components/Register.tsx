@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai'
 
 import Button from './Button'
 
@@ -17,10 +18,11 @@ const Register = () => {
 
 	const {
 		register,
-		watch,
 		handleSubmit,
 		formState: { errors }
-	} = useForm<IRegisterFormData>()
+	} = useForm<IRegisterFormData>({
+		mode: 'onTouched'
+	})
 
 	const router = useRouter()
 
@@ -31,12 +33,11 @@ const Register = () => {
 
 	return (
 		<form className='space-y-6' onSubmit={onSubmit}>
-			<label htmlFor='email' className=' text-sm font-medium text-gray-700'>
-				Email
-			</label>
 			<div>
+				<label htmlFor='email'>Email</label>
 				<input
 					value={email}
+					placeholder='email'
 					className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
 					{...register('email', {
 						required: true,
@@ -45,44 +46,65 @@ const Register = () => {
 					onChange={e => setEmail(e.target.value)}
 				/>
 				{errors.email && (
-					<p className='text-red-500'>Adresse email non valide</p>
+					<span className='text-sm text-red-500'>
+						Adresse email non valide.
+					</span>
 				)}
 			</div>
 
-			<label htmlFor='password'>Mot de passe</label>
 			<div>
+				<label htmlFor='password'>Mot de passe</label>
 				<input
 					value={password}
 					type='password'
+					placeholder='password'
 					className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
 					{...register('password', {
 						required: true,
-						minLength: 8,
-						maxLength: 16
+						minLength: {
+							value: 8,
+							message: 'Le mot de passe doit contenir au moins 8 caractères.'
+						},
+						maxLength: {
+							value: 20,
+							message: 'Le mot de passe ne doit pas dépasser 20 caractères.'
+						}
 					})}
 					onChange={e => setPassword(e.target.value)}
 				/>
+				{errors.password && (
+					<span className='text-sm text-red-500'>
+						{errors.password.message}
+					</span>
+				)}
 			</div>
 
-			<label htmlFor='password'>Confirmez le mot de passe</label>
 			<div>
+				<label htmlFor='password'>Confirmez le mot de passe</label>
 				<input
 					value={confirmPassword}
 					type='password'
+					placeholder='confirmez le mot de passe'
 					className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
-					{...register('password', {
+					{...register('confirmPassword', {
 						required: true,
-						validate: (val: string) => {
-							if (watch('password') != val) {
-								return 'Les mots de passe ne correspondent pas'
-							}
-						}
+						validate: value =>
+							value === password || 'Les mots de passe ne correspondent pas'
 					})}
 					onChange={e => setConfirmPasword(e.target.value)}
 				/>
 			</div>
+			{errors.confirmPassword && (
+				<span className='text-sm text-red-500'>
+					{errors.confirmPassword.message}
+				</span>
+			)}
 			<div>
 				<Button type='submit'>S'inscrire</Button>
+			</div>
+			<div className='absolute top-1 right-5'>
+				<AiFillEyeInvisible />
+				<AiFillEye />
 			</div>
 		</form>
 	)

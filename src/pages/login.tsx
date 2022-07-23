@@ -17,11 +17,9 @@ const LoginPage: NextPage = () => {
 						<h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
 							Se connecter
 						</h2>
-						<Link href={'/register'}>
-							<p className='mt-2 text-center text-sm text-gray-600'>
-								Ou S'inscrire
-							</p>
-						</Link>
+						<p className='mt-2 text-center text-sm text-gray-600'>
+							Ou <Link href={'/register'}>S'inscrire</Link>
+						</p>
 					</div>
 					<Login />
 				</div>
