@@ -60,7 +60,7 @@ const LoginPage: NextPage = () => {
 							/>
 						</div>
 						{errors.email && (
-							<span className='text-red-500'>Adresse email non valid</span>
+							<span className='text-red-500'>Adresse email non valide</span>
 						)}
 						<label htmlFor='password'>Mot de passe</label>
 						<div>
