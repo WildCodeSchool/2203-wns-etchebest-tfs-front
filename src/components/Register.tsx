@@ -37,7 +37,7 @@ const Register = () => {
 				<label htmlFor='email'>Email</label>
 				<input
 					value={email}
-					placeholder='email'
+					placeholder='email@exemple.com'
 					className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
 					{...register('email', {
 						required: true,
@@ -57,7 +57,7 @@ const Register = () => {
 				<input
 					value={password}
 					type='password'
-					placeholder='password'
+					placeholder='Saisissez votre mot de passe'
 					className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
 					{...register('password', {
 						required: true,
@@ -84,7 +84,7 @@ const Register = () => {
 				<input
 					value={confirmPassword}
 					type='password'
-					placeholder='confirmez le mot de passe'
+					placeholder='Confirmez le mot de passe'
 					className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
 					{...register('confirmPassword', {
 						required: true,
