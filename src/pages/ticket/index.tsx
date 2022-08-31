@@ -26,7 +26,10 @@ const ListTaskPage: NextPage = () => {
 				<link rel='icon' href='/favicon.ico' />
 				{/* 	<link rel='stylesheet' href='https://rsms.me/inter/inter.css' /> */}
 			</Head>
-			<BaseLayout name={'Liste des Tickets'}>
+			<BaseLayout
+				name={'Liste des Tickets'}
+				button={<button>Ajouter un ticket</button>}
+			>
 				<>
 					{loading && <p> En cours de chargement...</p>}
 					{error && <p>'Une erreur est survenue'</p>}
