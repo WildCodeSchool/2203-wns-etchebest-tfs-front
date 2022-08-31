@@ -1,26 +1,10 @@
 import type { NextPage } from 'next'
+
 import Head from 'next/head'
 import Link from '../components/Link'
-import { useForm } from 'react-hook-form'
-import Button from '../components/Button'
-import { useRouter } from 'next/router'
-
-interface IFormData {
-	email: String
-	password: String
-}
+import Register from '../components/Register'
 
 const RegisterPage: NextPage = () => {
-	const {
-		register,
-		handleSubmit,
-		formState: { errors }
-	} = useForm<IFormData>()
-	const router = useRouter()
-	const onSubmit = handleSubmit(data => {
-		console.log(data)
-		router.push('/')
-	})
 	return (
 		<>
 			<Head>
@@ -38,54 +22,7 @@ const RegisterPage: NextPage = () => {
 							Ou <Link href={'/login'}>Se connecter</Link>
 						</p>
 					</div>
-					<form className='space-y-6' onSubmit={onSubmit}>
-						<label
-							htmlFor='email'
-							className=' text-sm font-medium text-gray-700'
-						>
-							Email
-						</label>
-						<div>
-							<input
-								className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
-								{...register('email', {
-									required: true,
-									pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
-								})}
-							/>
-						</div>
-						{errors.email && (
-							<span className='text-red-500'>Adresse email non valid</span>
-						)}
-						<label htmlFor='password'>Mot de passe</label>
-						<div>
-							<input
-								type='password'
-								className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
-								{...register('password', {
-									required: true,
-									minLength: 8,
-									maxLength: 16
-								})}
-							/>
-						</div>
-
-						<label htmlFor='password'>Confirmez le mot de passe</label>
-						<div>
-							<input
-								type='password'
-								className='block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-green-500 sm:text-sm'
-								{...register('password', {
-									required: true,
-									minLength: 8,
-									maxLength: 16
-								})}
-							/>
-						</div>
-						<div>
-							<Button type='submit'>S'inscrire</Button>
-						</div>
-					</form>
+					<Register />
 				</div>
 			</div>
 		</>
