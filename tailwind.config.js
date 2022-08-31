@@ -4,10 +4,10 @@ const colors = require('tailwindcss/colors')
 
 module.exports = {
 	content: [
-		'./pages/**/*.{js,ts,jsx,tsx}',
-		'./layout/**/*.{js,ts,jsx,tsx}',
-		'./utils/**/*.{js,ts,jsx,tsx}',
-		'./components/**/*.{js,ts,jsx,tsx}'
+		'./src/pages/**/*.{js,ts,jsx,tsx}',
+		'./src/layout/**/*.{js,ts,jsx,tsx}',
+		'./src/utils/**/*.{js,ts,jsx,tsx}',
+		'./src/components/**/*.{js,ts,jsx,tsx}'
 	],
 	theme: {
 		fontFamily: {
