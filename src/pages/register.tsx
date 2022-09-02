@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 
 import Head from 'next/head'
 import Link from '../components/Link'
-import Register from '../components/Register'
+import { Register } from '../components/Register'
 
 const RegisterPage: NextPage = () => {
 	return (

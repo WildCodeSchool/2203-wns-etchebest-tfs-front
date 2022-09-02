@@ -23,6 +23,7 @@ const Register = () => {
 	} = useForm<IRegisterFormData>({
 		mode: 'onTouched'
 	})
+	
 
 	const router = useRouter()
 
