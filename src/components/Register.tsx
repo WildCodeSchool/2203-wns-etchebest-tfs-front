@@ -27,6 +27,7 @@ export function Register() {
 		password: '00000000',
 		confirmPassword: '00000000'
 	}
+	
 
 	const [userInfo, setUserInfo] = useState<IRegisterFormData>(initialValue) 
 	const { register, handleSubmit, formState: { errors } } = useForm<IRegisterFormData>({ mode: 'onTouched' })
