@@ -1,13 +1,12 @@
-import '../styles/globals.css'
+import { ApolloProvider } from '@apollo/client'
+import { client } from '../apollo/config'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import Head from 'next/head'
 
-const client = new ApolloClient({
-	uri: process.env.NEXT_PUBLIC_API_URI,
-	cache: new InMemoryCache()
-})
+import '../styles/globals.css'
+
+
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
@@ -23,3 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 // Disabling SSR
 export default dynamic(() => Promise.resolve(MyApp), { ssr: false })
+function setContextSRR(arg0: (_: any, { headers }: { headers: any }) => { headers: any }) {
+	throw new Error('Function not implemented.')
+}
+
