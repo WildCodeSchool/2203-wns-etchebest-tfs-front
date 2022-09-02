@@ -18,6 +18,7 @@ interface IRegisterFormData {
 	confirmPassword: string
 }
 
+
 export function Register() {
 
 	const initialValue = {
@@ -32,6 +33,7 @@ export function Register() {
 	const [userInfo, setUserInfo] = useState<IRegisterFormData>(initialValue) 
 	const { register, handleSubmit, formState: { errors } } = useForm<IRegisterFormData>({ mode: 'onTouched' })
 	const [mutateRegister, { data, loading, error }] = useMutation(REGISTER_USER)
+
 
 	const router = useRouter()
 

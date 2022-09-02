@@ -1,4 +1,5 @@
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
+import { GET_PROJECTS } from '../../apollo/queries'
 import formatDate from '../../utils/formatDate/formatDate'
 
 interface Project {
@@ -7,15 +8,7 @@ interface Project {
 	subject: String
 }
 
-export const GET_PROJECTS = gql`
-	query Projects {
-		projects {
-			createdAt
-			id
-			subject
-		}
-	}
-`
+
 
 export function Project() {
 	const { loading, error, data } = useQuery(GET_PROJECTS)

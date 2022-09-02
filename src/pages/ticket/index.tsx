@@ -1,20 +1,11 @@
 import type { NextPage } from 'next'
-import { gql, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import Head from 'next/head'
 import TicketList from '../../components/ticket/TicketList'
 import BaseLayout from '../../layout/BaseLayout'
+import { GET_TICKETS } from '../../apollo/queries'
 
-export const GET_TICKETS = gql`
-	query Tickets {
-		tickets {
-			id
-			title
-			description
-			status
-			createdAt
-		}
-	}
-`
+
 const ListTaskPage: NextPage = () => {
 	const { loading, error, data } = useQuery(GET_TICKETS)
 
