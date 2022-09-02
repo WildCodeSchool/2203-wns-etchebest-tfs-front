@@ -8,7 +8,7 @@ const TicketList = ({ tickets }: ITicketsListProps) => (
 	<table className='TicketsList w-full '>
 		<thead className={'bg-gray-100'}>
 			<tr>
-				<td>NomSSATETOTOENCOREPLUSLONG2</td>
+				<td>NomSSATETOTOENCOREPLUSLONG2CESTVRAIMENTTROPLONG</td>
 				<td>Projet</td>
 				<td>Status</td>
 				<td>Assigné</td>
