@@ -9,7 +9,7 @@ const TicketList = ({ tickets }: ITicketsListProps) => (
 		<thead className={'bg-gray-100'}>
 			<tr>
 				<td>
-					NomSSATETOTOENCOREPLUSLONG2CESTVRAIMENTTROPLONGNONMAISVRAIMENTJO
+					NomSSATETOTOENCOREPLUSLONG2CESTVRAIMENTTROPLONGNONMAISVRAIMENTLongeeffzref
 				</td>
 				<td>Projet</td>
 				<td>Status</td>

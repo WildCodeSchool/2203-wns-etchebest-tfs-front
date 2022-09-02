@@ -41,4 +41,4 @@ jobs:
           context: ../2203-wns-etchebest-tfs-front
           file: ../2203-wns-etchebest-tfs-front/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_CLIENT_IMAGE_NAME }}:latest
+          # tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_CLIENT_IMAGE_NAME }}:latest
