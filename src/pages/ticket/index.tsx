@@ -20,7 +20,9 @@ const ListTaskPage: NextPage = () => {
 			<BaseLayout name={'Liste des Tickets'}>
 				<>
 					{loading && <p> En cours de chargement...</p>}
-					{error && <p>'Une erreur est survenue'</p>}
+					{error && error.graphQLErrors.map(({ message }, i) => (
+         		 <span key={i}>{message}</span>
+       		))}
 					{!loading && !error && <TicketList tickets={data.tickets} />}
 				</>
 			</BaseLayout>
