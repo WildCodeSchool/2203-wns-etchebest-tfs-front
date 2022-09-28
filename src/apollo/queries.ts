@@ -28,3 +28,9 @@ export const REGISTER_USER = gql`
 		register(data: $data)
 	}
 `
+
+export const LOGIN_MUTATION = gql`
+	mutation Mutation($data: LoginInput!) {
+		login(data: $data)
+	}
+`
