@@ -1,0 +1,20 @@
+.label {
+  @apply text-sm font-medium text-primary
+}
+
+.input {
+  @apply 
+    w-full 
+    px-2
+    py-2 
+    rounded-sm
+    border
+    text-sm
+  text-primary
+  border-grey-500
+  placeholder-grey-400
+    placeholder:text-sm
+  focus:border-secondary
+  focus:text-secondary  
+  focus:ring-grey-500
+}

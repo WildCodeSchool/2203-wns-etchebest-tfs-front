@@ -4,6 +4,7 @@ import {
 	ClipboardCheckIcon,
 	BookmarkIcon
 } from '@heroicons/react/outline'
+import { useRouter } from 'next/router'
 import SidebarLink from '../components/SidebarLink'
 
 const links = [
@@ -14,6 +15,14 @@ const links = [
 ]
 
 const Sidebar = () => {
+
+	const router = useRouter()
+
+	function handleLogout() {
+		localStorage.removeItem('token')
+		router.push("/login")
+	}
+
 	return (
 		<div className={'relative flex h-full flex-col bg-gray-800 py-10 px-10'}>
 			<div className={'mb-12 text-white'}>Logo</div>
@@ -42,9 +51,9 @@ const Sidebar = () => {
 				<div className={'h-10 w-10 rounded-full bg-gray-300'}></div>
 				<div>
 					<p className={'text-sm font-medium text-white'}>Nom d'utilisateur</p>
-					<p className='text-xs font-medium text-gray-300 hover:text-gray-200'>
+					<button onClick={handleLogout} className='text-xs font-medium text-gray-300 hover:text-gray-200'>
 						Se déconnecter
-					</p>
+					</button>
 				</div>
 			</div>
 		</div>

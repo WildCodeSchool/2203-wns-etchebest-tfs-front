@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Input from '../components/form/Input'
+import Input from '../components/common/form/Input'
 
 const LoginPage: NextPage = () => {
 	return (
