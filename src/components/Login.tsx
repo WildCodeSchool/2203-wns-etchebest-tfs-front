@@ -10,7 +10,7 @@ import Button from '../components/Button'
 interface ILoginFormData {
 	email: string
 	password: string
-}
+};
 
 const LOGIN_MUTATION = gql`
    mutation Mutation($data: LoginInput!) {
