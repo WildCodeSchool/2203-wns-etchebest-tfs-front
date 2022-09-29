@@ -24,7 +24,7 @@ const Login = () => {
 
 	const { register, handleSubmit, formState: { errors } } = useForm<ILoginFormData>()
 
-  const [ mutateLogin, { data, loading, error } ] = useMutation(LOGIN_MUTATION)
+  const [ mutateLogin, { loading, error } ] = useMutation(LOGIN_MUTATION)
 
  
 	const router = useRouter()
