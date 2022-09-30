@@ -97,7 +97,7 @@ export function RegisterForm() {
 	}
 
 	//Mutation
-	const [mutateRegister, { data, loading, error: ApolloError }] =
+	const [mutateRegister, { loading, error: ApolloError }] =
 		useMutation(REGISTER_USER)
 
 	const router = useRouter()
