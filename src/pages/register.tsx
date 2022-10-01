@@ -1,13 +1,10 @@
 import type { NextPage } from 'next'
-
 import Head from 'next/head'
-import Link from 'next/link'
 //Components
 import { Auth } from '../components/auth/Auth'
 import { RegisterForm } from '../components/auth/RegisterForm'
-import { Loader } from '../components/common/Loader'
 
-export default function RegisterPage() {
+const RegisterPage: NextPage = () => {
 	return (
 		<>
 			<Head>
@@ -21,5 +18,6 @@ export default function RegisterPage() {
 		</>
 	)
 }
+export default RegisterPage;
 
 
