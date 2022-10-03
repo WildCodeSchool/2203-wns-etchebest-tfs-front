@@ -17,7 +17,6 @@ export function FormUpload() {
 	const [error, setError] = useState<{message: string, size: number | null}>({message: "", size:null})
 
 	function onSubmit() {
-		console.log()
 		if(files){
 			const file = files[0] 
 			console.log(file)

@@ -1,4 +1,4 @@
-import Ticket from '../ticket/Ticket'
+import Ticket from '../ticketList/Ticket'
 import { screen, render } from '@testing-library/react'
 import { MockedProvider } from '@apollo/client/testing'
 

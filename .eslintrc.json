@@ -15,12 +15,13 @@
 		"airbnb-typescript",
 		"airbnb/hooks",
 		"plugin:react/jsx-runtime",
-		"plugin:unicorn/all",
+		// "plugin:unicorn/all",
 		"plugin:react-prefer-function-component/recommended",
 		"prettier"
 	],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
+		"project": "tsconfig.json",
 		"ecmaFeatures": {
 			"jsx": true
 		},

@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import { MockedProvider } from '@apollo/client/testing'
-import { Project } from './project'
+import { Project } from './Projects'
 import { GET_PROJECTS } from '../../apollo/queries'
 
 const mocks = [

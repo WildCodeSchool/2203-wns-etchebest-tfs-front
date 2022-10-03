@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-type-alias */
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { HTMLAttributes, ReactElement, ReactNode } from 'react'
 import classNames from '../utils/classNames'
 import { Loader } from './common/Loader'
 
@@ -7,21 +7,23 @@ import { Loader } from './common/Loader'
 type Type = 'button' | 'submit'
 
 interface Properties extends HTMLAttributes<HTMLButtonElement> {
-	children: ReactElement | string
+	children: ReactElement | string | ReactNode
 	type?: Type
 	className?: string
 	disabled?: boolean
 	fullWidth?: boolean
 	loading?: boolean
+	outlined?: boolean
 }
 
-const Button = (props: Properties): ReactElement => {
-	const { type, children, className, fullWidth, loading, disabled, ...rest } = props
+export default function Button(props: Properties): ReactElement {
+	const { type, children, className, fullWidth, loading, disabled, outlined, ...rest } = props
 
 	let classes = classNames(
-		`relative min-h-14 border border-transparent text-sm duration-100 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-offset-2  px-6 py-3 disabled:text-grey-500 disabled:bg-grey-300 disabled:hover:bg-grey-300`,
+		`relative min-h-14 border border-transparent text-sm duration-100 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-offset-2  px-6 py-3 disabled:text-grey-500 disabled:bg-grey-300 disabled:hover:bg-grey-300 flex items-center gap-1`,
+		outlined ? 'text-secondary bg-white border-2 border-secondary font-semibold hover:text-white hover:bg-secondary transition-all duration-75 ease-in-out' : 'text-white bg-secondary hover:bg-primary focus:ring-grey-500',
 		className ??
-			'rounded-sm text-white bg-secondary hover:bg-primary focus:ring-grey-500'						
+			'rounded-sm '						
 	)
 	if(fullWidth) {
 		classes = classNames(classes, 'w-full')
@@ -50,4 +52,3 @@ Button.defaultProps = {
 	className: null
 }
 
-export default Button

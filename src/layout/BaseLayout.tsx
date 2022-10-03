@@ -1,5 +1,4 @@
 import type { ReactElement } from 'react'
-import Footer from './Footer'
 import Header from './Header'
 import Sidebar from './Sidebar'
 
@@ -9,17 +8,14 @@ interface Properties {
 	button?: ReactElement
 }
 
-const BaseLayout = ({ children, name, button }: Properties): ReactElement => {
+export default function BaseLayout({ children, name, button }: Properties): ReactElement {
 	return (
 		<>
 			<div className={'flex h-screen'}>
 				<Sidebar />
-				<div className={'flex w-full flex-col justify-between'}>
-					<div className={'w-full'}>
-						<Header name={name} button={button} />
-						<main className={'p-4'}>{children}</main>
-					</div>
-					<Footer />
+				<div className={'w-full min-h-screen pl-40 pr-24 bg-grey-50 overflow-hidden'}>
+					<Header name={name} button={button} />
+					<main className={'w-full'}>{children}</main>
 				</div>
 			</div>
 		</>
@@ -29,5 +25,3 @@ const BaseLayout = ({ children, name, button }: Properties): ReactElement => {
 BaseLayout.defaultProps = {
 	children: <></>
 }
-
-export default BaseLayout
