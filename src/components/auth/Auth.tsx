@@ -9,13 +9,13 @@ interface IAuthProps {
   subtitle: string,
   authType: 'login' | 'register'
 }
-
+//Wrapper pour les formulaires de login et register
 export function Auth({children, title, subtitle, authType}:IAuthProps) {
   return (
 
-    <div className='max-w-xl rounded-sm bg-white px-16 pt-10 pb-12 text-primary'>
+    <div className='min-w-[400px] max-w-[900px] rounded-sm bg-white px-16 pt-10 pb-12 text-primary'>
       
-      <div className='flex flex-col mb-12 items-center'>
+      <header className='flex flex-col mb-12 items-center'>
         <div className="mb-10">
           <Image
             src="/logo.svg"
@@ -37,8 +37,8 @@ export function Auth({children, title, subtitle, authType}:IAuthProps) {
        }
        {/* ----------------------------------- */}
         <p className='text-center text-xs uppercase text-gray-300'>{subtitle}</p>
-      </div>
-      <div>{ children }</div>
+      </header>
+      { children }
     </div>
   )
 }

@@ -5,7 +5,8 @@
 .input {
   @apply 
     w-full 
-    px-2
+    pl-2
+    pr-8
     py-2 
     rounded-sm
     border
@@ -18,3 +19,4 @@
   focus:text-secondary  
   focus:ring-grey-500
 }
+

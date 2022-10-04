@@ -1,13 +1,11 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 //Librarie
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from '@apollo/client'
 //Component
 import Button from '../Button'
-import { ErrorInput } from '../common/form/ErrorInput'
-//Styles
-import styles from './LoginForm.module.css'
+import { InputGroup } from '../common/form/input/InputGroup'
 //Utiles
 import { isEmpty } from '../../utils/objectIsEmpty'
 //Queries
@@ -50,7 +48,7 @@ export default function LoginForm() {
 
 	const router = useRouter()
 
-	const onSubmit = handleSubmit(payload => {
+	const onSubmit:SubmitHandler<ILoginFormData> = (payload => {
 		mutateLogin({
 			variables: {
 				data: payload
@@ -59,6 +57,7 @@ export default function LoginForm() {
 			.then(data => {
 				if (data) {
 					localStorage.setItem('token', data.data.login)
+					
 					router.push('/')
 				}
 			})
@@ -66,38 +65,30 @@ export default function LoginForm() {
 	})
 
 	return (
-		<form className='min-w-100' onSubmit={onSubmit}>
+		<form className="form" onSubmit={handleSubmit(onSubmit)}>
 			<div className='mb-3'>
-				<label htmlFor='email' className={styles.label}>
-					Email
-				</label>
-				<input
-					id='email'
-					value={data?.email}
-					placeholder='Your email'
-					className={styles.input}
-					autoComplete='email'
-					aria-invalid={errors.email ? 'true' : 'false'}
-					{...register('email', validators.email)}
-				/>
-				<ErrorInput errors={errors} field='email' />
+				<InputGroup
+						label='Email'
+						type='email'
+						field='email'
+						register={register}
+						errors={errors}
+						validator={validators}
+						placeholder='email@exemple.com'
+						autoComplete='email'
+					/>
 			</div>
-
 			<div className='mb-8'>
-				<label htmlFor='password' className={styles.label}>
-					Mot de passe
-				</label>
-				<input
-					id='password'
-					value={data?.password}
+				<InputGroup
+					label='Mot de passe'
 					type='password'
-					aria-invalid={errors.password ? 'true' : 'false'}
-					className={styles.input}
-					{...register('password', validators.password)}
-					autoComplete='current-password'
-					placeholder='Your password'
+					field='password'
+					register={register}
+					validator={validators}
+					errors={errors}
+					placeholder='Saisissez votre mot de passe'
+					autoComplete='new-password'
 				/>
-				<ErrorInput errors={errors} field='password' />
 			</div>
 			<Button type='submit' fullWidth loading={loading} disabled={!isEmpty(errors)}>
 				Connexion

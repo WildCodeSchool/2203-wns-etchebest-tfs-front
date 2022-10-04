@@ -1,8 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+//Components
 import { Auth } from '../components/auth/Auth'
-
-
 import LoginForm from '../components/auth/LoginForm'
 
 const LoginPage: NextPage = () => {
