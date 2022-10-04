@@ -1,11 +1,7 @@
 import type { NextPage } from 'next'
-
 import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
+//Components
 import { Auth } from '../components/auth/Auth'
-
-
 import LoginForm from '../components/auth/LoginForm'
 
 const LoginPage: NextPage = () => {

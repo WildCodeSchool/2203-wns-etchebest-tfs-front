@@ -1,17 +1,15 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 //Libraries
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from '@apollo/client'
 //Component
 import Button from '../Button'
-import { ErrorInput } from '../common/form/ErrorInput'
-//Styles
-import styles from './LoginForm.module.css'
 //Queries
 import { REGISTER_USER } from '../../apollo/queries'
 //Utils
 import { isEmpty } from '../../utils/objectIsEmpty'
+import { InputGroup } from '../common/form/input/InputGroup'
 
 interface IRegisterFormData {
 	firstname: string
@@ -29,6 +27,7 @@ export function RegisterForm() {
 		watch,
 		formState: { errors }
 	} = useForm<IRegisterFormData>({ mode: 'onTouched' })
+
 	const validators = {
 		firstname: {
 			required: {
@@ -91,18 +90,20 @@ export function RegisterForm() {
 				value: 8,
 				message: 'Le mot de passe doit contenir au moins 8 caractères.'
 			},
+			
 			validate: (value: string) => value === watch('password'),
-			message: 'Les mots de passe ne correspondent pas'
+			message: 'Les mots de passe ne correspondent pas'	
+		
 		}
 	}
 
 	//Mutation
-	const [mutateRegister, { data, loading, error: ApolloError }] =
+	const [mutateRegister, { loading, error: ApolloError }] =
 		useMutation(REGISTER_USER)
 
 	const router = useRouter()
 
-	const onSubmit = handleSubmit(data => {
+	const onSubmit: SubmitHandler<IRegisterFormData> =  (data => {
 		// on enlève confirmPassword de l'objet data
 		const { confirmPassword, ...rest } = data
 
@@ -121,97 +122,79 @@ export function RegisterForm() {
 	})
 
 	return (
-		<form className='grid grid-cols-2 gap-3 ' onSubmit={onSubmit}>
+		<form className='grid grid-cols-2 gap-3 ' onSubmit={handleSubmit(onSubmit)}>
 			{/* firstname */}
-			<div className='col-span-1'>
-				<label htmlFor='firstname' className={styles.label}>
-					Firstname
-				</label>
-				<input
-					id='firstname'
-					type="text"
-					aria-invalid={errors.firstname ? 'true' : 'false'}
-					placeholder='John'
-					className={styles.input}
-					{...register('firstname', validators.firstname)}
-					autoComplete='given-name'
-				/>
-				{errors.firstname && <ErrorInput errors={errors} field='firstname' />}
-			</div>
+			<InputGroup
+				label='Prénom'
+				type='text'
+				field='firstname'
+				placeholder='Votre prénom'
+				autoComplete='given-name'
+				register={register}
+				errors={errors}
+				validator={validators}
+			/>
 
 			{/* lastname */}
-			<div className='col-span-1'>
-				<label htmlFor='lastname' className={styles.label}>
-					Lastname
-				</label>
-				<input
-					id='lastname'
-					type="text"
-					aria-invalid={errors.lastname ? 'true' : 'false'}
-					placeholder='John'
-					className={styles.input}
-					{...register('lastname', validators.lastname)}
-					autoComplete='family-name'
-				/>
-				{errors.lastname && <ErrorInput errors={errors} field='lastname' />}
-			</div>
+			<InputGroup
+				label='Nom'
+				type='text'
+				field='lastname'
+				placeholder='Votre nom'
+				autoComplete='email'
+				register={register}
+				errors={errors}
+				validator={validators}
+			/>
 
 			{/* Email */}
 			<div className='col-span-2'>
-				<label htmlFor='email' className={styles.label}>
-					Email
-				</label>
-				<input
-					id='email'
-					type="email"
-					aria-invalid={errors.email ? 'true' : 'false'}
+				<InputGroup
+					label='Email'
+					type='email'
+					field='email'
+					register={register}
+					errors={errors}
+					validator={validators}
 					placeholder='email@exemple.com'
-					className={styles.input}
-					{...register('email', validators.email)}
 					autoComplete='email'
 				/>
-				{errors.email && <ErrorInput errors={errors} field='email' />}
 			</div>
 
 			{/* password */}
 			<div className='col-span-2'>
-				<label htmlFor='password' className={styles.label}>
-					Mot de passe
-				</label>
-				<input
-					id='password'
-					aria-invalid={errors.password ? 'true' : 'false'}
+				<InputGroup
+					label='Mot de passe'
 					type='password'
+					field='password'
+					register={register}
+					validator={validators}
+					errors={errors}
 					placeholder='Saisissez votre mot de passe'
-					className={styles.input}
-					{...register('password', validators.password)}
 					autoComplete='new-password'
 				/>
-				{errors.password && <ErrorInput errors={errors} field='password' />}
 			</div>
 
 			{/* Confirm passwors */}
 			<div className='col-span-2 mb-5'>
-				<label htmlFor='confirm-password' className={styles.label}>
-					Confirmez le mot de passe
-				</label>
-				<input
-					id='confirm-password'
-					aria-invalid={errors.password ? 'true' : 'false'}
+				<InputGroup
+					label='Confirmation de passe'
 					type='password'
-					placeholder='Confirmez le mot de passe'
-					className={styles.input}
-					{...register('confirmPassword', validators.confirmPassword)}
+					field='confirmPassword'
+					register={register}
+					validator={validators}
+					errors={errors}
+					placeholder='Comfirmez votre mot de passe'
 					autoComplete='new-password'
 				/>
-				{errors.confirmPassword && <ErrorInput errors={errors} field='confirmPassword' />}
 			</div>
+
 			<div className='col-span-2'>
 				<Button type='submit' fullWidth disabled={!isEmpty(errors)} loading={loading}>
 					S'inscrire
 				</Button>
 				{ApolloError && (
-					<p className='rounded-sm bg-alert px-4 py-2 text-sm font-medium text-white'>
+					<p className='my-2 rounded-sm bg-alert px-4 py-2 text-sm font-medium text-white'>
 						{ApolloError.message}
 					</p>
 				)}
