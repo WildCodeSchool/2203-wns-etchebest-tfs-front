@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { FieldError, UseFormRegister } from 'react-hook-form';
-import { ErrorInput } from '../ErrorInput';
+import { ErrorInput } from './ErrorInput';
 import { ExclamationCircleIcon } from '@heroicons/react/outline'
 //Styles
 import styles from "../input/InputGroup.module.css"
