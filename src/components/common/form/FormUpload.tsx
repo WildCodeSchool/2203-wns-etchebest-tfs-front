@@ -10,7 +10,7 @@ type FormData = {
 
 export function FormUpload() {
 	
-	const { register, handleSubmit, watch, formState: {errors} } = useForm<FormData>();
+	const { register, handleSubmit } = useForm<FormData>();
 	
 	const [files, setFiles] = useState<FileList | null>(null)
 	const [file, setFile] = useState<string | null>(null)

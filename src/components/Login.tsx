@@ -6,10 +6,11 @@ import { gql, useMutation } from '@apollo/client'
 //Component
 import Button from '../components/Button'
 
+
 interface ILoginFormData {
 	email: string
 	password: string
-}
+};
 
 const LOGIN_MUTATION = gql`
    mutation Mutation($data: LoginInput!) {
@@ -23,7 +24,7 @@ const Login = () => {
 
 	const { register, handleSubmit, formState: { errors } } = useForm<ILoginFormData>()
 
-  const [ mutateLogin, { data, loading, error } ] = useMutation(LOGIN_MUTATION)
+  const [ mutateLogin, { loading, error } ] = useMutation(LOGIN_MUTATION)
 
  
 	const router = useRouter()

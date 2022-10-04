@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 // Disabling SSR
 export default dynamic(() => Promise.resolve(MyApp), { ssr: false })
-function setContextSRR(arg0: (_: any, { headers }: { headers: any }) => { headers: any }) {
+/*function setContextSRR(arg0: (_: any, { headers }: { headers: any }) => { headers: any }) {
 	throw new Error('Function not implemented.')
-}
+}*/
 
