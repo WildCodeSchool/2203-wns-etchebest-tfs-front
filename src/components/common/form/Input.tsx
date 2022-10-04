@@ -1,4 +1,4 @@
-import { forwardRef, Ref } from "react"
+import { forwardRef } from "react"
 
 interface Properties {
 	label: string
@@ -10,7 +10,7 @@ interface Properties {
 	accept?: string,
 }
 
-const Input = forwardRef((props: Properties, ref) => {
+const Input = forwardRef((props: Properties ) => {
 	const { label, id, name, type, required, onChange, ...rest } = props
 	return (
 		<div>
