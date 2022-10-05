@@ -44,11 +44,11 @@ export default function LoginForm() {
 	}
 
 	//Mutation
-	const [mutateLogin, { data, loading, error: ApolloError }] = useMutation(LOGIN_MUTATION)
+	const [mutateLogin, { loading, error: ApolloError }] = useMutation(LOGIN_MUTATION)
 
 	const router = useRouter()
 
-	const onSubmit:SubmitHandler<ILoginFormData> = (payload => {
+	const onSubmit: SubmitHandler<ILoginFormData> = payload => {
 		mutateLogin({
 			variables: {
 				data: payload
@@ -57,26 +57,26 @@ export default function LoginForm() {
 			.then(data => {
 				if (data) {
 					localStorage.setItem('token', data.data.login)
-					
+
 					router.push('/')
 				}
 			})
 			.catch(err => console.log(err))
-	})
+	}
 
 	return (
-		<form className="form" onSubmit={handleSubmit(onSubmit)}>
+		<form className='form' onSubmit={handleSubmit(onSubmit)}>
 			<div className='mb-3'>
 				<InputGroup
-						label='Email'
-						type='email'
-						field='email'
-						register={register}
-						errors={errors}
-						validator={validators}
-						placeholder='email@exemple.com'
-						autoComplete='email'
-					/>
+					label='Email'
+					type='email'
+					field='email'
+					register={register}
+					errors={errors}
+					validator={validators}
+					placeholder='email@exemple.com'
+					autoComplete='email'
+				/>
 			</div>
 			<div className='mb-8'>
 				<InputGroup
