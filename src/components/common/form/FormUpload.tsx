@@ -2,7 +2,7 @@ import XCircleIcon from "@heroicons/react/outline/XCircleIcon";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../../Button";
-import Input from "./Input";
+
 
 type FormData = {
   file: FileList;
@@ -10,9 +10,9 @@ type FormData = {
 
 export function FormUpload() {
 	
-	const { register, handleSubmit, watch, formState: {errors} } = useForm<FormData>();
+	const { handleSubmit } = useForm<FormData>();
 	
-	const [files, setFiles] = useState<FileList | null>(null)
+	const [files] = useState<FileList | null>(null)
 	const [file, setFile] = useState<string | null>(null)
 	const [error, setError] = useState<{message: string, size: number | null}>({message: "", size:null})
 
@@ -36,17 +36,17 @@ export function FormUpload() {
 	return (
 				<div className='flex justify-evenly'>
 					<form onSubmit={ handleSubmit(onSubmit) } >
-						<div className="mb-2 flex">
+						{/* <div className="mb-2 flex">
 							<Input 
 								{...register("file")}
-								onChange={e => setFiles(e.currentTarget.files)}
+								onChange={e:any => setFiles(e.currentTarget.files)}
 								label='Picture' 
 								name="file"
 								id="file"
 								type="file"
 								accept=".jpg, .png, .gif, .jpeg"
 							/>
-						</div>
+						</div> */}
 				{/* 		{error && <p>{error.message}</p>}
 						{error?.size && <p>{error.size}mo</p>} */}
 						<Button type='submit'>Submit</Button>

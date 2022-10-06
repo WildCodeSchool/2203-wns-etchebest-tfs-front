@@ -7,15 +7,19 @@ import Head from 'next/head'
 import '../styles/globals.css'
 
 
+import {AuthProvider} from '../UserContext'
+
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<ApolloProvider client={client}>
-			<Head>
-				<link rel='icon' href='/favicon.ico' />
-				<link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
-			</Head>
-			<Component {...pageProps} />
+			<AuthProvider>
+				<Head>
+					<link rel='icon' href='/favicon.ico' />
+					<link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
+				</Head>
+				<Component {...pageProps} />
+			</AuthProvider>
 		</ApolloProvider>
 	)
 }

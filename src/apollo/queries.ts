@@ -23,6 +23,18 @@ export const GET_PROJECTS = gql`
 	}
 `
 
+export const GET_ME = gql`
+	query Me {
+		me {
+			id
+			firstname
+			lastname
+			email
+			roles
+		}
+	}
+`
+
 export const REGISTER_USER = gql`
 	mutation Register($data: UserCreateInput!) {
 		register(data: $data)
