@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/router'
 //Libraries
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useMutation } from '@apollo/client'
+import { OperationVariables, QueryResult, useLazyQuery, useMutation } from '@apollo/client'
 //Component
 import Button from '../Button'
 //Queries
-import { REGISTER_USER } from '../../apollo/queries'
+import { IS_EXIST_USER, REGISTER_USER } from '../../apollo/queries'
 //Utils
 import { isEmpty } from '../../utils/objectIsEmpty'
 import { InputGroup } from '../common/form/input/InputGroup'
@@ -20,6 +20,8 @@ interface IRegisterFormData {
 }
 
 export function RegisterForm() {
+	const [getisExistUser] = useLazyQuery(IS_EXIST_USER)
+
 	//Form
 	const {
 		register,
@@ -65,6 +67,18 @@ export function RegisterForm() {
 			pattern: {
 				value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
 				message: 'Adresse email non valide'
+			},
+			validate: {
+				isExist: async (value: string): Promise<boolean | string> => {
+					const response = await getisExistUser(
+						{ variables: 
+							{ 
+								data: {email:value} 
+							} 
+						})
+						console.log(response)
+					return !response.data.isExistUser || 'Adresse email déjà utilisée'
+				}
 			}
 		},
 		password: {
@@ -90,20 +104,19 @@ export function RegisterForm() {
 				value: 8,
 				message: 'Le mot de passe doit contenir au moins 8 caractères.'
 			},
-			
-			validate: (value: string) => value === watch('password'),
-			message: 'Les mots de passe ne correspondent pas'	
-		
+			validate: {
+				isSame: (value: string) =>
+					value === watch('password') || 'Les mots de passe ne correspondent pas'
+			}
 		}
 	}
 
 	//Mutation
-	const [mutateRegister, { loading, error: ApolloError }] =
-		useMutation(REGISTER_USER)
+	const [mutateRegister, { loading, error: ApolloError }] = useMutation(REGISTER_USER)
 
 	const router = useRouter()
 
-	const onSubmit: SubmitHandler<IRegisterFormData> =  (data => {
+	const onSubmit: SubmitHandler<IRegisterFormData> = data => {
 		// on enlève confirmPassword de l'objet data
 		const { confirmPassword, ...rest } = data
 
@@ -119,7 +132,7 @@ export function RegisterForm() {
 			.catch(err => {
 				console.log(err)
 			})
-	})
+	}
 
 	return (
 		<form className='grid grid-cols-2 gap-3 ' onSubmit={handleSubmit(onSubmit)}>
@@ -187,6 +200,7 @@ export function RegisterForm() {
 					placeholder='Comfirmez votre mot de passe'
 					autoComplete='new-password'
 				/>
+				{errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
 			</div>
 
 			<div className='col-span-2'>

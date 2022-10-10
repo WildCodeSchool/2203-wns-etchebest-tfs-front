@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-
+//-------------- TICKETS --------------
 export const GET_TICKETS = gql`
 	query Tickets {
 		tickets {
@@ -12,7 +12,7 @@ export const GET_TICKETS = gql`
 		}
 	}
 `
-
+//------------ PROJECT ------------
 export const GET_PROJECTS = gql`
 	query Projects {
 		projects {
@@ -23,6 +23,8 @@ export const GET_PROJECTS = gql`
 	}
 `
 
+
+//----------- USER ------------
 export const GET_ME = gql`
 	query Me {
 		me {
@@ -35,14 +37,21 @@ export const GET_ME = gql`
 	}
 `
 
-export const REGISTER_USER = gql`
-	mutation Register($data: UserCreateInput!) {
-		register(data: $data)
-	}
-`
+export const IS_EXIST_USER = gql`
+query IsExistUser($data: isExistUserInput!) {
+  isExistUser(data: $data)
+}`
 
+
+//----------- AUTH ------------
 export const LOGIN_MUTATION = gql`
 	mutation Mutation($data: LoginInput!) {
 		login(data: $data)
+	}
+`
+
+export const REGISTER_USER = gql`
+	mutation Register($data: UserCreateInput!) {
+		register(data: $data)
 	}
 `

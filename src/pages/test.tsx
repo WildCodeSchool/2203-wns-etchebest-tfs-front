@@ -10,11 +10,6 @@ import { useLazyQuery } from '@apollo/client'
 import { GET_ME } from '../apollo/queries'
 
 
-
-interface ILoginFormData {
-  firstname: string
-}
-
 const TestPage: NextPage = () => {
 
 	const [getMe,{ loading, data }] = useLazyQuery(GET_ME)
@@ -25,7 +20,7 @@ const TestPage: NextPage = () => {
 		const userLogged = async () => {
 		const data = await getMe()
 		const user = data.data.me
-		redirectAccordingRole(user, "USER")
+		redirectAccordingRole(user, "ADMIN")
 		}
 		userLogged().catch(console.error);	
 	}, [])
@@ -33,18 +28,16 @@ const TestPage: NextPage = () => {
 	function redirectAccordingRole(user:IAuthUserCtx, roles:string){
 		if(!user){
 			authCtx?.setAuthUser(user)
-			router.push('/login')
+			router.push('/')
 		}
 		else if(user && user.roles === roles){
 			authCtx?.setAuthUser(user)
 		}
 		else{
 			authCtx?.setAuthUser(user)
-			router.back()
+			router.push('/')
 		}
 	}
-
-
 
 	return (
 		<>
@@ -52,11 +45,11 @@ const TestPage: NextPage = () => {
 				<title>Test page</title>
 			</Head>
 
-      
-			{!loading && <div className="max-w-sm">
+      {authCtx?.authUser && 
+				<div className="max-w-sm">
 				<h1>Page test</h1>
       </div>}
-			{loading && <p>Loading...</p>}
+			
 			
 		</>
 	)

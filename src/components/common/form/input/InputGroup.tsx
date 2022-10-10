@@ -18,10 +18,10 @@ interface IProps  {
 }
 
 
-export const InputGroup = ({ label, type, placeholder, autoComplete, register, validator, field, errors}:IProps) => {
+export function InputGroup ({ label, type, placeholder, autoComplete, register, validator, field, errors}:IProps) {
 
   return   (
-		<div className=''>
+		<div>
 				<label className={styles.label} htmlFor={field}>{label}</label>
 				<div className='relative'>
 					<input 
