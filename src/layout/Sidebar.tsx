@@ -9,7 +9,7 @@ import { useState } from 'react'
 import classNames from '../utils/classNames'
 
 const links = [
-	{ name: 'Paramètres', href: '/settings', icon: CogIcon }
+	{ name: 'Paramètres', href: '/test', icon: CogIcon }
 ]
 
 export default function Sidebar() {
@@ -28,10 +28,10 @@ export default function Sidebar() {
 			<div className={'fixed flex h-screen flex-col border-r-2 border-secondary w-16 bg-white z-40'}>
 				<div className={'mb-6 py-6 border-b-2 border-secondary px-4 flex items-center justify-center h-16 box-border'}>
 					<Link href={'/'}>
-						<Image src='/logo.svg' alt='logo' width='50' height='26' className={'cursor-pointer'}/>
+						<Image src='/logo--small.svg' alt='logo' width='50' height='26' className={'cursor-pointer'}/>
 					</Link>
 				</div>
-				<nav className={''}>
+				<nav>
 					<ul className={'mt-2 flex flex-col gap-3'}>
 						{links.map(item => (
 							<li key={item.name} className={'flex justify-center px-4 cursor-pointer'}>

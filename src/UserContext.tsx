@@ -29,7 +29,7 @@ export const AuthProvider = ({children}:{children:ReactElement[]}) => {
  
   // State utiliser dans le contexte pour définir quelle est l'utilisateur est connecté
   // On envoi également le setter pour pouvoir "setté" l'utilisateur une fois connecté
-  const [authUser, setAuthUser] = useState(authContext)
+  const [authUser, setAuthUser] = useState<IAuthUserCtx | null>(authContext)
   const value = {authUser, setAuthUser}
 
   return (  

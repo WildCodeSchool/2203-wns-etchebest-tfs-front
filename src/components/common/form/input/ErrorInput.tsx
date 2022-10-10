@@ -7,7 +7,6 @@ interface IErrorInputProps {
 }
 
 export function ErrorInput({errors, field}: IErrorInputProps) {
-  console.log({errorInput:{field, errors}})
   return (
       <span className='text-alert_dark text-xs font-normal'>
         <p className="error">{errors[field]?.message}</p>
