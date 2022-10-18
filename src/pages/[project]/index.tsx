@@ -8,6 +8,7 @@ import BaseLayout from '../../layout/BaseLayout'
 import Button from '../../components/Button'
 import TicketList from '../../components/ticketList/TicketList'
 import ProjectItemOverview from '../../components/project/ProjectItemOverview'
+import { PlusSmIcon } from '@heroicons/react/outline'
 
 const ProjectPage: NextPage = () => {
 	const { loading, error, data } = useQuery(GET_TICKETS)
@@ -16,7 +17,7 @@ const ProjectPage: NextPage = () => {
 			<Head>
 				<title>Projets</title>
 			</Head>
-			<BaseLayout name={'My app'} button={<Button>+ Ajouter un Ticket</Button>}>
+			<BaseLayout name={'My app'} button={<Button icon={<PlusSmIcon className="h-5"/>}>Ajouter un Ticket</Button>}>
 				<>
 					<ProjectItemOverview opened={10} wip={15} review={105} done={100} cta={<Button outlined={true}>Last assigned ticket</Button>} />
 					<h2 className={'text-secondary uppercase font-medium mb-2 mt-8'}>Tickets</h2>

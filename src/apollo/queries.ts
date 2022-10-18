@@ -14,13 +14,23 @@ export const GET_TICKETS = gql`
 `
 //------------ PROJECT ------------
 export const GET_PROJECTS = gql`
-	query Projects {
-		projects {
-			createdAt
-			id
-			subject
-		}
-	}
+query Projects {
+  projects {
+    id
+		title
+    subject
+    createdAt
+    updatedAt
+		tickets {
+      status
+    }
+		members {
+      firstname
+      lastname
+    }
+		user_author_project_id
+  }
+}
 `
 
 

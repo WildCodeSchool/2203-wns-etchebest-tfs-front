@@ -13,10 +13,10 @@ export default function BaseLayout({ children, name, button }: Properties): Reac
 		<>
 			<div className={'flex h-screen'}>
 				<Sidebar />
-				<div className={'w-full min-h-screen pl-40 pr-24 bg-grey-50 overflow-hidden'}>
+				<main className={'w-full min-h-screen pl-40 pr-24 pb-20 bg-grey-50 overflow-hidden'}>
 					<Header name={name} button={button} />
-					<main className={'w-full'}>{children}</main>
-				</div>
+					<section className={'w-full'}>{children}</section>
+				</main>
 			</div>
 		</>
 	)

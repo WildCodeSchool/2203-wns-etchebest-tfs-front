@@ -14,15 +14,15 @@ import {AuthProvider} from '../UserContext'
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<ApolloProvider client={client}>
-			<AuthProvider>
 				<StoreProvider>
+			<AuthProvider>
 				<Head>
 						<link rel='icon' href='/favicon.ico' />
 						<link rel='stylesheet' href='https://rsms.me/inter/inter.css' />
 					</Head>
 					<Component {...pageProps} />
-				</StoreProvider>	
 			</AuthProvider>
+				</StoreProvider>	
 		</ApolloProvider>
 	)
 }
