@@ -27,7 +27,7 @@ export const StoreProvider: any = (props: any) => {
     if (['grid', 'row'].includes(view)) {
       setProjectView(view)
     } else {
-      console.log('error in project view change')
+      console.error('error in project view change')
     }
   }
 

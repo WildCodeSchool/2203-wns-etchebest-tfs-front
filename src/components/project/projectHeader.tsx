@@ -4,32 +4,32 @@ import { useContext } from 'react'
 import StoreContext from '../../context/StoreContext'
 import classNames from '../../utils/classNames'
 
+
 const FilterIcon = ({children, onClick, active = false}: any) => (
-	<div 
+	
+	<button 
 		className={classNames(
-			'py-3 px-6 rounded cursor-pointer',
-			active ? 'bg-primary text-white' : ' text-primary bg-white border border-grey-300'
+			'py-2 px-4 rounded-sm cursor-pointer ',
+			active ? 'bg-primary text-white' : ' text-primary bg-white border border-grey-300 hover:bg-secondary hover:text-white transition ease-in-out duration-100'
 		)}
 		onClick={onClick}
 	>
 		{children}
-	</div>
+	</button>
 )
 
-export default function ProjectHeader() {
+export default function ProjectHeader({handleSearch}:{handleSearch: any}) {
 
 	const {projectView} = useContext(StoreContext)
 
-	console.log(projectView)
-
   return (
-    <div className={'flex justify-between w-full items-center mt-5'}>
-			<div className={'flex gap-2'}>
+    <div className='flex justify-between w-full items-center mt-12'>
+			<div className='flex gap-2'>
 				<FilterIcon active={projectView.data === 'row'} onClick={() => projectView.change('row')}>
-					<MenuIcon className={'w-6 h-6'} />
+					<MenuIcon className='h-5' />
 				</FilterIcon>
 				<FilterIcon active={projectView.data === 'grid'} onClick={() => projectView.change('grid')}>
-					<ViewGridIcon className={'w-6 h-6'} />
+					<ViewGridIcon className='h-5' />
 				</FilterIcon>
 			</div>
 			<div className="relative h-full rounded-md shadow-sm">
@@ -42,6 +42,7 @@ export default function ProjectHeader() {
           id="search"
           className='block w-full h-full pl-10 py-2  rounded-sm border text-sm text-primary border-grey-500 placeholder-grey-400 placeholder:text-sm focus:border-secondary focus:text-secondary   focus:ring-grey-500'
           placeholder="Rechercher"
+					onChange={(e)=>handleSearch(e)}
         />
       </div>
 		</div>
