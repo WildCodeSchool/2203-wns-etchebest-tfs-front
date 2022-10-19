@@ -1,44 +1,28 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { useState } from 'react'
 // Components
 import BaseLayout from '../layout/BaseLayout'
 import Button from '../components/Button'
 import Projects from '../components/project/Projects'
 import ProjectHeader from '../components/project/projectHeader'
+import { Loader } from '../components/common/Loader'
 // Librairies
 import { useQuery } from '@apollo/client'
+import { PlusSmIcon } from '@heroicons/react/outline'
 // Queries
-import { GET_PROJECTS } from 'src/apollo/queries'
-import { Loader } from 'src/components/common/Loader'
-import { useState } from 'react'
-import { PlusIcon, PlusSmIcon } from '@heroicons/react/outline'
+import { GET_PROJECTS } from '../apollo/queries'
+// Types
+import { Project, ProjectsData } from '../types'
 
-export interface IProject {
-	id: number
-	title: string
-	subject: string
-	updatedAt: string
-	tickets: [
-		{
-			status:string
-		}
-	]
-	members: [
-		{
-			firstname: string
-		lastname: string
-	}
-	]
-	user_author_project_id: number
-}
 
 const ProjectsPage: NextPage = () => {
 	
-  const { loading, error, data } = useQuery(GET_PROJECTS)
+  const { loading, error, data } = useQuery<ProjectsData>(GET_PROJECTS)
 	const [searchValue, setSearchValue] = useState<string | null>(null)
 	
 	//Permet de renvoyer les projets en fonction de la recherche
-	function filterProjects(projects:IProject[]) {
+	function filterProjects(projects:Project[]) {
 		if (searchValue) {
 			return projects.filter(project => project.title.toLowerCase().includes(searchValue.toLowerCase()))
 		}
@@ -49,7 +33,6 @@ const ProjectsPage: NextPage = () => {
 		setSearchValue(e.currentTarget.value)
 	}
 
-
 	return (
 		<div className={'flex min-h-screen flex-col justify-between bg-gray-50'}>
 			<Head>
@@ -59,7 +42,7 @@ const ProjectsPage: NextPage = () => {
 				<>
 					<ProjectHeader handleSearch={handleSearch}/>
 					{loading && <Loader className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-20 text-primary'/>}
-					{!loading && <Projects projects={filterProjects(data.projects)} />}
+					{!loading && data?.projects && <Projects projects={filterProjects(data.projects)} />}
 				</>
 			</BaseLayout>
 		</div>

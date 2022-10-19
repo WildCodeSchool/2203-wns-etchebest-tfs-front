@@ -10,17 +10,17 @@ import StoreContext from '../../context/StoreContext'
 //Components
 import Button from '../Button'
 import ProjectGridElement from './ProjectGridElement'
-import formatDate from 'src/utils/formatDate'
+import formatDate from '../../utils/formatDate'
 import Table from '../common/table/Table'
-import { IProject } from 'src/pages'
+import { Project } from '../../types'
 
 
-interface IProjectsProps {
-	projects: IProject[]
+interface ProjectsProps {
+	projects: Project[]
 	error?: boolean | number
 }
 
-export default function Projects({ projects, error = false }: IProjectsProps) {
+export default function Projects({ projects, error = false }: ProjectsProps) {
 	
 	const { projectView } = useContext(StoreContext)
 
@@ -82,7 +82,7 @@ export default function Projects({ projects, error = false }: IProjectsProps) {
 		<>
 			{projectView.data === 'grid' ? (
 				<section className='mt-4 flex min-h-full flex-wrap gap-6 border border-grey-300 bg-white p-12'>
-					{projects.map((project: IProject, i) => (
+					{projects.map((project: Project, i) => (
 						<ProjectGridElement key={i} data={project} />
 					))}
 				</section>

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useRouter } from 'next/router'
 //Libraries
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { OperationVariables, QueryResult, useLazyQuery, useMutation } from '@apollo/client'
+import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form'
+import { useLazyQuery, useMutation } from '@apollo/client'
 //Component
 import Button from '../Button'
 //Queries
@@ -10,17 +10,18 @@ import { IS_EXIST_USER, REGISTER_USER } from '../../apollo/queries'
 //Utils
 import { isEmpty } from '../../utils/objectIsEmpty'
 import { InputGroup } from '../common/form/input/InputGroup'
+//Types
+import type { User, ValidatorForm } from '../../types'
 
-interface IRegisterFormData {
-	firstname: string
-	lastname: string
-	email: string
-	password: string
+
+interface RegisterFormData extends Pick<User, "firstname" | "lastname" | "email" | "password"> {
 	confirmPassword: string
 }
 
+type ValidatorRegister = ValidatorForm<keyof RegisterFormData>
+
 export function RegisterForm() {
-	const [getisExistUser] = useLazyQuery(IS_EXIST_USER)
+	const [getisExistUser] = useLazyQuery<{isExistUser:boolean}>(IS_EXIST_USER)
 
 	//Form
 	const {
@@ -28,9 +29,9 @@ export function RegisterForm() {
 		handleSubmit,
 		watch,
 		formState: { errors }
-	} = useForm<IRegisterFormData>({ mode: 'onTouched' })
+	} = useForm<RegisterFormData>({ mode: 'onTouched' })
 
-	const validators = {
+	const validators: ValidatorRegister = {
 		firstname: {
 			required: {
 				value: true,
@@ -77,7 +78,7 @@ export function RegisterForm() {
 							} 
 						})
 						console.log(response)
-					return !response.data.isExistUser || 'Adresse email déjà utilisée'
+					return !response.data?.isExistUser || 'Adresse email déjà utilisée'
 				}
 			}
 		},
@@ -116,7 +117,7 @@ export function RegisterForm() {
 
 	const router = useRouter()
 
-	const onSubmit: SubmitHandler<IRegisterFormData> = data => {
+	const onSubmit: SubmitHandler<RegisterFormData> = data => {
 		// on enlève confirmPassword de l'objet data
 		const { confirmPassword, ...rest } = data
 

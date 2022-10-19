@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 //Librarie
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form'
 import { useMutation } from '@apollo/client'
 //Component
 import Button from '../Button'
@@ -10,11 +10,12 @@ import { InputGroup } from '../common/form/input/InputGroup'
 import { isEmpty } from '../../utils/objectIsEmpty'
 //Queries
 import { LOGIN_MUTATION } from '../../apollo/queries'
+//Types
+import type {User, ValidatorForm} from '../../types/index'
 
-interface ILoginFormData {
-	email: string
-	password: string
-}
+
+type LoginFormData = Pick<User, "email" | "password">;
+type ValidatorLogin = ValidatorForm<keyof LoginFormData>
 
 export default function LoginForm() {
 	//Form
@@ -22,9 +23,9 @@ export default function LoginForm() {
 		register,
 		handleSubmit,
 		formState: { errors }
-	} = useForm<ILoginFormData>({ mode: 'onTouched' })
+	} = useForm<LoginFormData>({ mode: 'onTouched' })
 
-	const validators: any = {
+	const validators: ValidatorLogin = {
 		email: {
 			required: {
 				value: true,
@@ -48,7 +49,7 @@ export default function LoginForm() {
 
 	const router = useRouter()
 
-	const onSubmit: SubmitHandler<ILoginFormData> = payload => {
+	const onSubmit: SubmitHandler<LoginFormData> = payload => {
 		mutateLogin({
 			variables: {
 				data: payload
