@@ -9,9 +9,10 @@ import Button from '../../components/Button'
 import TicketList from '../../components/ticketList/TicketList'
 import ProjectItemOverview from '../../components/project/ProjectItemOverview'
 import { PlusSmIcon } from '@heroicons/react/outline'
+import { TicketsData } from '../../types'
 
 const ProjectPage: NextPage = () => {
-	const { loading, error, data } = useQuery(GET_TICKETS)
+	const { loading, error, data } = useQuery<TicketsData>(GET_TICKETS)
 	return (
 		<div className={'flex min-h-screen flex-col justify-between bg-gray-50'}>
 			<Head>
