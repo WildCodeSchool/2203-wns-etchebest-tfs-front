@@ -1,4 +1,4 @@
-import Badge from '../Badge'
+import Badge from '../common/badge/Badge'
 import Link from 'next/link'
 import formatDate from '../../utils/formatDate'
 

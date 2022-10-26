@@ -1,12 +1,12 @@
-import styles from './Table.module.css';
 import React from 'react'
 import Link from 'next/link';
 
+import styles from './Table.module.css';
 
-//------------- Tableau ----------------
-interface ITableProps {
+
+interface TableProps {
   headerItems: string[]
-  rowItems: any[][] //A FAIRE ! typer tableau string | number
+  rowItems: any[][] | undefined //A FAIRE ! typer tableau string | number
   rowLinkPath?: string[]
 }
 
@@ -18,10 +18,10 @@ interface ITableProps {
  * @return Retourne un tableau html
  */
 
-export default function Table({headerItems, rowItems, rowLinkPath}:ITableProps) {
+export default function Table({headerItems, rowItems, rowLinkPath}:TableProps) {
 
   //Le nombre de ligne doit correspondre au nombre de chemin (path)
- if(rowLinkPath && rowItems.length !== rowLinkPath?.length) {
+ if(rowLinkPath && rowItems?.length !== rowLinkPath?.length) {
   throw new Error("The number of rowItems and rowLinkPath must be the same")
  }
 
@@ -41,7 +41,7 @@ export default function Table({headerItems, rowItems, rowLinkPath}:ITableProps) 
         </thead>
         <tbody>
           {/* //Retourne chaque lignes du tableau entourées d'un lien */}
-          { rowLinkPath ? rowItems.map((item, i) => {
+          { rowLinkPath ? rowItems?.map((item, i) => {
             return (
               <Link key={i} href={rowLinkPath[i]}>
               <tr key={i} className={styles.table_content_row}>
@@ -59,12 +59,12 @@ export default function Table({headerItems, rowItems, rowLinkPath}:ITableProps) 
           
           :
 
-          rowItems.map((item, i) => {    {/* //Retourne chaque lignes du tableau sans lien */}
+          rowItems?.map((item, i) => {    {/* //Retourne chaque lignes du tableau sans lien */}
             return (
-              <tr key={i}>
+              <tr key={i} className={styles.table_content_row}>
                 {item.map((item, i) => {
                   return (
-                    <td key={i}>
+                    <td key={i} className={styles.table_content_cell}>
                       {item}
                     </td>
                   )

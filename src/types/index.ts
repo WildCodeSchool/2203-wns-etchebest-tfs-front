@@ -80,18 +80,19 @@ export interface Label {
 	tickets: Ticket[]
 }
 
-enum Role {
+export enum Role {
 	USER = "LOW",
 	ADMIN = "USER"
 }
 
-enum Status {
+export enum Status {
 	OPEN = "OPEN",
 	IN_PROGRESS = "IN_PROGRESS",
+	REVIEW = "REVIEW",
 	CLOSED = "CLOSED"
 }
 
-enum Priority {
+export enum Priority {
 	LOW = "LOW",
 	MEDIUM = "MEDIUM",
 	HIGH = "HIGH"
@@ -113,6 +114,11 @@ export interface TicketsData {
 /* For query "GET_PROJECTS"  ex: useQuery<ProjectsData>(GET_PROJECTS) */
 export interface ProjectsData {
   projects: Project[]
+}
+
+/* For query "GET_PROJECT"  ex: useQuery<ProjectData>(GET_PROJECT) */
+export interface ProjectData {
+  project: Project
 }
 
 

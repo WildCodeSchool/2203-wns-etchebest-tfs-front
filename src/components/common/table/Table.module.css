@@ -43,11 +43,6 @@
  
 }
 
-/* .table_content_row:after {
-  width: calc(100% - 3rem);
-  left: 1.5rem;
-} */
-
 .table_content_cell {
   @apply 
   py-5 px-10

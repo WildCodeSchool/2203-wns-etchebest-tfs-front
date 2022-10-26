@@ -12,7 +12,12 @@ import Button from '../Button'
 import ProjectGridElement from './ProjectGridElement'
 import formatDate from '../../utils/formatDate'
 import Table from '../common/table/Table'
+//Utils
+import countTicketsByStatus from '../../utils/countTicketsStatus'
+//Types
 import { Project } from '../../types'
+
+import styles from '../../components/common/Table.module.css'
 
 
 interface ProjectsProps {
@@ -31,12 +36,13 @@ export default function Projects({ projects, error = false }: ProjectsProps) {
   const tableRowItems = projects.map((project) => {
     const {title, members, updatedAt, tickets } = project
 		
-		//Filtre les status des tickets et retourne le nombre pour chaque type de status
-		const {length: open} = tickets.filter(ticket => ticket.status === "OPEN" )
-		const {length: inProgress} = tickets.filter(ticket => ticket.status === "IN_PROGRESS" )
-		const {length: closed} = tickets.filter(ticket => ticket.status === "CLOSED" )
+		const lastUpdate = formatDate(updatedAt)
+		
+		const open = countTicketsByStatus(tickets, "OPEN")
+		const inProgress = countTicketsByStatus(tickets, "IN_PROGRESS")
+		const closed = countTicketsByStatus(tickets, "CLOSED")
 
-    return [title, members.length, formatDate(updatedAt), open, inProgress, closed]
+    return [title, members.length, lastUpdate, open, inProgress, closed]
   })
 
   // Tableau qui fournie les liens pour chaque ligne du tableau
@@ -86,7 +92,9 @@ export default function Projects({ projects, error = false }: ProjectsProps) {
 						<ProjectGridElement key={i} data={project} />
 					))}
 				</section>
-			) : (
+			) 
+			: 
+			(
 				<section className='mt-4 min-h-full '>
 					<Table headerItems={tableHeaderItems} rowItems={tableRowItems} rowLinkPath={rowLinkPath}/>
 				</section>
