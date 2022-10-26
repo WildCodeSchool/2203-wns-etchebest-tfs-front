@@ -33,6 +33,30 @@ query Projects {
 }
 `
 
+export const GET_PROJECT = gql `
+query GetProject($where: ProjectWhereUniqueInput!) {
+  project(where: $where) {
+    title
+    id
+    code
+    tickets {
+      id
+      title
+			updatedAt
+      priority
+			status
+      labels {
+        name
+      }
+			user_author {
+        firstname
+        lastname
+      }
+    }
+  }
+}
+`
+
 
 //----------- USER ------------
 export const GET_ME = gql`

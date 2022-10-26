@@ -1,4 +1,4 @@
-import Badge from '../../components/Badge'
+import Badge from '../common/badge/Badge'
 
 const classes = {
 	titles: 'text-grey-500 font-medium uppercase',
