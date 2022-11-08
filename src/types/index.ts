@@ -81,8 +81,8 @@ export interface Label {
 }
 
 export enum Role {
-	USER = "LOW",
-	ADMIN = "USER"
+	USER = "USER",
+	ADMIN = "ADMIN"
 }
 
 export enum Status {

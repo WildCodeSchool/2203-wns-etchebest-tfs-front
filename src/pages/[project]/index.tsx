@@ -1,36 +1,44 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useEffect, useState } from 'react'
 //Components
 import BaseLayout from '../../layout/BaseLayout'
 import Button from '../../components/Button'
-import ProjectItemOverview from '../../components/project/ProjectItemOverview'
+import ProjectItemOverview from '../../components/project/projectOverview/ProjectItemOverview'
 import Table from '../../components/common/table/Table'
 import TicketListFilters from '../../components/ticketList/TicketListFilters'
 import Badge from '../../components/common/badge/Badge'
-import { InputGroup } from '../../components/common/form/input/InputGroup'
-import Modal from '../../components/common/modal/Modal'
+import { CreateTicketModal } from '../../components/ticket/CreateTicketModal'
 //Librairies
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { useQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import { PlusSmIcon } from '@heroicons/react/outline'
 //Queries
 import { GET_PROJECT } from '../../apollo/queries'
 //Types
-import { Priority, ProjectData, Status, Ticket, ValidatorForm } from '../../types'
+import { Priority, ProjectData, Status } from '../../types'
 //Utils
 import countTicketsByStatus from '../../utils/countTicketsStatus'
 import formatDate from '../../utils/formatDate'
-import {isEmpty} from '../../utils/objectIsEmpty'
+import { CreateOrAddLabel } from '../../components/ticket/label/inputLabel/CreateOrAddLabel'
+
 
 const ProjectPage: NextPage = () => {
+	//Status de la modal de création de ticket
 	const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
 
 	const router = useRouter()
 	const { project: projectId } = router.query
 
-	const { loading, error, data } = useQuery<ProjectData>(GET_PROJECT, {
+	/* const { loading, error, data } = useQuery<ProjectData>(GET_PROJECT, {
+		variables: {
+			where: {
+				id: Number(projectId)
+			}
+		}
+	}) */
+
+	const [getProjects,{ data }] = useLazyQuery<ProjectData>(GET_PROJECT, {
 		variables: {
 			where: {
 				id: Number(projectId)
@@ -38,6 +46,17 @@ const ProjectPage: NextPage = () => {
 		}
 	})
 
+	useEffect(() => {
+		getProjects()
+	}, [])
+	
+
+	 async function updateData(){
+		console.log("update")
+		await getProjects()
+	}
+
+	// ---------- Parse des données (traduction, cast, count) -----------------
 	const statusTrad = (status: Status) => {
 		switch (status) {
 			case 'OPEN':
@@ -64,7 +83,15 @@ const ProjectPage: NextPage = () => {
 				return 'ERROR PRIORITY CAST'
 		}
 	}
+	const statusCount = {
+		open: countTicketsByStatus(data?.project.tickets, 'OPEN'),
+		wip: countTicketsByStatus(data?.project.tickets, 'IN_PROGRESS'),
+		review: 10,
+		done: countTicketsByStatus(data?.project.tickets, 'CLOSED')
+	}
+	//------------------------------------------------------------------------
 
+	//---------  Creation des data pour le tableau de tickets  ------------
 	const tableHeaderItems = [
 		'PRIORITY',
 		'TITLE',
@@ -83,7 +110,7 @@ const ProjectPage: NextPage = () => {
 			updatedAt,
 			user_author: { firstname }
 		} = ticket
-	const badges = labels.map((label, i) => <Badge key={i}>{label.name}</Badge>)
+		const badges = labels.map((label, i) => <Badge key={i}>{label.name}</Badge>)
 
 		return [
 			castPriorityToEmoji(priority),
@@ -94,15 +121,7 @@ const ProjectPage: NextPage = () => {
 			firstname
 		]
 	})
-
-	const statusCount = {
-		open: countTicketsByStatus(data?.project.tickets, 'OPEN'),
-		wip: countTicketsByStatus(data?.project.tickets, 'IN_PROGRESS'),
-		review: 10,
-		done: countTicketsByStatus(data?.project.tickets, 'CLOSED')
-		
-	}
-
+//------------------------------------------------------------------------
 
 
 	return (
@@ -112,9 +131,17 @@ const ProjectPage: NextPage = () => {
 			</Head>
 			<BaseLayout
 				name={'Projet/' + data?.project.title || ''}
-				button={<Button onClick={()=>setIsOpenModal(true)} icon={<PlusSmIcon className='h-5' />}>Ajouter un Ticket</Button>}
+				button={
+					<Button
+						onClick={() => setIsOpenModal(true)}
+						icon={<PlusSmIcon className='h-5' />}
+					>
+						Ajouter un Ticket
+					</Button>
+				}
 			>
 				<>
+				<CreateOrAddLabel/>
 					<ProjectItemOverview
 						opened={statusCount.open}
 						wip={statusCount.wip}
@@ -127,7 +154,7 @@ const ProjectPage: NextPage = () => {
 						<TicketListFilters />
 						<Table headerItems={tableHeaderItems} rowItems={rowItems} />
 					</section>
-					<CreateProjectModal setIsOpenModal={setIsOpenModal} isOpen={isOpenModal}/>
+					<CreateTicketModal setIsOpenModal={setIsOpenModal} updateParentData={updateData} projectId={projectId as string} isOpen={isOpenModal}/>
 				</>
 			</BaseLayout>
 		</div>
@@ -135,71 +162,3 @@ const ProjectPage: NextPage = () => {
 }
 
 export default ProjectPage
-
-
-// ---------------  Modal de creation de ticket  ----------------------------
-
-type CreateTicketForm = Pick<Ticket, "title" | "description" | "priority" | "labels"  >
-type ValidatorCreateTicket = ValidatorForm<keyof CreateTicketForm>
-
-interface CreateProjectProps {
-	setIsOpenModal:Dispatch<SetStateAction<boolean>>,
-	isOpen:boolean
-}
-
-function CreateProjectModal({setIsOpenModal,isOpen}:CreateProjectProps) {
-	
-	const {
-		register,
-		handleSubmit,
-		formState: { errors }
-	} = useForm<CreateTicketForm>({ mode: 'onTouched' })
-
-	const validators: ValidatorCreateTicket = {
-		title: {
-			required: {
-				value: true,
-				message: 'Le titre est requis'
-			}
-		},
-		description: {
-			required: {
-				value: true,
-				message: 'La desc est requise'
-			}
-		},
-		priority: {
-			required: {
-				value: true,
-				message: 'La priorité est requise'
-			}
-		},
-		labels: {
-			required: {
-				value: true,
-				message: 'Les est requis'
-			}
-		},
-	
-	}
-
-	const onSubmit: SubmitHandler<CreateTicketForm> = payload => {
-   console.log(payload.title)
-	}
-	
-	return (isOpen ? <Modal>
-		<div>
-			<h2 className='text-2xl text-primary font-medium'>Ajouter un ticket</h2>
-			<form onSubmit={handleSubmit(onSubmit)} className='mt-8'>
-				<InputGroup type="text" label="Titre" placeholder='Ajouter un titre' field="title" register={register} errors={errors} validator={validators} />
-				<InputGroup type="text" label="Description" placeholder='Ajouter un description' field="description" register={register} errors={errors} validator={validators} />
-				<InputGroup type="text" label="Priority" placeholder='Définir une prio' field="priority" register={register} errors={errors} validator={validators} />
-				<InputGroup type="text" label="Labels" placeholder='Ajouter des labels' field="labels" register={register} errors={errors} validator={validators} />
-			</form>
-		</div>
-		<div className='flex mt-4 justify-end gap-4'>
-			<Button  outlined onClick={()=>setIsOpenModal(false)}>Annuler</Button>
-			<Button disabled={!isEmpty(errors)} type='submit' >Ajouter le ticket</Button>
-		</div>
-	</Modal> : null)
-}

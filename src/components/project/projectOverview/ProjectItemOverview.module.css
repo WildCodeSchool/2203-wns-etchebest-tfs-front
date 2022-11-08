@@ -1,0 +1,16 @@
+.statusWrapper {
+	@apply bg-white border border-grey-300 w-full flex flex-col md:grid grid-cols-6 py-8
+}
+
+.status{
+	@apply border-b md:border-b-0 py-2 md:py-0 md:border-r border-grey-300 flex flex-col items-center justify-center
+}
+
+.statusName {
+	@apply text-grey-300 text-xs font-medium uppercase
+
+}
+
+.statusNumber {
+	@apply text-5xl text-primary font-bold
+}

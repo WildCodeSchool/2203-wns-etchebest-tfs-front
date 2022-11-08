@@ -6,7 +6,8 @@ import { ExclamationCircleIcon } from '@heroicons/react/outline'
 //Styles
 import styles from "../input/InputGroup.module.css"
 
-interface IProps  {
+
+interface InputGroupProps  {
 	label: string
 	type: string
 	field: string
@@ -18,7 +19,7 @@ interface IProps  {
 }
 
 
-export function InputGroup ({ label, type, placeholder, autoComplete, register, validator, field, errors}:IProps) {
+export function InputGroup ({ label, type, placeholder, autoComplete, register, validator, field, errors}:InputGroupProps) {
 
   return   (
 		<div>
@@ -28,7 +29,7 @@ export function InputGroup ({ label, type, placeholder, autoComplete, register, 
 						className={styles.input}
 						id={field}
 						type={type}
-						{...register(field, validator[field])}
+						{...register(field, validator ? validator[field] : null)}
 						aria-invalid={errors[field] ? 'true' : 'false'} 
 						placeholder={placeholder}
 						autoComplete={autoComplete}
@@ -36,7 +37,7 @@ export function InputGroup ({ label, type, placeholder, autoComplete, register, 
 					
 					{errors[field] && <ExclamationCircleIcon className='absolute h-4 top-1/2 right-2 transform -translate-y-1/2 stroke-alert_dark '/>}
 				</div>
-				{errors[field] &&<ErrorInput errors={errors} field={field}/>}
+				{errors? errors[field] &&<ErrorInput errors={errors} field={field}/> : null}
 		</div>
 	)
 	}

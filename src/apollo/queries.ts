@@ -12,6 +12,17 @@ export const GET_TICKETS = gql`
 		}
 	}
 `
+
+export const CREATE_TICKET = gql`
+mutation CreateTicket($data: TicketCreateInput!) {
+  createTicket(data: $data) {
+    id
+    labels {
+      name
+    }
+  }
+}
+`
 //------------ PROJECT ------------
 export const GET_PROJECTS = gql`
 query Projects {
