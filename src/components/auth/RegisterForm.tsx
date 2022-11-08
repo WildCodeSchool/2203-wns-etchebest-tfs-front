@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRouter } from 'next/router'
 //Libraries
-import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { useLazyQuery, useMutation } from '@apollo/client'
 //Component
 import Button from '../Button'
