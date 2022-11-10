@@ -9,6 +9,7 @@ import Button from "../Button"
 import { InputGroup } from "../common/form/input/InputGroup"
 import { SelectGroup } from "../common/form/select/SelectGroup"
 import Modal from "../common/modal/Modal"
+import { CreateOrAddLabel } from "./label/inputLabel/CreateOrAddLabel"
 
 type CreateTicketForm = Pick<Ticket, 'title' | 'description' | 'priority'>
 type ValidatorCreateTicket = ValidatorForm<keyof CreateTicketForm>
@@ -161,6 +162,7 @@ export function CreateTicketModal({ projectId, setIsOpenModal, isOpen,  updatePa
             <option value={Priority.MEDIUM}>Moyenne</option>
             <option value={Priority.HIGH}>Elevée</option>
 					</SelectGroup>
+					<CreateOrAddLabel/>
 					<div className='mt-4 flex justify-end gap-4'>
 						<Button outlined onClick={() => {setIsOpenModal(false),setIsSubmited(false)}}>
 							Annuler

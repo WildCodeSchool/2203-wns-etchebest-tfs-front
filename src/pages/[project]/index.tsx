@@ -141,7 +141,6 @@ const ProjectPage: NextPage = () => {
 				}
 			>
 				<>
-				<CreateOrAddLabel/>
 					<ProjectItemOverview
 						opened={statusCount.open}
 						wip={statusCount.wip}
