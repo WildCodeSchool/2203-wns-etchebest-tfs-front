@@ -46,7 +46,7 @@ function CreateProjectForm({setIsSubmited, setIsOpenModal}:CreateProjectChildPro
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<CreateProjectForm>({ mode: 'onTouched', defaultValues: { title: 'test', subject: 'test', code: 'TES' } })
+	} = useForm<CreateProjectForm>({ mode: 'onTouched'})
 
 	const validators: ValidatorProjectForm = {
 		title: {
