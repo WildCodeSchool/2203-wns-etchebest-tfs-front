@@ -121,6 +121,13 @@ const ProjectPage: NextPage = () => {
 			firstname
 		]
 	})
+
+	// Tableau qui fournie les liens pour chaque ligne du tableau
+	const rowLinkPath = data?.project.tickets.map((ticket) => {
+		const {id: ticketId } = ticket
+		const path = `${projectId}/${ticketId}` 
+		return path
+	})
 //------------------------------------------------------------------------
 
 
@@ -152,7 +159,7 @@ const ProjectPage: NextPage = () => {
 					<h2 className={'mb-2 mt-8 font-medium uppercase text-secondary'}>Tickets</h2>
 					<section className='relative' id='table-project'>
 						<TicketListFilters />
-						<Table headerItems={tableHeaderItems} rowItems={rowItems} />
+						<Table headerItems={tableHeaderItems} rowItems={rowItems} rowLinkPath={rowLinkPath} />
 					</section>
 					<CreateTicketModal setIsOpenModal={setIsOpenModal} updateParentData={updateData} projectId={projectId as string} isOpen={isOpenModal}/>
 				</>
