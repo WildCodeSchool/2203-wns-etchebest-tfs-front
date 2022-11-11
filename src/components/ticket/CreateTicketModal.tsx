@@ -2,7 +2,7 @@ import { gql, useMutation, useQuery } from "@apollo/client"
 import { CheckCircleIcon } from "@heroicons/react/outline"
 import { Dispatch, SetStateAction, useState } from "react"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { CREATE_TICKET } from "../../apollo/queries"
+import { CREATE_TICKET, GET_ME } from "../../apollo/queries"
 import { Priority, Ticket, ValidatorForm } from "../../types"
 import { isEmpty } from "../../utils/objectIsEmpty"
 import Button from "../Button"
@@ -23,13 +23,7 @@ interface CreateProjectProps {
 
 export function CreateTicketModal({ projectId, setIsOpenModal, isOpen,  updateParentData}: CreateProjectProps) {
 
-	const CONNECTED_USER_ID = gql`
-	query connectedUserId {
-		me {
-			id
-		}
-	}
-	`
+	
  // ------------------ Formulaire de creation de ticket -------------------
 	const [isSubmited, setIsSubmited] = useState<boolean>(false)
 
@@ -74,14 +68,13 @@ export function CreateTicketModal({ projectId, setIsOpenModal, isOpen,  updatePa
 
 	// -------------- Envoi du ticket créé ---------------------
 	const [createTicketMutation, {data, loading, error: createTicketError}] = useMutation(CREATE_TICKET)
-	const {data: user, error:idUserError} = useQuery(CONNECTED_USER_ID)
+	const {data: user, error:idUserError} = useQuery(GET_ME)
 
 	const onSubmit: SubmitHandler<CreateTicketForm> = async payload => {
 		//Récupération de l'id de l'utilisateur connecté
 
-		if(!user?.me.id) {
-			console.log("pas d'id user")
-			return
+		if(!user?.me) {
+			throw new Error("l'utilisateur doit être connecté ou avoir les droits");
 		}
 		const ticket = {
 			...payload,
@@ -111,8 +104,6 @@ export function CreateTicketModal({ projectId, setIsOpenModal, isOpen,  updatePa
 			<Modal close={close}>
 				<CheckCircleIcon className='mx-auto mb-8 h-20 text-secondary'/>
 				<h2  className='text-2xl text-center font-medium text-primary'>Votre ticket a été créé</h2>
-				<p>{data.createTicket.id}</p>
-				
 				<div className='mt-4 flex justify-end gap-4'>
 						<Button outlined onClick={() => {setIsOpenModal(false),setIsSubmited(false)}}>
 							Fermer

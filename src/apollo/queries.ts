@@ -68,6 +68,14 @@ query GetProject($where: ProjectWhereUniqueInput!) {
 }
 `
 
+export const CREATE_PROJECT = gql`
+mutation CreateProject($data: ProjectCreateInput!) {
+  createProject(data: $data) {
+    id
+    title
+  }
+}
+`
 
 //----------- USER ------------
 export const GET_ME = gql`
