@@ -1,0 +1,9 @@
+- Faire le composant permettant d'afficher un groupe d'utilisateurs
+- MaJ le composant Table pour pouvoir mettre des actions (edit, delete)
+- Pouvoir accèder à la page d'un ticket en cliquant depuis la liste de ticket d'un projet
+- Finir de mettre en place le filtre permettant de filtrer les tickets (state déjà fonctionnel, reste à filtrer le tableau de tickets suivant le filtre)
+- Gérer les errors 
+    - Gérer avec des throw puis les catch (https://nextjs.org/docs/advanced-features/error-handling)
+    - Créer un composant qui affiche ces erreurs
+- Mettre en place le Breadcrumb (fil d'arianne) sur la page projet et ticket  "projet > Mon super projet > Mon super tick 
+- MaJ la liste de projet ou de ticket après une création (Pour l'instant il faut refresh la page à la main)

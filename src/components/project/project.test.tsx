@@ -1,7 +1,8 @@
-import { render, screen, waitFor } from '@testing-library/react'
 import { MockedProvider } from '@apollo/client/testing'
-import { Project } from './Projects'
+import { render, screen, waitFor } from '@testing-library/react'
+
 import { GET_PROJECTS } from '../../apollo/queries'
+import Project from '../../pages/[project]'
 
 const mocks = [
 	{
@@ -27,7 +28,7 @@ const mocks = [
 	}
 ]
 
-describe('Tickets', () => {
+describe('Project', () => {
 	it('Should display the subject once', async () => {
 		render(
 			<MockedProvider mocks={mocks} addTypename={false}>

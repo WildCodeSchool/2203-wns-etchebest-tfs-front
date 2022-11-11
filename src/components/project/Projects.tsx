@@ -17,8 +17,6 @@ import countTicketsByStatus from '../../utils/countTicketsStatus'
 //Types
 import { Project } from '../../types'
 
-import styles from '../../components/common/Table.module.css'
-
 
 interface ProjectsProps {
 	projects: Project[]

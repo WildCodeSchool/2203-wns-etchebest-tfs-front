@@ -60,7 +60,7 @@ export interface Comment {
 }
 
 export interface Project {
-	id: number
+	id: Readonly<number>
 	title: string
 	subject: string
 	code: string
@@ -119,6 +119,10 @@ export interface ProjectsData {
 /* For query "GET_PROJECT"  ex: useQuery<ProjectData>(GET_PROJECT) */
 export interface ProjectData {
   project: Project
+}
+
+export interface MeData {
+	me: User
 }
 
 
