@@ -16,11 +16,13 @@ import { PlusSmIcon } from '@heroicons/react/outline'
 //Queries
 import { GET_PROJECT } from '../../apollo/queries'
 //Types
-import { Priority, ProjectData, Status } from '../../types'
+import { ProjectData } from '../../types'
 //Utils
 import countTicketsByStatus from '../../utils/countTicketsStatus'
 import formatDate from '../../utils/formatDate'
 import { CreateOrAddLabel } from '../../components/ticket/label/inputLabel/CreateOrAddLabel'
+import { castPriorityToEmoji } from '../../utils/castPriorityToEmoji'
+import { statusTrad } from '../../utils/statusTrad'
 
 
 const ProjectPage: NextPage = () => {
@@ -56,33 +58,6 @@ const ProjectPage: NextPage = () => {
 		await getProjects()
 	}
 
-	// ---------- Parse des données (traduction, cast, count) -----------------
-	const statusTrad = (status: Status) => {
-		switch (status) {
-			case 'OPEN':
-				return 'Ouvert'
-			case 'IN_PROGRESS':
-				return 'En cours'
-			case 'REVIEW':
-				return 'En revue'
-			case 'CLOSED':
-				return 'Cloturé'
-			default:
-				return 'ERROR STATUS TRAD'
-		}
-	}
-	const castPriorityToEmoji = (priority: Priority) => {
-		switch (priority) {
-			case 'LOW':
-				return '🚀'
-			case 'MEDIUM':
-				return '🚀🚀'
-			case 'HIGH':
-				return '🚀🚀🚀'
-			default:
-				return 'ERROR PRIORITY CAST'
-		}
-	}
 	const statusCount = {
 		open: countTicketsByStatus(data?.project.tickets, 'OPEN'),
 		wip: countTicketsByStatus(data?.project.tickets, 'IN_PROGRESS'),

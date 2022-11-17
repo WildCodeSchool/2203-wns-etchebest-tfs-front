@@ -13,6 +13,35 @@ export const GET_TICKETS = gql`
 	}
 `
 
+export const GET_TICKET = gql`
+query Query($where: TicketWhereUniqueInput!) {
+  ticket(where: $where) {
+    id
+    title
+    description
+    priority
+    status
+    labels {
+      name
+    }
+    time_estimation
+    createdAt
+    updatedAt
+    project {
+      title
+      id
+    }
+    user_assign {
+      firstname
+      lastname
+    }
+    user_author {
+      firstname
+      lastname
+    }
+  }
+}`
+
 export const CREATE_TICKET = gql`
 mutation CreateTicket($data: TicketCreateInput!) {
   createTicket(data: $data) {
@@ -23,6 +52,8 @@ mutation CreateTicket($data: TicketCreateInput!) {
   }
 }
 `
+
+
 //------------ PROJECT ------------
 export const GET_PROJECTS = gql`
 query Projects {
@@ -108,3 +139,19 @@ export const REGISTER_USER = gql`
 		register(data: $data)
 	}
 `
+
+//----------- COMMENT ------------
+
+export const GET_TICKET_COMMENTS = gql`
+  query Comments($where: CommentWhereInput) {
+    comments(where: $where) {
+      author {
+        firstname
+        lastname
+      }
+      content
+      createdAt
+      updatedAt
+      id
+    }
+  }`

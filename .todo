@@ -1,9 +1,22 @@
-- Faire le composant permettant d'afficher un groupe d'utilisateurs
-- MaJ le composant Table pour pouvoir mettre des actions (edit, delete)
-- Pouvoir accèder à la page d'un ticket en cliquant depuis la liste de ticket d'un projet
-- Finir de mettre en place le filtre permettant de filtrer les tickets (state déjà fonctionnel, reste à filtrer le tableau de tickets suivant le filtre)
-- Gérer les errors 
-    - Gérer avec des throw puis les catch (https://nextjs.org/docs/advanced-features/error-handling)
-    - Créer un composant qui affiche ces erreurs
-- Mettre en place le Breadcrumb (fil d'arianne) sur la page projet et ticket  "projet > Mon super projet > Mon super tick 
-- MaJ la liste de projet ou de ticket après une création (Pour l'instant il faut refresh la page à la main)
+- [X] Pouvoir accèder à la page d'un ticket en cliquant depuis la liste de ticket d'un projet et afficher le détail
+
+
+- [] Faire le composant permettant d'afficher un groupe d'utilisateurs
+- [] MaJ le composant Table pour pouvoir mettre des actions (edit, delete)
+- [] Cabler avec le back la page de détail d'un ticket
+    - [X] Récuprérer les infos du ticket depuis le back
+    - [X] Pouvoir changer le statut du ticket via un select
+    - [] Pouvoir ajouter un commentaire à ce ticket (On changera peut être l'emplacement des commentaires pour les mettre dans la partie droite de la page avec un système de tab "Détail | Commentaires")
+    - [] Cabler l'estimation de temps
+    - [] Pouvoir ajouter un document à un ticket 
+- [] Finir de mettre en place le filtre permettant de filtrer les tickets (state déjà fonctionnel, reste à filtrer le tableau de tickets suivant le filtre)
+- [] Gérer les errors 
+    - [] Gérer avec des throw puis les catch (https://nextjs.org/docs/advanced-features/error-handling)
+    - [] Créer un composant qui affiche ces erreurs
+- [] Mettre en place le Breadcrumb (fil d'arianne) sur la page projet et ticket  "projet / Mon super projet / Mon super ticket
+- [] MaJ la liste de projet ou de ticket après une création (Pour l'instant il faut refresh la page à la main)
+- [] Finir de mettre en place l'ajout de label lors de la creation d'un ticket
+- [] Mettre un Loader sur la page projet
+- [] Indiquer quand le tableau de projet ou de ticket est vide (cf: maquette figma)
+- [] Typer les mutations (useMutation<DATA,VAR>(QUERY))
+- [] Sortir les mutations du fichier queries.ts et les mettres dans un fichier mutations.ts
