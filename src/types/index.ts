@@ -121,8 +121,24 @@ export interface ProjectData {
   project: Project
 }
 
+/* For query "GET_ME"  ex: useQuery<MeData>(GET_ME) */
 export interface MeData {
 	me: User
+}
+
+/* For query "GET_TICKET"  ex: useQuery<MeData>(GET_TICKET) */
+export interface TicketData {
+	ticket: Ticket
+}
+
+/* For query "GET_TICKET_COMMENTS"  ex: useQuery<MeData>(GET_TICKET_COMMENTS) */
+export interface CommentsData {
+	comments: Comment[]
+}
+
+/* For query "UPDATE_STATUS"  ex: useMuattation<MeData>(UPDATE_STATUS) */
+export interface UpdateStatusData {
+	updateTicket: Pick<Ticket, "id" | "status">
 }
 
 
