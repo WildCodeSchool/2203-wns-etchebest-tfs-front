@@ -20,3 +20,4 @@
 - [] Indiquer quand le tableau de projet ou de ticket est vide (cf: maquette figma)
 - [] Typer les mutations (useMutation<DATA,VAR>(QUERY))
 - [] Sortir les mutations du fichier queries.ts et les mettres dans un fichier mutations.ts
+- [] Mettre à jour les tableaux (tableau de ticket et de projet) quand on ajoute ou supprime des éléments.

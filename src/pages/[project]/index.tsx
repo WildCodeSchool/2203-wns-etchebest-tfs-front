@@ -16,7 +16,7 @@ import { PlusSmIcon } from '@heroicons/react/outline'
 //Queries
 import { GET_PROJECT } from '../../apollo/queries'
 //Types
-import { ProjectData } from '../../types'
+import { ProjectData, Status } from '../../types'
 //Utils
 import countTicketsByStatus from '../../utils/countTicketsStatus'
 import formatDate from '../../utils/formatDate'
@@ -32,13 +32,6 @@ const ProjectPage: NextPage = () => {
 	const router = useRouter()
 	const { project: projectId } = router.query
 
-	/* const { loading, error, data } = useQuery<ProjectData>(GET_PROJECT, {
-		variables: {
-			where: {
-				id: Number(projectId)
-			}
-		}
-	}) */
 
 	const [getProjects,{ data }] = useLazyQuery<ProjectData>(GET_PROJECT, {
 		variables: {
@@ -59,10 +52,10 @@ const ProjectPage: NextPage = () => {
 	}
 
 	const statusCount = {
-		open: countTicketsByStatus(data?.project.tickets, 'OPEN'),
-		wip: countTicketsByStatus(data?.project.tickets, 'IN_PROGRESS'),
-		review: 10,
-		done: countTicketsByStatus(data?.project.tickets, 'CLOSED')
+		open: countTicketsByStatus(data?.project.tickets, Status.OPEN),
+		wip: countTicketsByStatus(data?.project.tickets, Status.IN_PROGRESS),
+		review: countTicketsByStatus(data?.project.tickets, Status.REVIEW),
+		done: countTicketsByStatus(data?.project.tickets, Status.CLOSED)
 	}
 	//------------------------------------------------------------------------
 
