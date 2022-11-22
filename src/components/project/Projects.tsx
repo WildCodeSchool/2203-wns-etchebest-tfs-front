@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { Dispatch, SetStateAction, useContext } from 'react'
 //Libraries
 import {
 	ExclamationCircleIcon,
@@ -8,7 +8,7 @@ import {
 //Context
 import StoreContext from '../../context/StoreContext'
 //Components
-import Button from '../Button'
+import Button from '../common/Button'
 import ProjectGridElement from './ProjectGridElement'
 import formatDate from '../../utils/formatDate'
 import Table from '../common/table/Table'
@@ -16,14 +16,15 @@ import Table from '../common/table/Table'
 import countTicketsByStatus from '../../utils/countTicketsStatus'
 //Types
 import { Project } from '../../types'
+import { NoResultProjectTable } from './NoResultProjectTable'
 
 
 interface ProjectsProps {
 	projects: Project[]
-	error?: boolean | number
+  setIsOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-export default function Projects({ projects, error = false }: ProjectsProps) {
+export default function Projects({ projects, setIsOpenModal }: ProjectsProps) {
 	
 	const { projectView } = useContext(StoreContext)
 
@@ -49,39 +50,6 @@ export default function Projects({ projects, error = false }: ProjectsProps) {
     return String(id)
   })
 
-	if (error) {
-		if (error === 1) {
-			return (
-				<section className='mt-5 flex min-h-full items-center justify-center border border-grey-300 bg-white p-48'>
-					<div className='flex flex-col items-center'>
-						<ExclamationCircleIcon className='h-32 w-32 text-alert' />
-						<div className='mt-16 flex flex-col items-center'>
-							<p className='mb-4 font-medium text-grey-500'>
-								The tickets could not be retrieved
-							</p>
-							<Button outlined={true}>
-								<>
-									<RefreshIcon className='h-4 w-4' /> Recharger
-								</>
-							</Button>
-						</div>
-					</div>
-				</section>
-			)
-		} else
-			return (
-				<section className='mt-5 flex min-h-full items-center justify-center border border-grey-300 bg-white p-48'>
-					<div className={'flex flex-col items-center'}>
-						<FolderOpenIcon className={'h-32 w-32 text-primary'} />
-						<div className={'mt-16 flex flex-col items-center'}>
-							<p className={'mb-4 font-medium text-grey-500'}>No project found</p>
-							<Button outlined={true}>+ Ajouter un projet</Button>
-						</div>
-					</div>
-				</section>
-			)
-	}
-
 	return (
 		<>
 			{projectView.data === 'grid' ? (
@@ -94,7 +62,7 @@ export default function Projects({ projects, error = false }: ProjectsProps) {
 			: 
 			(
 				<section className='mt-4 min-h-full '>
-					<Table headerItems={tableHeaderItems} rowItems={tableRowItems} rowLinkPath={rowLinkPath}/>
+					<Table headerItems={tableHeaderItems} rowItems={tableRowItems} rowLinkPath={rowLinkPath} noResultContent={<NoResultProjectTable  setIsOpenModal={setIsOpenModal}/>}/>
 				</section>
 			)}
 		</>

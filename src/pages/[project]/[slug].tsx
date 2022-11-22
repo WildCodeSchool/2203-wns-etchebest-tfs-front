@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { TrashIcon } from '@heroicons/react/outline'
 
-import Button from '../../components/Button'
+import Button from '../../components/common/Button'
 import BaseLayout from '../../layout/BaseLayout'
 import TicketLeftPanel from '../../components/ticket/TicketLeftPanel'
 import TicketRightPanel from '../../components/ticket/TicketRightPanel'

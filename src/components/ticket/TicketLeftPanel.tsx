@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import { DocumentAddIcon, PhotographIcon } from '@heroicons/react/outline'
 import { GET_TICKET_COMMENTS } from '../../apollo/queries'
 
-import Button from '../../components/Button'
+import Button from '../common/Button'
 import { CommentsData, Ticket, User } from '../../types'
 import formatDate from '../../utils/formatDate'
 import { Loader } from '../common/Loader'

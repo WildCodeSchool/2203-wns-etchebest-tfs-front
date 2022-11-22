@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import { GET_ME, CREATE_PROJECT } from "../../apollo/queries"
 import { Project, ValidatorForm, MeData } from "../../types"
 import { isEmpty } from "../../utils/objectIsEmpty"
-import Button from "../Button"
+import Button from "../common/Button"
 import { InputGroup } from "../common/form/input/InputGroup"
 import Modal from "../common/modal/Modal"
 
@@ -159,7 +159,7 @@ function CreateProjectSucess({setIsSubmited, setIsOpenModal}: CreateProjectChild
 				>
 					Fermer
 				</Button>
-				<Button onClick={() => setIsSubmited(false)}>Créer un nouveau ticket</Button>
+				<Button onClick={() => setIsSubmited(false)}>Créer un nouveau projet</Button>
 			</div>
 		</div>
 	)
