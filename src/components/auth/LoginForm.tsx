@@ -2,14 +2,14 @@ import React from 'react'
 import { useRouter } from 'next/router'
 //Librarie
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useMutation } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 //Component
 import Button from '../../components/common/Button'
 import { InputGroup } from '../common/form/input/InputGroup'
 //Utiles
 import { isEmpty } from '../../utils/objectIsEmpty'
-//Queries
-import { LOGIN_MUTATION } from '../../apollo/queries'
+// Queries
+import { LOGIN_QUERY } from '../../apollo/queries'
 //Types
 import type {User, ValidatorForm} from '../../types/index'
 
@@ -45,12 +45,12 @@ export default function LoginForm() {
 	}
 
 	//Mutation
-	const [mutateLogin, { loading, error: ApolloError }] = useMutation(LOGIN_MUTATION)
+	const [queryLogin, { loading, error: ApolloError }] = useLazyQuery(LOGIN_QUERY)
 
 	const router = useRouter()
 
 	const onSubmit: SubmitHandler<LoginFormData> = payload => {
-		mutateLogin({
+		queryLogin({
 			variables: {
 				data: payload
 			}
@@ -95,7 +95,7 @@ export default function LoginForm() {
 				Connexion
 			</Button>
 			{ApolloError && (
-				<p className='rounded-sm bg-alert px-4 py-2 text-sm font-medium text-white'>
+				<p className='rounded-sm bg-alert px-4 py-2 mt-4 text-sm font-medium text-white'>
 					{ApolloError.message}
 				</p>
 			)}

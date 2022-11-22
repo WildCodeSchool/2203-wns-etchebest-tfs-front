@@ -42,18 +42,6 @@ query Query($where: TicketWhereUniqueInput!) {
   }
 }`
 
-export const CREATE_TICKET = gql`
-mutation CreateTicket($data: TicketCreateInput!) {
-  createTicket(data: $data) {
-    id
-    labels {
-      name
-    }
-  }
-}
-`
-
-
 //------------ PROJECT ------------
 export const GET_PROJECTS = gql`
 query Projects {
@@ -98,16 +86,6 @@ query GetProject($where: ProjectWhereUniqueInput!) {
   }
 }
 `
-
-export const CREATE_PROJECT = gql`
-mutation CreateProject($data: ProjectCreateInput!) {
-  createProject(data: $data) {
-    id
-    title
-  }
-}
-`
-
 //----------- USER ------------
 export const GET_ME = gql`
 	query Me {
@@ -128,18 +106,11 @@ query IsExistUser($data: isExistUserInput!) {
 
 
 //----------- AUTH ------------
-export const LOGIN_MUTATION = gql`
-	mutation Mutation($data: LoginInput!) {
+export const LOGIN_QUERY = gql`
+	query Login($data: LoginInput!) {
 		login(data: $data)
 	}
 `
-
-export const REGISTER_USER = gql`
-	mutation Register($data: UserCreateInput!) {
-		register(data: $data)
-	}
-`
-
 //----------- COMMENT ------------
 
 export const GET_TICKET_COMMENTS = gql`

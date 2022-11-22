@@ -1,14 +1,21 @@
-import { gql, useMutation, useQuery } from "@apollo/client"
-import { CheckCircleIcon } from "@heroicons/react/outline"
 import { Dispatch, SetStateAction, useState } from "react"
+//Librairies
+import { useMutation, useQuery } from "@apollo/client"
+import { CheckCircleIcon } from "@heroicons/react/outline"
 import { useForm, SubmitHandler } from "react-hook-form"
-import { CREATE_TICKET, GET_ME } from "../../apollo/queries"
-import { Priority, Ticket, ValidatorForm } from "../../types"
-import { isEmpty } from "../../utils/objectIsEmpty"
+// Components
 import Button from "../common/Button"
 import { InputGroup } from "../common/form/input/InputGroup"
 import { SelectGroup } from "../common/form/select/SelectGroup"
 import Modal from "../common/modal/Modal"
+// Queries
+import { GET_ME } from "../../apollo/queries"
+// Mutations
+import { CREATE_TICKET } from "../../apollo/mutations"
+// Utils
+import { isEmpty } from "../../utils/objectIsEmpty"
+// Types
+import { Priority, Ticket, ValidatorForm } from "../../types"
 
 type CreateTicketForm = Pick<Ticket, 'title' | 'description' | 'priority'>
 type ValidatorCreateTicket = ValidatorForm<keyof CreateTicketForm>
@@ -20,10 +27,8 @@ interface CreateProjectProps {
 	updateParentData: Function
 }
 
-
 export function CreateTicketModal({ projectId, setIsOpenModal, isOpen,  updateParentData}: CreateProjectProps) {
 
-	
  // ------------------ Formulaire de creation de ticket -------------------
 	const [isSubmited, setIsSubmited] = useState<boolean>(false)
 

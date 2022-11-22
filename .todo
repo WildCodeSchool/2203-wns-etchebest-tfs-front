@@ -22,3 +22,4 @@
 - [] Sortir les mutations du fichier queries.ts et les mettres dans un fichier mutations.ts
 - [] Mettre à jour les tableaux (tableau de ticket et de projet) quand on ajoute ou supprime des éléments.
 - [] Pouvoir supprimer un projet
+- [x] Changer la mutation "LOGIN_MUTATION" par une queries (attention changement à faire également dans le back sur le resolver /src/auth/customAuthResolver.ts)
