@@ -8,6 +8,7 @@ interface TableProps {
   headerItems: string[]
   rowItems: any[][] | undefined //A FAIRE ! typer tableau string | number
   rowLinkPath?: string[]
+  noResultContent: string | JSX.Element
 }
 
 /**
@@ -15,10 +16,11 @@ interface TableProps {
  * @param rowItems Tableau de tableau de string qui contient les données à afficher 
  * dans le tableau [[row1col1, row1col2, row1col3], [row2col1, row2col2, row2col3]]
  * @param rowLinkPath Tableau de string qui contient les liens pour chaque ligne du tableau
+ * @param noResultContent Contenu à afficher si le tableau est vide
  * @return Retourne un tableau html
  */
 
-export default function Table({headerItems, rowItems, rowLinkPath}:TableProps) {
+export default function Table({headerItems, rowItems, rowLinkPath, noResultContent}:TableProps) {
 
   //Le nombre de ligne doit correspondre au nombre de chemin (path)
  if(rowLinkPath && rowItems?.length !== rowLinkPath?.length) {
@@ -75,9 +77,12 @@ export default function Table({headerItems, rowItems, rowLinkPath}:TableProps) {
           }
         </tbody>
       </table>
+      { !rowItems?.length && <div>{noResultContent}</div>}
     </div>
   )
 }
+
+
 
 
 

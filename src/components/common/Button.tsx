@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-type-alias */
 import type { HTMLAttributes, ReactElement, ReactNode } from 'react'
-import classNames from '../utils/classNames'
-import { Loader } from './common/Loader'
+import classNames from '../../utils/classNames'
+import { Loader } from '../common/Loader'
 
 
 type Type = 'button' | 'submit'

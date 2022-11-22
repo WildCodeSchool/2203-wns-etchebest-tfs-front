@@ -4,12 +4,13 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 //Components
 import BaseLayout from '../../layout/BaseLayout'
-import Button from '../../components/Button'
+import Button from '../../components/common/Button'
 import ProjectItemOverview from '../../components/project/projectOverview/ProjectItemOverview'
 import Table from '../../components/common/table/Table'
-import TicketListFilters from '../../components/ticketList/TicketListFilters'
+import TicketListFilters from '../../components/ticket/TicketListFilters'
 import Badge from '../../components/common/badge/Badge'
 import { CreateTicketModal } from '../../components/ticket/CreateTicketModal'
+import {NoResultTicketTable} from '../../components/ticket/NoResultTicketTable'
 //Librairies
 import { useLazyQuery } from '@apollo/client'
 import { PlusSmIcon } from '@heroicons/react/outline'
@@ -91,6 +92,7 @@ const ProjectPage: NextPage = () => {
 	})
 
 	// Tableau qui fournie les liens pour chaque ligne du tableau
+	// return "/[projectId}/[ticketId]"
 	const rowLinkPath = data?.project.tickets.map((ticket) => {
 		const {id: ticketId } = ticket
 		const path = `${projectId}/${ticketId}` 
@@ -98,6 +100,7 @@ const ProjectPage: NextPage = () => {
 	})
 //------------------------------------------------------------------------
 
+ 
 
 	return (
 		<div className={'bg-gray-50 flex min-h-screen flex-col justify-between'}>
@@ -122,12 +125,12 @@ const ProjectPage: NextPage = () => {
 						wip={statusCount.wip}
 						review={statusCount.review}
 						done={statusCount.done}
-						cta={<Button outlined={true}>Last assigned ticket</Button>}
+						cta={<Button outlined>Last assigned ticket</Button>}
 					/>
 					<h2 className={'mb-2 mt-8 font-medium uppercase text-secondary'}>Tickets</h2>
 					<section className='relative' id='table-project'>
 						<TicketListFilters />
-						<Table headerItems={tableHeaderItems} rowItems={rowItems} rowLinkPath={rowLinkPath} />
+						<Table headerItems={tableHeaderItems} rowItems={rowItems} rowLinkPath={rowLinkPath} noResultContent={<NoResultTicketTable projectName={data?.project.title} setIsOpenModal={setIsOpenModal}/>} />
 					</section>
 					<CreateTicketModal setIsOpenModal={setIsOpenModal} updateParentData={updateData} projectId={projectId as string} isOpen={isOpenModal}/>
 				</>

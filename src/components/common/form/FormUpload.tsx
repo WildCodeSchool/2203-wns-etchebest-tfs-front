@@ -1,7 +1,7 @@
 import XCircleIcon from "@heroicons/react/outline/XCircleIcon";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import Button from "../../Button";
+import Button from "../Button";
 
 
 type FormData = {

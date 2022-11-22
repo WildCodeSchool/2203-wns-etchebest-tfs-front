@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useLazyQuery, useMutation } from '@apollo/client'
 //Component
-import Button from '../Button'
+import Button from '../common/Button'
 //Queries
 import { IS_EXIST_USER, REGISTER_USER } from '../../apollo/queries'
 //Utils

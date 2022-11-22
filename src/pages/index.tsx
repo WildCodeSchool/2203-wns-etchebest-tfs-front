@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { ChangeEvent, useState } from 'react'
 // Components
 import BaseLayout from '../layout/BaseLayout'
-import Button from '../components/Button'
+import Button from '../components/common/Button'
 import Projects from '../components/project/Projects'
 import ProjectHeader from '../components/project/projectHeader'
 import { Loader } from '../components/common/Loader'
@@ -58,7 +58,7 @@ const ProjectsPage: NextPage = () => {
 						<Loader className='absolute top-1/2 left-1/2 h-20 -translate-x-1/2 -translate-y-1/2 text-primary' />
 					)}
 					{!loading && data?.projects && (
-						<Projects projects={filterProjects(data.projects)} />
+						<Projects projects={filterProjects(data.projects)} setIsOpenModal={setIsOpenModal} />
 					)}
 					<CreateProjectModal setIsOpenModal={setIsOpenModal} isOpen={isOpenModal} />
 				</>
