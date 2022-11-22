@@ -1,13 +1,19 @@
-import { useLazyQuery, useMutation } from "@apollo/client"
-import { CheckCircleIcon } from "@heroicons/react/outline"
 import { Dispatch, SetStateAction, useState } from "react"
+//Librairies
 import { useForm, SubmitHandler } from "react-hook-form"
-import { GET_ME, CREATE_PROJECT } from "../../apollo/queries"
-import { Project, ValidatorForm, MeData } from "../../types"
-import { isEmpty } from "../../utils/objectIsEmpty"
+import { CheckCircleIcon } from "@heroicons/react/outline"
+import { useLazyQuery, useMutation } from "@apollo/client"
+//Components
 import Button from "../common/Button"
-import { InputGroup } from "../common/form/input/InputGroup"
 import Modal from "../common/modal/Modal"
+import { InputGroup } from "../common/form/input/InputGroup"
+//Queries
+import { CREATE_PROJECT } from "../../apollo/mutations"
+//mutations
+import { GET_ME } from "../../apollo/queries"
+import { isEmpty } from "../../utils/objectIsEmpty"
+//Types
+import { Project, ValidatorForm, MeData } from "../../types"
 
 
 

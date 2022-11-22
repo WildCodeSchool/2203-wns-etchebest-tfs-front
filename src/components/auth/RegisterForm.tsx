@@ -6,7 +6,9 @@ import { useLazyQuery, useMutation } from '@apollo/client'
 //Component
 import Button from '../common/Button'
 //Queries
-import { IS_EXIST_USER, REGISTER_USER } from '../../apollo/queries'
+import { IS_EXIST_USER } from '../../apollo/queries'
+//Mutations
+import { REGISTER_USER } from '../../apollo/mutations'
 //Utils
 import { isEmpty } from '../../utils/objectIsEmpty'
 import { InputGroup } from '../common/form/input/InputGroup'
