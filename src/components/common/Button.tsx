@@ -14,11 +14,12 @@ interface Properties extends HTMLAttributes<HTMLButtonElement> {
 	fullWidth?: boolean
 	loading?: boolean
 	outlined?: boolean
+	alert?: boolean
 	icon?: ReactElement
 }
 
 export default function Button(props: Properties): ReactElement {
-	const { type, children, className, fullWidth, loading, disabled, outlined,icon, ...rest } = props
+	const { type, children, className, fullWidth, loading, disabled, outlined, alert,icon, ...rest } = props
 
 	let classes = classNames(
 		`relative inline-flex min-h-14 border justify-center border-transparent text-sm duration-100 transition-colors font-medium focus:outline-none focus:ring-2 focus:ring-offset-2  px-6 py-3 disabled:text-grey-500 disabled:bg-grey-300 disabled:hover:bg-grey-300 flex items-center gap-1`,
@@ -33,6 +34,12 @@ export default function Button(props: Properties): ReactElement {
 		//Permet de garder le bouton de la même taille.
 		//Le loader est positionné en absolute par dessus le text.
 		classes = classNames(classes, 'text-transparent')
+	}
+	if(alert && !outlined){
+		classes = classNames(classes, 'text-white border-alert bg-alert hover:bg-alert_dark hover: border-alert_dark')
+	} 
+	else if(alert && outlined){
+		classes = classNames(classes, 'text-alert bg-transparent border-alert hover:bg-alert')
 	}
 
 

@@ -33,3 +33,11 @@ mutation CreateProject($data: ProjectCreateInput!) {
   }
 }
 `
+
+export const DELETE_PROJECT = gql`
+mutation DeleteProject($where: ProjectWhereUniqueInput!) {
+  deleteProject(where: $where) {
+    id
+  }
+}
+` 
