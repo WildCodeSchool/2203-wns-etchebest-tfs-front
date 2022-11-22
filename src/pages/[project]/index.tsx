@@ -12,10 +12,12 @@ import Badge from '../../components/common/badge/Badge'
 import { CreateTicketModal } from '../../components/ticket/CreateTicketModal'
 import {NoResultTicketTable} from '../../components/ticket/NoResultTicketTable'
 //Librairies
-import { useLazyQuery } from '@apollo/client'
-import { PlusSmIcon } from '@heroicons/react/outline'
+import { useLazyQuery, useMutation } from '@apollo/client'
+import { PlusSmIcon, TrashIcon } from '@heroicons/react/outline'
 //Queries
 import { GET_PROJECT } from '../../apollo/queries'
+//Mutations
+import { DELETE_PROJECT } from '../../apollo/mutations'
 //Types
 import { ProjectData, Status } from '../../types'
 //Utils
@@ -32,6 +34,8 @@ const ProjectPage: NextPage = () => {
 
 	const router = useRouter()
 	const { project: projectId } = router.query
+
+	const [deleteProject, {loading: loadingDelete}] = useMutation(DELETE_PROJECT, {onCompleted: () => router.push(`/`)})
 
 
 	const [getProjects,{ data }] = useLazyQuery<ProjectData>(GET_PROJECT, {
@@ -101,6 +105,29 @@ const ProjectPage: NextPage = () => {
 //------------------------------------------------------------------------
 
  
+	const headerButton = () => {
+		const variable = {
+			variables: {
+				where: {
+					id: Number(projectId)
+				}
+			}
+		}
+		return(
+			<>
+				<Button 
+					outlined 
+					alert
+					onClick={() => deleteProject(variable)}
+					loading={loadingDelete}
+					icon={<TrashIcon className='h-5' />}
+				>
+						Supprimer ce projet
+				</Button>
+				<Button onClick={() => setIsOpenModal(true)} icon={<PlusSmIcon className='h-5' />}>Ajouter un Ticket</Button>
+			</>
+		)
+	}
 
 	return (
 		<div className={'bg-gray-50 flex min-h-screen flex-col justify-between'}>
@@ -110,12 +137,7 @@ const ProjectPage: NextPage = () => {
 			<BaseLayout
 				name={'Projet/' + data?.project.title || ''}
 				button={
-					<Button
-						onClick={() => setIsOpenModal(true)}
-						icon={<PlusSmIcon className='h-5' />}
-					>
-						Ajouter un Ticket
-					</Button>
+					headerButton()
 				}
 			>
 				<>
