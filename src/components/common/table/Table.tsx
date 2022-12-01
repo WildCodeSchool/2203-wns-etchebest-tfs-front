@@ -2,11 +2,13 @@ import React from 'react'
 import Link from 'next/link';
 
 import styles from './Table.module.css';
+import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
 
 
 interface TableProps {
   headerItems: string[]
   rowItems: any[][] | undefined //A FAIRE ! typer tableau string | number
+  actions?: {edit:boolean, delete:boolean, handleClick:Function}
   rowLinkPath?: string[]
   noResultContent: string | JSX.Element
 }
@@ -20,15 +22,62 @@ interface TableProps {
  * @return Retourne un tableau html
  */
 
-export default function Table({headerItems, rowItems, rowLinkPath, noResultContent}:TableProps) {
+export default function Table({headerItems, rowItems, actions, rowLinkPath, noResultContent}:TableProps) {
 
   //Le nombre de ligne doit correspondre au nombre de chemin (path)
- if(rowLinkPath && rowItems?.length !== rowLinkPath?.length) {
+ if(rowLinkPath && (rowItems?.length !== rowLinkPath?.length)) {
   throw new Error("The number of rowItems and rowLinkPath must be the same")
  }
 
+ //L'id sert unique
+  let rowItemsWithoutId
+  if(rowItems){
+    rowItemsWithoutId = rowItems.map((row)=>{
+      const [_, ...rest] = row
+      return rest
+    })
+  }
+
+  function cellActionRender(i:number){
+
+    if(!rowItems || !actions) return
+    const [id] = rowItems[i]
+
+    return (
+    <td className={styles.table_content_cell__action}>
+      {actions.edit &&
+      <button
+        className='bg-secondary text-white p-2 rounded-sm hover:bg-primary'
+        onClick={(e)=>{
+          e.preventDefault();
+          e.stopPropagation();
+          actions.handleClick(e, "edit", id )
+         }
+        }
+      >
+        <PencilIcon className='h-4'/>
+      </button>
+      }
+       {
+      actions.delete &&
+      <button
+        className='bg-alert text-white p-2 rounded-sm hover:bg-alert_dark'
+        onClick={(e)=> {
+          e.preventDefault();
+          e.stopPropagation();
+          actions.handleClick(e, "delete", id)
+         }
+        }
+      >
+        <TrashIcon className='h-4'/>
+      </button>
+      }
+    </td>
+    )
+  }
+
   return (
-    <div className="overflow-x-auto relative  rounded-sm border border-grey-300">
+    <div className="overflow-x-auto relative rounded-sm border border-grey-300">
       <table className={styles.table}>
         <thead className={styles.table_header}>
           <tr>
@@ -43,7 +92,7 @@ export default function Table({headerItems, rowItems, rowLinkPath, noResultConte
         </thead>
         <tbody>
           {/* //Retourne chaque lignes du tableau entourées d'un lien */}
-          { rowLinkPath ? rowItems?.map((item, i) => {
+          { rowLinkPath ? rowItemsWithoutId?.map((item, i) => {
             return (
               <Link key={i} href={rowLinkPath[i]}>
               <tr key={i} className={styles.table_content_row}>
@@ -54,6 +103,7 @@ export default function Table({headerItems, rowItems, rowLinkPath, noResultConte
                     </td>
                   )
                 })}
+                {actions && cellActionRender(i) }
               </tr>
               </Link>
             )
@@ -61,7 +111,7 @@ export default function Table({headerItems, rowItems, rowLinkPath, noResultConte
           
           :
 
-          rowItems?.map((item, i) => {    {/* //Retourne chaque lignes du tableau sans lien */}
+          rowItemsWithoutId?.map((item, i) => {    {/* //Retourne chaque lignes du tableau sans lien */}
             return (
               <tr key={i} className={styles.table_content_row}>
                 {item.map((item, i) => {
@@ -71,6 +121,7 @@ export default function Table({headerItems, rowItems, rowLinkPath, noResultConte
                     </td>
                   )
                 })}
+                {actions && cellActionRender(i) }
               </tr>
             )
           })

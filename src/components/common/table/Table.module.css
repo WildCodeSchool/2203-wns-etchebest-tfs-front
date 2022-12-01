@@ -47,3 +47,11 @@
   @apply 
   py-5 px-10
 }
+
+.table_content_cell__action {
+  @apply 
+  flex
+  gap-2
+  py-4
+  px-10
+}
