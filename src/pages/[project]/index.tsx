@@ -35,7 +35,10 @@ const ProjectPage: NextPage = () => {
 	const router = useRouter()
 	const { project: projectId } = router.query
 
-	const [deleteProject, {loading: loadingDelete}] = useMutation(DELETE_PROJECT, {onCompleted: () => router.push(`/`)})
+	const [deleteProject, {loading: loadingDelete}] = useMutation(DELETE_PROJECT, {
+		onCompleted: () => router.push(`/`),
+		onError: ()=> {throw new Error(`Impossible de supprimer le projet`)},
+		})
 
 
 	const [getProjects,{ data }] = useLazyQuery<ProjectData>(GET_PROJECT, {
