@@ -66,9 +66,10 @@ query Projects {
 export const GET_PROJECT = gql `
 query GetProject($where: ProjectWhereUniqueInput!) {
   project(where: $where) {
-    title
     id
     code
+    title
+    subject
     tickets {
       id
       title

@@ -6,34 +6,34 @@ interface ProjectOverviewProps {
   wip: number,
   review: number,
   done: number,
-  cta: ReactElement
-  
+  subject: string | ReactElement
 }
 
 export default function ProjectItemOverview(props: ProjectOverviewProps) {
-  const {opened, wip, review, done, cta} = props
+  const {opened, wip, review, done, subject} = props
 	return (
 		<section>
 			<h2 className={'text-secondary uppercase font-medium mb-2 mt-5'}>Overview</h2>
 			<div className={styles.statusWrapper}>
 				<div className={styles.status}>
-					<p className={styles.statusName}>Ouvert</p>
+					<h5 className={styles.statusName}>Ouvert</h5>
 					<p className={styles.statusNumber}>{opened}</p>
 				</div>
 				<div className={styles.status}>
-					<p className={styles.statusName}>En cours</p>
+					<h5 className={styles.statusName}>En cours</h5>
 					<p className={styles.statusNumber}>{wip}</p>
 				</div>
 				<div className={styles.status}>
-					<p className={styles.statusName}>En revue</p>
+					<h5 className={styles.statusName}>En revue</h5>
 					<p className={styles.statusNumber}>{review}</p>
 				</div>
 				<div className={styles.status}>
-					<p className={styles.statusName}>Fermé</p>
+					<h5 className={styles.statusName}>Fermé</h5>
 					<p className={styles.statusNumber}>{done}</p>
 				</div>
-				<div className="h-full pt-8 md:pt-0 flex flex-cols items-center col-span-2 justify-center">
-					{cta}
+				<div className={styles.subject}>
+					<h5 className={styles.statusName + " mb-2"}>Description</h5>
+					<pre className="text-primary font-sans font-medium whitespace-pre-line">{subject}</pre>
 				</div>
 			</div>
 		</section>

@@ -6,6 +6,10 @@
 	@apply border-b md:border-b-0 py-2 md:py-0 md:border-r border-grey-300 flex flex-col items-center justify-center
 }
 
+.subject {
+	@apply items-start col-span-2 px-12
+}
+
 .statusName {
 	@apply text-grey-300 text-xs font-medium uppercase
 

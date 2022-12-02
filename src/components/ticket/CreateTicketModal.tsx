@@ -16,9 +16,10 @@ import { CREATE_TICKET } from "../../apollo/mutations"
 import { isEmpty } from "../../utils/objectIsEmpty"
 // Types
 import { Priority, Ticket, ValidatorForm } from "../../types"
+import TextareaGroup from "../common/form/TextareaGroup"
 
 type CreateTicketForm = Pick<Ticket, 'title' | 'description' | 'priority'>
-type ValidatorCreateTicket = ValidatorForm<keyof CreateTicketForm>
+type ValidatorCreateTicket = ValidatorForm<keyof Omit<CreateTicketForm, "description">> //Description non obligatoire 
 
 interface CreateProjectProps {
 	projectId: string
@@ -34,6 +35,7 @@ export function CreateTicketModal({ projectId, setIsOpenModal, isOpen,  updatePa
 
 	const {
 		register,
+		watch,
 		handleSubmit,
 		formState: { errors }
 	} = useForm<CreateTicketForm>({ mode: 'onTouched' })
@@ -43,12 +45,6 @@ export function CreateTicketModal({ projectId, setIsOpenModal, isOpen,  updatePa
 			required: {
 				value: true,
 				message: 'Le titre est requis'
-			}
-		},
-		description: {
-			required: {
-				value: true,
-				message: 'La desc est requise'
 			}
 		},
 		priority: {
@@ -136,17 +132,15 @@ export function CreateTicketModal({ projectId, setIsOpenModal, isOpen,  updatePa
 						validator={validators}
 						placeholder='Ajouter un titre'
 					/>
-					<InputGroup
-						label='Description'
-						type='text'
-						placeholder='Ajouter un description'
-						field='description'
+					<TextareaGroup
+						label="Description"
+						placeholder="Veuillez saisir un sujet"
+						name="description"
 						register={register}
-						errors={errors}
-						validator={validators}
+						watch={watch}
 					/>
 					<SelectGroup
-						label='Priority'
+						label='Priorité'
 						field='priority'
 						register={register}
 						validator={validators}

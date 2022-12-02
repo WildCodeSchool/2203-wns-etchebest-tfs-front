@@ -1,7 +1,7 @@
 import ExclamationCircleIcon from '@heroicons/react/outline/ExclamationCircleIcon'
 import React, { ReactNode } from 'react'
 import { FieldError, UseFormRegister } from 'react-hook-form'
-import { Priority } from '../../../../types'
+import { Priority, ValidatorForm } from '../../../../types'
 import { ErrorInput } from '../input/ErrorInput'
 import styles from '../input/InputGroup.module.css'
 
@@ -11,7 +11,7 @@ interface SelectGroupProps {
   field: string,
   register: UseFormRegister<any>
   placeholder: string,
-  validator?: any,
+  validator?: ValidatorForm<any>,
   errors: Record<string, FieldError>
 }
 
@@ -21,7 +21,7 @@ export function SelectGroup({children, label, field, register, validator, errors
     <div>
         <label htmlFor={ field } className={styles.label}>{label}</label>
         <div className="relative">
-          <select {...register(field, validator ? validator[field] : null)} name={field} id={field} className={styles.input}>
+          <select {...register(field, validator)} name={field} id={field} className={styles.input}>
             <option value="" className='text-grey-400 focus:text-grey-400'>{ placeholder }</option>
             { children }
           </select>
