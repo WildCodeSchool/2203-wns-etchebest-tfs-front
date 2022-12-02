@@ -17,7 +17,7 @@ import { PlusSmIcon, TrashIcon } from '@heroicons/react/outline'
 //Queries
 import { GET_PROJECT } from '../../apollo/queries'
 //Mutations
-import { DELETE_PROJECT } from '../../apollo/mutations'
+import { DELETE_PROJECT, DELETE_TICKET } from '../../apollo/mutations'
 //Types
 import { ProjectData, Status } from '../../types'
 //Utils
@@ -28,6 +28,8 @@ import { castPriorityToEmoji } from '../../utils/castPriorityToEmoji'
 import { statusTrad } from '../../utils/statusTrad'
 
 
+
+
 const ProjectPage: NextPage = () => {
 	//Status de la modal de création de ticket
 	const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
@@ -35,13 +37,24 @@ const ProjectPage: NextPage = () => {
 	const router = useRouter()
 	const { project: projectId } = router.query
 
-	const [deleteProject, {loading: loadingDelete}] = useMutation(DELETE_PROJECT, {
+	const [deleteProject, {loading: loadingDeleteProject}] = useMutation(DELETE_PROJECT, {
 		onCompleted: () => router.push(`/`),
 		onError: ()=> {throw new Error(`Impossible de supprimer le projet`)},
 		})
 
+	const [deleteTicket] = useMutation(DELETE_TICKET, { refetchQueries:[
+		{
+			query: GET_PROJECT,
+			variables: {
+				where: {
+					id: Number(projectId)
+				}
+			}
+		}
+	]})
 
-	const [getProjects,{ data }] = useLazyQuery<ProjectData>(GET_PROJECT, {
+
+	const [getProject,{ data }] = useLazyQuery<ProjectData>(GET_PROJECT, {
 		variables: {
 			where: {
 				id: Number(projectId)
@@ -50,14 +63,10 @@ const ProjectPage: NextPage = () => {
 	})
 
 	useEffect(() => {
-		getProjects()
+		getProject()
 	}, [])
 	
 
-	 async function updateData(){
-		console.log("update")
-		await getProjects()
-	}
 
 	const statusCount = {
 		open: countTicketsByStatus(data?.project.tickets, Status.OPEN),
@@ -74,11 +83,13 @@ const ProjectPage: NextPage = () => {
 		'LABELS',
 		'STATUS',
 		'DERNIÈRE MÀJ',
-		'AUTEUR'
+		'AUTEUR',
+		'ACTION'
 	]
 
 	const rowItems = data?.project.tickets.map(ticket => {
 		const {
+			id,
 			priority,
 			title,
 			status,
@@ -89,6 +100,7 @@ const ProjectPage: NextPage = () => {
 		const badges = labels.map((label, i) => <Badge key={i}>{label.name}</Badge>)
 
 		return [
+			id,
 			castPriorityToEmoji(priority),
 			title,
 			badges,
@@ -107,7 +119,17 @@ const ProjectPage: NextPage = () => {
 	})
 //------------------------------------------------------------------------
 
- 
+function handleActionInTable(_:MouseEvent, action: "delete" | "edit", id: string){
+	
+	switch (action) {
+		case "edit": console.log("edit")
+			break;
+		case "delete": deleteTicket({variables:{where: {id:Number(id)}}})
+			break;
+		default: throw new Error(`L'action '${action}' dans le tableau est inconnu`);
+	}
+}
+
 	const headerButton = () => {
 		const variable = {
 			variables: {
@@ -122,7 +144,7 @@ const ProjectPage: NextPage = () => {
 					outlined 
 					alert
 					onClick={() => deleteProject(variable)}
-					loading={loadingDelete}
+					loading={loadingDeleteProject}
 					icon={<TrashIcon className='h-5' />}
 				>
 						Supprimer ce projet
@@ -155,9 +177,22 @@ const ProjectPage: NextPage = () => {
 					<h2 className={'mb-2 mt-8 font-medium uppercase text-secondary'}>Tickets</h2>
 					<section className='relative' id='table-project'>
 						<TicketListFilters />
-						<Table headerItems={tableHeaderItems} rowItems={rowItems} rowLinkPath={rowLinkPath} noResultContent={<NoResultTicketTable projectName={data?.project.title} setIsOpenModal={setIsOpenModal}/>} />
+						<Table actions={
+							{
+							edit:true,
+							delete:true,
+							handleClick:(_:MouseEvent, action:"delete" | "edit", id:string)=> handleActionInTable(_,action, id)
+						 }
+						}
+						headerItems={tableHeaderItems}
+						rowItems={rowItems}
+						rowLinkPath={rowLinkPath}
+						noResultContent={<NoResultTicketTable
+						projectName={data?.project.title}
+						setIsOpenModal={setIsOpenModal}/>}
+					/>
 					</section>
-					<CreateTicketModal setIsOpenModal={setIsOpenModal} updateParentData={updateData} projectId={projectId as string} isOpen={isOpenModal}/>
+					<CreateTicketModal setIsOpenModal={setIsOpenModal}  projectId={projectId as string} isOpen={isOpenModal}/>
 				</>
 			</BaseLayout>
 		</div>

@@ -9,7 +9,7 @@ import { InputGroup } from "../common/form/input/InputGroup"
 import { SelectGroup } from "../common/form/select/SelectGroup"
 import Modal from "../common/modal/Modal"
 // Queries
-import { GET_ME } from "../../apollo/queries"
+import { GET_ME, GET_PROJECT } from "../../apollo/queries"
 // Mutations
 import { CREATE_TICKET } from "../../apollo/mutations"
 // Utils
@@ -17,18 +17,18 @@ import { isEmpty } from "../../utils/objectIsEmpty"
 // Types
 import { Priority, Ticket, ValidatorForm } from "../../types"
 import TextareaGroup from "../common/form/TextareaGroup"
+import { queries } from "@testing-library/react"
 
 type CreateTicketForm = Pick<Ticket, 'title' | 'description' | 'priority'>
 type ValidatorCreateTicket = ValidatorForm<keyof Omit<CreateTicketForm, "description">> //Description non obligatoire 
 
-interface CreateProjectProps {
+interface CreateTicketProps {
 	projectId: string
 	setIsOpenModal: Dispatch<SetStateAction<boolean>>
 	isOpen: boolean,
-	updateParentData: Function
 }
 
-export function CreateTicketModal({ projectId, setIsOpenModal, isOpen,  updateParentData}: CreateProjectProps) {
+export function CreateTicketModal({ projectId, setIsOpenModal, isOpen}: CreateTicketProps) {
 
  // ------------------ Formulaire de creation de ticket -------------------
 	const [isSubmited, setIsSubmited] = useState<boolean>(false)
@@ -67,8 +67,19 @@ export function CreateTicketModal({ projectId, setIsOpenModal, isOpen,  updatePa
    setIsOpenModal(false)
 	}
 
-	// -------------- Envoi du ticket créé ---------------------
-	const [createTicketMutation, {data, loading, error: createTicketError}] = useMutation(CREATE_TICKET)
+	// -------------- Envoi du ticket créé puis récupération du projet après création du ticket ---------------------
+	const [createTicketMutation, {data, loading, error: createTicketError}] = useMutation(CREATE_TICKET,
+		{
+			refetchQueries:[{
+				query: GET_PROJECT,
+				variables: {
+					where: {
+						id: Number(projectId)
+					}
+				}
+			}]
+		}
+	)
 	const {data: user, error:idUserError} = useQuery(GET_ME)
 
 	const onSubmit: SubmitHandler<CreateTicketForm> = async payload => {
@@ -95,7 +106,6 @@ export function CreateTicketModal({ projectId, setIsOpenModal, isOpen,  updatePa
 		await createTicketMutation({ variables: { data: ticket } })
 		if(!createTicketError){
 			setIsSubmited(true)
-			updateParentData()
 		}
 	}
 

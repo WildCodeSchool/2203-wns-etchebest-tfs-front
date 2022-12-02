@@ -10,7 +10,7 @@ import { InputGroup } from "../common/form/input/InputGroup"
 //Queries
 import { CREATE_PROJECT } from "../../apollo/mutations"
 //mutations
-import { GET_ME } from "../../apollo/queries"
+import { GET_ME, GET_PROJECTS } from "../../apollo/queries"
 import { isEmpty } from "../../utils/objectIsEmpty"
 //Types
 import { Project, ValidatorForm, MeData } from "../../types"
@@ -86,7 +86,7 @@ function CreateProjectForm({setIsSubmited, setIsOpenModal}:CreateProjectChildPro
 // -------------- Envoi du projet créé  ---------------------
 // Récupère l'utilisateur courant puis envoi du nouveau projet
 	const [getMe,{loading: loadingGetId}] = useLazyQuery<MeData>(GET_ME)
-	const [createProjectMutation, { loading: loadingCreateProject }] = useMutation(CREATE_PROJECT, {onCompleted: () => setIsSubmited(true)})
+	const [createProjectMutation, { loading: loadingCreateProject }] = useMutation(CREATE_PROJECT, {refetchQueries:[GET_PROJECTS],onCompleted: () => setIsSubmited(true)})
 	
 	const onSubmit: SubmitHandler<CreateProjectForm> = async (payload) => {
 
