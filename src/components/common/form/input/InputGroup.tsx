@@ -1,10 +1,14 @@
 
 import React from 'react';
+//Librairies
 import { FieldError, UseFormRegister } from 'react-hook-form';
-import { ErrorInput } from './ErrorInput';
 import { ExclamationCircleIcon } from '@heroicons/react/outline'
+//Components
+import { ErrorInput } from './ErrorInput';
 //Styles
 import styles from "../input/InputGroup.module.css"
+//Types
+import { ValidatorForm } from '../../../../types';
 
 
 interface InputGroupProps  {
@@ -15,7 +19,7 @@ interface InputGroupProps  {
 	autoComplete?: string
 	register: UseFormRegister<any>
 	errors: Record<string, FieldError>
-	validator?: any
+	validator?: ValidatorForm<any>
 }
 
 
@@ -29,7 +33,7 @@ export function InputGroup ({ label, type, placeholder, autoComplete, register, 
 						className={styles.input}
 						id={field}
 						type={type}
-						{...register(field, validator ? validator[field] : null)}
+						{...register(field, validator)}
 						aria-invalid={errors[field] ? 'true' : 'false'} 
 						placeholder={placeholder}
 						autoComplete={autoComplete}

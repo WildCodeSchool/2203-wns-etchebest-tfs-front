@@ -22,6 +22,7 @@ import { isEmpty } from '../../utils/objectIsEmpty'
 import Button from '../common/Button'
 import { InputGroup } from '../common/form/input/InputGroup'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import TextareaGroup from '../common/form/TextareaGroup'
 
 
 interface ProjectsProps {
@@ -135,8 +136,12 @@ function UpdateProjectModal({ setIsOpenModal, isOpen, currentProject }: UpdatePr
 	const {
 		register,
 		handleSubmit,
-		formState: { errors, isSubmitSuccessful },
-	} = useForm<EditProjectForm>({ mode: 'onTouched', defaultValues:{title: currentProject?.title, subject: currentProject?.subject}})
+	  watch,
+		formState: { errors },
+	} = useForm<EditProjectForm>({ mode: 'onTouched', defaultValues:{
+																																		title: currentProject?.title, 
+																																		subject: currentProject?.subject
+																																	}})
 
 	const UPDATE_PROJECT = gql`
 	mutation UpdateProject($data: ProjectUpdateInput!, $where: ProjectWhereUniqueInput!) {
@@ -158,7 +163,6 @@ function UpdateProjectModal({ setIsOpenModal, isOpen, currentProject }: UpdatePr
 	}
 
 	const onSubmit: SubmitHandler<EditProjectForm> = async(payload)=>{
-		console.log("edit submit")
  		await EditProject({variables: {
 			where: {
 				id: currentProject?.id
@@ -203,14 +207,12 @@ function UpdateProjectModal({ setIsOpenModal, isOpen, currentProject }: UpdatePr
 					validator={validators}
 					placeholder='Ajouter un titre'
 				/>
-				<InputGroup
-					label='Sujet'
-					type='text'
-					field='subject'
+				<TextareaGroup
+					label="Sujet"
+					name="subject"
+					placeholder="Veuillez saisir un sujet"
 					register={register}
-					errors={errors}
-					validator={validators}
-					placeholder='Ajouter un sujet'
+					watch={watch}
 				/>
 				<div className="mt-4 flex justify-end gap-4">
 					<Button outlined onClick={() => {setIsOpenModal(false)}}>

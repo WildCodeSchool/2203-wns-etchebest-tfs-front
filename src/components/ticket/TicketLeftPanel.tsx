@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { DocumentAddIcon, PhotographIcon } from '@heroicons/react/outline'
+import { DocumentAddIcon, PencilIcon, PhotographIcon } from '@heroicons/react/outline'
 import { GET_TICKET_COMMENTS } from '../../apollo/queries'
 
 import Button from '../common/Button'
@@ -39,14 +39,19 @@ export default function TicketLeftPanel({ ticket }:TicketLeftPanelProps) {
 			<h2 className={'text-primary font-medium text-2xl'}>{ticket.title}</h2>
 			<div className={'mt-8'}>
 				<h3 className={classes.titles}>Sujet</h3>
-				<p className={'text-primary'}>{ticket.description}</p>
+				{ticket.description && <p className={'text-primary'}>{ticket.description}</p>}
+				{!ticket.description && 
+					<div className="flex justify-center p-8 outline-dashed outline-2 outline-grey-500 mx-1 mt-4">
+						<Button outlined={true}><PencilIcon className={'w-5 mr-1'} /> Ajouter une description </Button>
+					</div>
+				}
 			</div>
 			{/* --------- Pièces Jointes --------- */}
 			<div className={'mt-8'}>
 				<h3 className={classes.titles}>Pièces Jointes</h3>
 				<div className={'rounded flex flex-col items-center justify-center p-8 outline-dashed outline-2 outline-grey-500 mx-1 mt-4'}>
 					<PhotographIcon className={'text-grey-200 h-16 w-16 mb-5'} />
-					<Button outlined={true}><DocumentAddIcon className={'w-4 h-4'} /> Ajouter un fichier </Button>
+					<Button outlined={true}><DocumentAddIcon className={'w-5 mr-1'} /> Ajouter un fichier </Button>
 				</div>
 			</div>
 			{/* --------- fin Pièces Jointes --------- */}

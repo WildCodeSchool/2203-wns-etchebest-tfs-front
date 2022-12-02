@@ -150,7 +150,7 @@ const ProjectPage: NextPage = () => {
 						wip={statusCount.wip}
 						review={statusCount.review}
 						done={statusCount.done}
-						cta={<Button outlined>Last assigned ticket</Button>}
+						subject={data?.project.subject || ""}
 					/>
 					<h2 className={'mb-2 mt-8 font-medium uppercase text-secondary'}>Tickets</h2>
 					<section className='relative' id='table-project'>
