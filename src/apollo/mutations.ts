@@ -22,6 +22,13 @@ mutation CreateTicket($data: TicketCreateInput!) {
   }
 }
 `
+export const DELETE_TICKET = gql`
+	mutation DeleteTicket($where: TicketWhereUniqueInput!) {
+	  deleteTicket(where: $where) {
+	    id
+	  }
+	}
+`
 
 //--------------- PROJECTS ----------------
 

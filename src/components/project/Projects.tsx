@@ -61,7 +61,6 @@ export default function Projects({ projects, setIsOpenModal }: ProjectsProps) {
 
 	function handleActionInTable(_:MouseEvent, action: "delete" | "edit", id: string){
 		if(action === "delete") {
-			console.log("delete " + id)
 			deleteProject({
 				variables: {
 					where: {
@@ -72,7 +71,6 @@ export default function Projects({ projects, setIsOpenModal }: ProjectsProps) {
 			return
 		}
 		else if((action === "edit")) {
-			console.log("edit " + id)
 			const currentProject = projects.find(p=> p.id === Number(id))
 			if(!currentProject) {
 				setIsOpenModalEdit(false)
