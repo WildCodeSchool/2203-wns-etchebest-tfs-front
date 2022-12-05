@@ -203,18 +203,17 @@ export function RegisterForm() {
 					placeholder='Comfirmez votre mot de passe'
 					autoComplete='new-password'
 				/>
-				{errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
 			</div>
 
 			<div className='col-span-2'>
 				<Button type='submit' fullWidth disabled={!isEmpty(errors)} loading={loading}>
 					S'inscrire
 				</Button>
-				{ApolloError && (
+			{ApolloError && (
 					<p className='my-2 rounded-sm bg-alert px-4 py-2 text-sm font-medium text-white'>
 						{ApolloError.message}
 					</p>
-				)}
+				)} 
 			</div>
 		</form>
 	)

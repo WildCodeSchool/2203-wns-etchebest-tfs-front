@@ -33,12 +33,11 @@ export function InputGroup ({ label, type, placeholder, autoComplete, register, 
 						className={styles.input}
 						id={field}
 						type={type}
-						{...register(field, validator)}
+						{...register(field, validator ? validator[field] : undefined)}
 						aria-invalid={errors[field] ? 'true' : 'false'} 
 						placeholder={placeholder}
 						autoComplete={autoComplete}
 					/>
-					
 					{errors[field] && <ExclamationCircleIcon className='absolute h-4 top-1/2 right-2 transform -translate-y-1/2 stroke-alert_dark '/>}
 				</div>
 				{errors? errors[field] &&<ErrorInput errors={errors} field={field}/> : null}
