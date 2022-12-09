@@ -61,7 +61,7 @@ export default function Sidebar() {
 				'fixed bottom-0 flex flex-col justify-evenly py-2 border-y-2 border-r-2 rounded-r-md border-secondary justif px-2 h-16 text-sm z-30 transition-all ease-in-out duration-100 bg-white',
 				active ? 'translate-x-16' : '-translate-x-20'
 				)}>
-				<p className={'text-secondary cursor-pointer'}>Profil</p>
+				<Link className={'text-secondary cursor-pointer'} href={'/profil'}>Profil</Link>
 				<button className={'text-alert_dark flex items-center cursor-pointer'} onClick={handleLogout}>Se déconnecter <LogoutIcon className={'h-4 w-4 ml-1'} /></button>
 			</div>
 		</>

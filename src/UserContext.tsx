@@ -1,35 +1,21 @@
-import { createContext,ReactElement,useState } from "react";
+import { createContext,Dispatch,ReactElement,SetStateAction,useState } from "react";
+import { User } from "./types";
 
-
-export interface IAuthUserCtx {
-  id: number;
-  firstname: string;
-  lastname: string;
-  email: string;
-  roles: string;
-}
+export type IAuthUserCtx = Pick<User, "firstname" | "lastname" | "email" | "roles">
 
 export interface IAuthCtx {
   authUser: IAuthUserCtx | null;
-  setAuthUser: (user:IAuthUserCtx)=>void
+  setAuthUser: Dispatch<SetStateAction<IAuthUserCtx | null>>
 }
 
 export const AuthContext = createContext<IAuthCtx | null>(null);
 
-export const AuthProvider = ({children}:{children:ReactElement[]}) => {
+export function AuthProvider({children}:{children:ReactElement[]}){
 
 
-   const authContext: IAuthUserCtx = {
-    id: 21,
-    firstname: 'test',
-    lastname: 'test',
-    email: 'test@exemple.com',
-    roles: 'ADMIN'
-  };
- 
   // State utiliser dans le contexte pour définir quelle est l'utilisateur est connecté
   // On envoi également le setter pour pouvoir "setté" l'utilisateur une fois connecté
-  const [authUser, setAuthUser] = useState<IAuthUserCtx | null>(authContext)
+  const [authUser, setAuthUser] = useState<IAuthUserCtx | null>(null)
   const value = {authUser, setAuthUser}
 
   return (  

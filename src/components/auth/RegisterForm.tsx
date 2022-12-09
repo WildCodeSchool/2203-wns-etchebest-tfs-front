@@ -79,7 +79,6 @@ export function RegisterForm() {
 								data: {email:value} 
 							} 
 						})
-						console.log(response)
 					return !response.data?.isExistUser || 'Adresse email déjà utilisée'
 				}
 			}
@@ -115,26 +114,20 @@ export function RegisterForm() {
 	}
 
 	//Mutation
-	const [mutateRegister, { loading, error: ApolloError }] = useMutation(REGISTER_USER)
+	const [mutateRegister, { loading, error: ApolloError }] = useMutation(REGISTER_USER,{
+		onCompleted:(data)=> { 
+			localStorage.setItem('token', data.register)
+			router.push('/') 
+		},
+		onError: (err) => { throw new Error("Impossible de créer l'utilisateur. " + err) }
+	})
 
 	const router = useRouter()
 
 	const onSubmit: SubmitHandler<RegisterFormData> = data => {
 		// on enlève confirmPassword de l'objet data
 		const { confirmPassword, ...rest } = data
-
-		const response = mutateRegister({ variables: { data: rest } })
-		response
-			.then(data => {
-				if (data) {
-					console.log(data.data.register)
-					localStorage.setItem('token', data.data.register)
-					router.push('/')
-				}
-			})
-			.catch(err => {
-				console.log(err)
-			})
+		mutateRegister({ variables: { data: rest } })
 	}
 
 	return (
