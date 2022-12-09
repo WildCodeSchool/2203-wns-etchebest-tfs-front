@@ -11,10 +11,9 @@ import { isEmpty } from '../../utils/objectIsEmpty'
 // Queries
 import { LOGIN_QUERY } from '../../apollo/queries'
 //Types
-import type {User, ValidatorForm} from '../../types/index'
+import type { User, ValidatorForm } from '../../types/index'
 
-
-type LoginFormData = Pick<User, "email" | "password">;
+type LoginFormData = Pick<User, 'email' | 'password'>
 type ValidatorLogin = ValidatorForm<keyof LoginFormData>
 
 export default function LoginForm() {
@@ -22,7 +21,7 @@ export default function LoginForm() {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors }
+		formState: { errors, touchedFields }
 	} = useForm<LoginFormData>({ mode: 'onTouched' })
 
 	const validators: ValidatorLogin = {
@@ -64,7 +63,6 @@ export default function LoginForm() {
 			})
 			.catch(err => console.log(err))
 	}
-
 	return (
 		<form className='form' onSubmit={handleSubmit(onSubmit)}>
 			<div className='mb-3'>
@@ -91,11 +89,16 @@ export default function LoginForm() {
 					autoComplete='new-password'
 				/>
 			</div>
-			<Button type='submit' fullWidth loading={loading} disabled={!isEmpty(errors)}>
+			<Button
+				type='submit'
+				fullWidth
+				loading={loading}
+				disabled={!isEmpty(errors) || !Object.keys(touchedFields).length}
+			>
 				Connexion
 			</Button>
 			{ApolloError && (
-				<p className='rounded-sm bg-alert px-4 py-2 mt-4 text-sm font-medium text-white'>
+				<p className='px-4 py-2 mt-4 text-sm font-medium text-white rounded-sm bg-alert'>
 					{ApolloError.message}
 				</p>
 			)}
