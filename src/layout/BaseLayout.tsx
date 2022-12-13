@@ -1,33 +1,23 @@
-import type { ReactElement } from 'react'
-import Footer from './Footer'
+import type { PropsWithChildren, ReactElement } from 'react'
 import Header from './Header'
 import Sidebar from './Sidebar'
 
-interface Properties {
-	children?: ReactElement
+interface BaseLayoutProps extends PropsWithChildren {
 	name: String
 	button?: ReactElement
 }
 
-const BaseLayout = ({ children, name, button }: Properties): ReactElement => {
+export default function BaseLayout({ children, name, button }: BaseLayoutProps): ReactElement {
 	return (
 		<>
-			<div className={'flex h-screen'}>
+			<div className='flex h-screen'>
 				<Sidebar />
-				<div className={'flex w-full flex-col justify-between'}>
-					<div className={'w-full'}>
-						<Header name={name} button={button} />
-						<main className={'p-4'}>{children}</main>
-					</div>
-					<Footer />
-				</div>
+				<main className='w-full min-h-screen pl-40 pr-24 pb-20 bg-grey-50 overflow-y-scroll'>
+					<Header name={name} button={button} />
+					<section className='w-full'>{children}</section>
+				</main>
 			</div>
 		</>
 	)
 }
 
-BaseLayout.defaultProps = {
-	children: <></>
-}
-
-export default BaseLayout

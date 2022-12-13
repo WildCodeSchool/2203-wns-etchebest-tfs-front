@@ -3,7 +3,7 @@ name: Compile and push client image
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
+  # Triggers the workflow on push or pull request events but only for the staging branch
   push:
     branches: ['dev']
 
@@ -42,5 +42,3 @@ jobs:
           file: ../2203-wns-etchebest-tfs-front/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tfs_deploy_client:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/tfs_deploy_client:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/tfs_deploy_client:buildcache,mode=max

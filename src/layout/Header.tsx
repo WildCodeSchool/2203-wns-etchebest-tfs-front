@@ -1,29 +1,56 @@
+import { ArrowSmLeftIcon } from '@heroicons/react/outline'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import type { ReactElement } from 'react'
-import Notification from '../components/Notification'
-import Search from '../components/Search'
 
 interface Properties {
 	name: String
 	button?: ReactElement
 }
 
-const Header = ({ name, button }: Properties): ReactElement => {
-	return (
-		<div
-			className={
-				'flex w-full items-center justify-between bg-white px-16 py-4 shadow-md'
+export default function Header(props: Properties): ReactElement {
+	const { name, button } = props
+
+	const router = useRouter()
+	
+	
+	const backRoute = () => {
+		const splitedRoute = router.asPath.split('/')
+		splitedRoute.pop()
+		if (splitedRoute.length === 1) {
+			if (router.pathname === '/') {
+				return ''
+			} else {
+				return '/'
 			}
-		>
-			<div className={'flex flex-col'}>
-				{name}
-				{button}
+		} else {
+			return splitedRoute.join('/')
+		}
+
+		
+	}
+
+	return (
+		<header className='relative pt-20'>
+			{backRoute() && (
+				<Link href={backRoute()}>
+				<a className='flex items-center font-medium text-secondary absolute top-8'>
+					<ArrowSmLeftIcon className='h-5 w-5'/> 
+					Retour
+				</a>
+			</Link>
+			)}
+
+			<div
+				className='flex w-full items-center justify-between relative'>
+				<div className='flex flex-col text-primary font-medium text-4xl'>
+					{name}
+				</div>
+				<div className='flex space-x-5'>
+					{button}
+				</div>
 			</div>
-			<div className={'flex space-x-5'}>
-				<Search />
-				<Notification />
-			</div>
-		</div>
+		</header>
+
 	)
 }
-
-export default Header

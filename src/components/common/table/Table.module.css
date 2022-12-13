@@ -1,0 +1,57 @@
+.table {
+  
+  @apply 
+  w-full
+  text-sm
+  text-left
+  whitespace-nowrap
+  h-fit
+  
+}
+
+.table_header{
+  @apply 
+  text-xs text-grey-400 uppercase bg-white border-b border-grey-300
+}
+
+.table_header_cell{
+  @apply 
+  py-5 px-10
+  
+}
+
+.table_content_row {
+  @apply 
+  relative
+  text-sm
+  text-primary
+  font-semibold
+  bg-white 
+  hover:bg-grey-100
+  cursor-pointer
+  /* Bordure de séparation */
+  after:content-['']
+  after:absolute
+  after:h-[1px]
+  after:bg-grey-200
+  after:bottom-0
+  /* Permet de créer un margin de chaque coté du trait */
+  after:left-[1.5rem]
+  after:w-[calc(100%-3rem)]
+  /* Retire la dernière bordure qui est inutile */
+  last:after:hidden
+ 
+}
+
+.table_content_cell {
+  @apply 
+  py-5 px-10
+}
+
+.table_content_cell__action {
+  @apply 
+  flex
+  gap-2
+  py-4
+  px-10
+}

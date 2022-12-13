@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
-
 import Head from 'next/head'
-import Link from '../components/Link'
-import { Register } from '../components/Register'
+//Components
+import { Auth } from '../components/auth/Auth'
+import { RegisterForm } from '../components/auth/RegisterForm'
 
 const RegisterPage: NextPage = () => {
 	return (
@@ -10,23 +10,14 @@ const RegisterPage: NextPage = () => {
 			<Head>
 				<title>Inscription</title>
 			</Head>
-			<div className={'relative h-screen w-screen bg-gray-50 pt-32'}>
-				<div
-					className={'relative mx-auto max-w-3xl rounded bg-white p-10 shadow'}
-				>
-					<div className='mx-auto mb-12 w-full max-w-md'>
-						<h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
-							S'inscrire
-						</h2>
-						<div className='mt-2 text-center text-sm text-gray-600'>
-							Ou <Link href={'/login'}>Se connecter</Link>
-						</div>
-					</div>
-					<Register />
-				</div>
+			<div className='flex items-center justify-center h-screen fit bg-secondary'>
+					<Auth authType='register' title='Create new account' subtitle='welcome to structure app'>
+						<RegisterForm />
+					</Auth>
 			</div>
 		</>
 	)
 }
+export default RegisterPage;
 
-export default RegisterPage
+
