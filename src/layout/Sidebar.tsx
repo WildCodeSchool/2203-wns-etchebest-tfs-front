@@ -51,9 +51,12 @@ export default function Sidebar() {
 						))}
 					</ul>
 				</nav>
-				<div
-					className={'absolute bottom-0 left-0 flex w-full items-center justify-center gap-2 border-t-2 border-secondary justif px-2 py-4 h-16'}>
-					<div className={'h-10 w-10 rounded-full bg-grey-300 box-border cursor-pointer'} onClick={() => {setActive(!active)}}></div>
+				<div 
+					className={'avatar absolute bottom-0 left-0 flex w-full items-center justify-center gap-2 border-t-2 border-secondary justif px-2 py-4 h-16'}>
+					<div 
+						className={'h-10 w-10 rounded-full bg-grey-300 box-border cursor-pointer'} 
+						onClick={() => {setActive(!active)}}>
+					</div>
 				</div>
 				
 			</div>
