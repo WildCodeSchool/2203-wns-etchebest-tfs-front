@@ -28,7 +28,7 @@ test.describe("Struture App", ()=>{
     await page.getByRole('button', { name: 'Connexion' }).click();
   });
 
-  test('Should disabled button when form is not valid', async ({ page, browserName }) => {
+  test('Should disabled button when register form is not valid', async ({ page, browserName }) => {
     await page.goto('http://localhost:3000/register');
     await page.getByPlaceholder('Votre prénom').click();
     await page.getByPlaceholder('Votre prénom').fill('');
@@ -43,6 +43,16 @@ test.describe("Struture App", ()=>{
     await page.getByPlaceholder('Comfirmez votre mot de passe').blur();
     expect(await page.getByRole('button', { name: 'S\'inscrire' })).toHaveAttribute('disabled', "")
     expect(await page.getByRole('button', { name: 'S\'inscrire' })).toBeDisabled()
+  })
+
+  test('Should disabled button when login form is not valid', async ({ page, browserName }) => {
+    await page.goto('http://localhost:3000/login');
+    await page.getByPlaceholder('email@exemple.com').click();
+    await page.getByPlaceholder('email@exemple.com').fill(`test-${browserName}test.com`);
+    await page.getByPlaceholder('Saisissez votre mot de passe').click();
+    await page.getByPlaceholder('Saisissez votre mot de passe').fill('00');
+    expect(await page.getByRole('button', { name: 'Connexion' })).toHaveAttribute('disabled', "")
+    expect(await page.getByRole('button', { name: 'Connexion' })).toBeDisabled()
   })
  
 })
