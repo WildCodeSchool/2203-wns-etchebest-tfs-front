@@ -16,6 +16,7 @@ test.describe("Struture App", ()=>{
     await page.getByPlaceholder('Saisissez votre mot de passe').fill('123456789');
     await page.getByPlaceholder('Comfirmez votre mot de passe').click();
     await page.getByPlaceholder('Comfirmez votre mot de passe').fill('123456789');
+    await page.getByRole('button', { name: 'S\'inscrire' }).isDisabled()
     await page.getByRole('button', { name: 'S\'inscrire' }).click();
     await expect(page).toHaveURL('/')
     await page.locator('.absolute').first().click();
