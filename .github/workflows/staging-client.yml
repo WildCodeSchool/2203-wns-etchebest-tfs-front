@@ -32,6 +32,7 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
@@ -62,6 +63,3 @@ jobs:
           file: ../2203-wns-etchebest-tfs-front/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tfs_deploy_client:latest
-
-
-  
