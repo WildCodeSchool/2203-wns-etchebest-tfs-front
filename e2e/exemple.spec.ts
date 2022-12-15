@@ -56,8 +56,8 @@ test.describe("Struture App", ()=>{
     await page.getByPlaceholder('Saisissez votre mot de passe').fill('00');
     expect(await page.getByRole('button', { name: 'Connexion' })).toHaveAttribute('disabled', "")
     expect(await page.getByRole('button', { name: 'Connexion' })).toBeDisabled()
-    
   })
+
  
 })
 
