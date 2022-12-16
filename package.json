@@ -6,7 +6,8 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"test": "jest --watch"
+		"test": "jest --watch",
+		"test:e2e": "playwright test"
 	},
 	"dependencies": {
 		"@apollo/client": "^3.5.10",
@@ -19,6 +20,7 @@
 		"react-hook-form": "^7.33.1"
 	},
 	"devDependencies": {
+		"@playwright/test": "^1.28.1",
 		"@tailwindcss/aspect-ratio": "^0.4.0",
 		"@tailwindcss/forms": "^0.5.0",
 		"@testing-library/jest-dom": "^5.16.4",

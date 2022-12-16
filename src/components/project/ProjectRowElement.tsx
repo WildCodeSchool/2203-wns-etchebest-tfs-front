@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import formatDate from 'src/utils/formatDate'
+import formatDate from '../../utils/formatDate'
 
 interface Properties {
   data: {

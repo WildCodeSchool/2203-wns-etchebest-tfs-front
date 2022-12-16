@@ -60,7 +60,7 @@ export default function Sidebar() {
 					</ul>
 				</nav>
 				<div
-					className={'absolute bottom-0 left-0 flex w-full items-center justify-center gap-2 border-t-2 border-secondary justif px-2 py-4 h-16'}>
+					className={'avatar absolute bottom-0 left-0 flex w-full items-center justify-center gap-2 border-t-2 border-secondary justif px-2 py-4 h-16'}>
 					<div className={'flex items-center justify-center h-10 w-10 font-medium text-white rounded-full bg-secondary box-border cursor-pointer'} 
 						onClick={() => {setActive(!active)}}>
 						<span>{authCtx?.authUser?.firstname[0]}</span>
