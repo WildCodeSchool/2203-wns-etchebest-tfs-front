@@ -14,24 +14,24 @@ import Button from '../../components/common/Button'
 import { GET_TICKET } from '../../apollo/queries'
 //Types
 import { TicketData } from '../../types'
+import { DELETE_TICKET } from '../../apollo/mutations'
+import { useGuardByRoles } from '../../hooks/useGuardByRoles'
+import { GUARD_ROUTES } from '../../GuardConfig'
 
 
 const ProjectTicketPage: NextPage = () => {
 
+	const {authedUser,isAllow} = useGuardByRoles(GUARD_ROUTES.ticket.page, "/login")
+
 	const router = useRouter()
+	console.log(router)
 	const ticketID = router.query.slug
 	
-
+  //------ Call API --------------------------
   const [getTicket,{data , loading, error }] = useLazyQuery<TicketData>(GET_TICKET)
-  const DELETE_TICKET = gql`
-		mutation DeleteTicket($where: TicketWhereUniqueInput!) {
-			deleteTicket(where: $where) {
-				id
-				title
-			}
-		}
-		`
-  const [deleteTicket,{loading : deleteTicketLoading}]= useMutation(DELETE_TICKET, {onCompleted: () => router.push(`/${router.query.project}`)})
+  const [deleteTicket,{loading : deleteTicketLoading}]= useMutation(DELETE_TICKET, {
+		onCompleted: () => router.push(`/${router.query.project}`)
+	})
 
 	useEffect(() => {
     if (router.query.slug) {
@@ -51,6 +51,7 @@ const ProjectTicketPage: NextPage = () => {
 	}
 
 	function btnDelete() {
+		if(!authedUser || !GUARD_ROUTES.ticket.actions.delete.includes(authedUser?.roles)) return 
 		return (
 		<Button 
 			outlined

@@ -13,11 +13,19 @@ import { PlusSmIcon } from '@heroicons/react/outline'
 // Queries
 import { GET_PROJECTS } from '../apollo/queries'
 // Types
-import { Project, ProjectsData} from '../types'
+import { Project, ProjectsData } from '../types'
 import CreateProjectModal from '../components/project/CreateProjectModal'
+//hooks
+import { useGuardByRoles } from '../hooks/useGuardByRoles'
+//config
+import { GUARD_ROUTES } from '../GuardConfig'
+
+
+
 
 const ProjectsPage: NextPage = () => {
-	const { loading, error, data } = useQuery<ProjectsData>(GET_PROJECTS)
+ 	const {authedUser,isAllow} = useGuardByRoles(GUARD_ROUTES.projects.page, "/login")
+	const { loading, data } = useQuery<ProjectsData>(GET_PROJECTS)
 	const [searchValue, setSearchValue] = useState<string | null>(null)
 	//Status de la modal de création de ticket
 	const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
@@ -36,33 +44,47 @@ const ProjectsPage: NextPage = () => {
 		setSearchValue(e.currentTarget.value)
 	}
 
+	function renderTopBtn() {
+		if (authedUser &&
+			GUARD_ROUTES.project.actions &&
+			GUARD_ROUTES.project.actions.create &&
+			GUARD_ROUTES.project.actions.create.includes(authedUser?.roles)
+			) {
+			return (
+				<Button
+					onClick={() => setIsOpenModal(true)}
+					icon={<PlusSmIcon className='h-5' />}
+				>
+					Ajouter un projet
+				</Button>
+			)
+		}
+	}
+
 	return (
 		<div className={'bg-gray-50 flex min-h-screen flex-col justify-between'}>
-			<Head>
-				<title>Projets</title>
-			</Head>
-			<BaseLayout
-				name={'Projets'}
-				button={
-					<Button
-						onClick={() => setIsOpenModal(true)}
-						icon={<PlusSmIcon className='h-5' />}
-					>
-						Ajouter un projet
-					</Button>
-				}
-			>
-				<>
-					<ProjectHeader handleSearch={handleSearch} />
-					{loading && (
-						<Loader className='absolute top-1/2 left-1/2 h-20 -translate-x-1/2 -translate-y-1/2 text-primary' />
-					)}
-					{!loading && data?.projects && (
-						<Projects projects={filterProjects(data.projects)} setIsOpenModal={setIsOpenModal} />
-					)}
-					<CreateProjectModal setIsOpenModal={setIsOpenModal} isOpen={isOpenModal} />
-				</>
-			</BaseLayout>
+			{	isAllow && 
+			<>
+				<Head>
+					<title>Projets</title>
+				</Head>
+				<BaseLayout
+					name={'Projets'}
+					button={ renderTopBtn() }
+				>
+					<>
+						<ProjectHeader handleSearch={handleSearch} />
+						{loading && (
+							<Loader className='absolute top-1/2 left-1/2 h-20 -translate-x-1/2 -translate-y-1/2 text-primary' />
+						)}
+						{!loading && data?.projects && (
+							<Projects projects={filterProjects(data.projects)} setIsOpenModal={setIsOpenModal} />
+						)}
+						<CreateProjectModal setIsOpenModal={setIsOpenModal} isOpen={isOpenModal} />
+					</>
+				</BaseLayout>
+			</>
+			}
 		</div>
 	)
 }

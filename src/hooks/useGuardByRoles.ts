@@ -27,12 +27,9 @@ export function useGuardByRoles (roles:Role[], redirectPath?:string):UseGuardByR
 		fetchPolicy: "no-cache" //Désactive le cache pour cette query
 	})
 
-  authCtx?.authUser
-
 	useLayoutEffect(() => {
 		(async ()=> {
 			await getMe().then(({data})=>{
-        console.log(roles)
 				if(data && data.me && roles.includes(data.me.roles)){
 					authCtx?.setAuthUser(data.me)  //Set l'utilisateur dans le context
 					setAuthedUser(data.me)

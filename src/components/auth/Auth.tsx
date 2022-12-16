@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 
 interface IAuthProps {
@@ -39,6 +40,13 @@ export function Auth({children, title, subtitle, authType}:IAuthProps) {
         <p className='text-center text-xs uppercase text-gray-300'>{subtitle}</p>
       </header>
       { children }
+      <span className='flex justify-center text-[0.75rem] mt-2 text-grey-400 mx-auto w-full hover:text-de'>
+        { authType === "register" ?
+         <Link className="mx-auto hover:text-primary" href='/login'>Déjà un compte ? Se connecter</Link>
+         :
+         <Link className="mx-auto hover:text-primary" href='/register'>Pas encore de compte ? S'inscrire</Link>
+         }
+        </span>
     </div>
   )
 }

@@ -16,6 +16,7 @@ interface InputGroupProps  {
 	type: string
 	field: string
 	placeholder: string
+	helper?: string
 	autoComplete?: string
 	register: UseFormRegister<any>
 	errors: Record<string, FieldError>
@@ -23,7 +24,7 @@ interface InputGroupProps  {
 }
 
 
-export function InputGroup ({ label, type, placeholder, autoComplete, register, validator, field, errors}:InputGroupProps) {
+export function InputGroup ({ label, type, placeholder, helper, autoComplete, register, validator, field, errors}:InputGroupProps) {
 
   return   (
 		<div>
@@ -40,6 +41,7 @@ export function InputGroup ({ label, type, placeholder, autoComplete, register, 
 					/>
 					{errors[field] && <ExclamationCircleIcon className='absolute h-4 top-1/2 right-2 transform -translate-y-1/2 stroke-alert_dark '/>}
 				</div>
+				{helper && <span className='text-xs text-grey-500'>{helper}</span>}
 				{errors? errors[field] &&<ErrorInput errors={errors} field={field}/> : null}
 		</div>
 	)
