@@ -10,7 +10,7 @@ import Table from '../../components/common/table/Table'
 import TicketListFilters from '../../components/ticket/TicketListFilters'
 import Badge from '../../components/common/badge/Badge'
 import { CreateTicketModal } from '../../components/ticket/CreateTicketModal'
-import {NoResultTicketTable} from '../../components/ticket/NoResultTicketTable'
+import { NoResultTicketTable } from '../../components/ticket/NoResultTicketTable'
 //Librairies
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { PlusSmIcon, TrashIcon } from '@heroicons/react/outline'
@@ -63,6 +63,7 @@ const ProjectPage: NextPage = () => {
 	})
 
 	useEffect(() => {
+		console.log('test')
 		getProject()
 	}, [])
 	
@@ -110,9 +111,9 @@ const ProjectPage: NextPage = () => {
 
 	// Tableau qui fournie les liens pour chaque ligne du tableau
 	// return "/[projectId}/[ticketId]"
-	const rowLinkPath = data?.project.tickets.map((ticket) => {
-		const {id: ticketId } = ticket
-		const path = `${projectId}/${ticketId}` 
+	const rowLinkPath = data?.project.tickets.map(ticket => {
+		const { id: ticketId } = ticket
+		const path = `${projectId}/${ticketId}`
 		return path
 	})
 
@@ -136,7 +137,7 @@ const ProjectPage: NextPage = () => {
 				}
 			}
 		}
-		return(
+		return (
 			<>
 				{
 					(authedUser && GUARD_ROUTES.project.actions.delete.includes(authedUser?.roles)) && 
@@ -191,7 +192,7 @@ const ProjectPage: NextPage = () => {
 						wip={statusCount.wip}
 						review={statusCount.review}
 						done={statusCount.done}
-						subject={data?.project.subject || ""}
+						subject={data?.project.subject || ''}
 					/>
 					<h2 className={'mb-2 mt-8 font-medium uppercase text-secondary'}>Tickets</h2>
 					<section className='relative' id='table-project'>
@@ -208,8 +209,6 @@ const ProjectPage: NextPage = () => {
 							/>
 						}
 					/>
-					</section>
-					<CreateTicketModal setIsOpenModal={setIsOpenModal}  projectId={projectId as string} isOpen={isOpenModal}/>
 				</>
 			</BaseLayout>
 			</>
