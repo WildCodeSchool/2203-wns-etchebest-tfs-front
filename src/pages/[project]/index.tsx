@@ -10,7 +10,7 @@ import Table from '../../components/common/table/Table'
 import TicketListFilters from '../../components/ticket/TicketListFilters'
 import Badge from '../../components/common/badge/Badge'
 import { CreateTicketModal } from '../../components/ticket/CreateTicketModal'
-import {NoResultTicketTable} from '../../components/ticket/NoResultTicketTable'
+import { NoResultTicketTable } from '../../components/ticket/NoResultTicketTable'
 //Librairies
 import { useLazyQuery, useMutation } from '@apollo/client'
 import { PlusSmIcon, TrashIcon } from '@heroicons/react/outline'
@@ -27,9 +27,6 @@ import { CreateOrAddLabel } from '../../components/ticket/label/inputLabel/Creat
 import { castPriorityToEmoji } from '../../utils/castPriorityToEmoji'
 import { statusTrad } from '../../utils/statusTrad'
 
-
-
-
 const ProjectPage: NextPage = () => {
 	//Status de la modal de création de ticket
 	const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
@@ -37,24 +34,27 @@ const ProjectPage: NextPage = () => {
 	const router = useRouter()
 	const { project: projectId } = router.query
 
-	const [deleteProject, {loading: loadingDeleteProject}] = useMutation(DELETE_PROJECT, {
+	const [deleteProject, { loading: loadingDeleteProject }] = useMutation(DELETE_PROJECT, {
 		onCompleted: () => router.push(`/`),
-		onError: ()=> {throw new Error(`Impossible de supprimer le projet`)},
-		})
+		onError: () => {
+			throw new Error(`Impossible de supprimer le projet`)
+		}
+	})
 
-	const [deleteTicket] = useMutation(DELETE_TICKET, { refetchQueries:[
-		{
-			query: GET_PROJECT,
-			variables: {
-				where: {
-					id: Number(projectId)
+	const [deleteTicket] = useMutation(DELETE_TICKET, {
+		refetchQueries: [
+			{
+				query: GET_PROJECT,
+				variables: {
+					where: {
+						id: Number(projectId)
+					}
 				}
 			}
-		}
-	]})
+		]
+	})
 
-
-	const [getProject,{ data }] = useLazyQuery<ProjectData>(GET_PROJECT, {
+	const [getProject, { data }] = useLazyQuery<ProjectData>(GET_PROJECT, {
 		variables: {
 			where: {
 				id: Number(projectId)
@@ -63,10 +63,9 @@ const ProjectPage: NextPage = () => {
 	})
 
 	useEffect(() => {
+		console.log('test')
 		getProject()
 	}, [])
-	
-
 
 	const statusCount = {
 		open: countTicketsByStatus(data?.project.tickets, Status.OPEN),
@@ -112,23 +111,25 @@ const ProjectPage: NextPage = () => {
 
 	// Tableau qui fournie les liens pour chaque ligne du tableau
 	// return "/[projectId}/[ticketId]"
-	const rowLinkPath = data?.project.tickets.map((ticket) => {
-		const {id: ticketId } = ticket
-		const path = `${projectId}/${ticketId}` 
+	const rowLinkPath = data?.project.tickets.map(ticket => {
+		const { id: ticketId } = ticket
+		const path = `${projectId}/${ticketId}`
 		return path
 	})
-//------------------------------------------------------------------------
+	//------------------------------------------------------------------------
 
-function handleActionInTable(_:MouseEvent, action: "delete" | "edit", id: string){
-	
-	switch (action) {
-		case "edit": console.log("edit")
-			break;
-		case "delete": deleteTicket({variables:{where: {id:Number(id)}}})
-			break;
-		default: throw new Error(`L'action '${action}' dans le tableau est inconnu`);
+	function handleActionInTable(_: MouseEvent, action: 'delete' | 'edit', id: string) {
+		switch (action) {
+			case 'edit':
+				console.log('edit')
+				break
+			case 'delete':
+				deleteTicket({ variables: { where: { id: Number(id) } } })
+				break
+			default:
+				throw new Error(`L'action '${action}' dans le tableau est inconnu`)
+		}
 	}
-}
 
 	const headerButton = () => {
 		const variable = {
@@ -138,18 +139,23 @@ function handleActionInTable(_:MouseEvent, action: "delete" | "edit", id: string
 				}
 			}
 		}
-		return(
+		return (
 			<>
-				<Button 
-					outlined 
+				<Button
+					outlined
 					alert
 					onClick={() => deleteProject(variable)}
 					loading={loadingDeleteProject}
 					icon={<TrashIcon className='h-5' />}
 				>
-						Supprimer ce projet
+					Supprimer ce projet
 				</Button>
-				<Button onClick={() => setIsOpenModal(true)} icon={<PlusSmIcon className='h-5' />}>Ajouter un Ticket</Button>
+				<Button
+					onClick={() => setIsOpenModal(true)}
+					icon={<PlusSmIcon className='h-5' />}
+				>
+					Ajouter un Ticket
+				</Button>
 			</>
 		)
 	}
@@ -159,40 +165,42 @@ function handleActionInTable(_:MouseEvent, action: "delete" | "edit", id: string
 			<Head>
 				<title>{data?.project.title}</title>
 			</Head>
-			<BaseLayout
-				name={'Projet/' + data?.project.title || ''}
-				button={
-					headerButton()
-				}
-			>
+			<BaseLayout name={'Projet/' + data?.project.title || ''} button={headerButton()}>
 				<>
-				<CreateOrAddLabel/>
+					<CreateOrAddLabel />
 					<ProjectItemOverview
 						opened={statusCount.open}
 						wip={statusCount.wip}
 						review={statusCount.review}
 						done={statusCount.done}
-						subject={data?.project.subject || ""}
+						subject={data?.project.subject || ''}
 					/>
 					<h2 className={'mb-2 mt-8 font-medium uppercase text-secondary'}>Tickets</h2>
 					<section className='relative' id='table-project'>
 						<TicketListFilters />
-						<Table actions={
-							{
-							edit:true,
-							delete:true,
-							handleClick:(_:MouseEvent, action:"delete" | "edit", id:string)=> handleActionInTable(_,action, id)
-						 }
-						}
-						headerItems={tableHeaderItems}
-						rowItems={rowItems}
-						rowLinkPath={rowLinkPath}
-						noResultContent={<NoResultTicketTable
-						projectName={data?.project.title}
-						setIsOpenModal={setIsOpenModal}/>}
-					/>
+						<Table
+							actions={{
+								edit: true,
+								delete: true,
+								handleClick: (_: MouseEvent, action: 'delete' | 'edit', id: string) =>
+									handleActionInTable(_, action, id)
+							}}
+							headerItems={tableHeaderItems}
+							rowItems={rowItems}
+							rowLinkPath={rowLinkPath}
+							noResultContent={
+								<NoResultTicketTable
+									projectName={data?.project.title}
+									setIsOpenModal={setIsOpenModal}
+								/>
+							}
+						/>
 					</section>
-					<CreateTicketModal setIsOpenModal={setIsOpenModal}  projectId={projectId as string} isOpen={isOpenModal}/>
+					<CreateTicketModal
+						setIsOpenModal={setIsOpenModal}
+						projectId={projectId as string}
+						isOpen={isOpenModal}
+					/>
 				</>
 			</BaseLayout>
 		</div>
