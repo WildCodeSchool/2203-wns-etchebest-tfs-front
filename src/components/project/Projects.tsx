@@ -1,28 +1,30 @@
 import { Dispatch, SetStateAction, useContext, useState } from 'react'
 //Libraries
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
+import { SubmitHandler, useForm } from 'react-hook-form'
 //Context
 import StoreContext from '../../context/StoreContext'
+import { AuthContext } from '../../UserContext'
 //Components
 import ProjectGridElement from './ProjectGridElement'
-import formatDate from '../../utils/formatDate'
 import Table from '../common/table/Table'
 import { NoResultProjectTable } from './NoResultProjectTable'
+import TextareaGroup from '../common/form/TextareaGroup'
+import { InputGroup } from '../common/form/input/InputGroup'
+import Button from '../common/Button'
+import Modal from '../common/modal/Modal'
 //Mutations
-import { DELETE_PROJECT } from '../../apollo/mutations'
+import { DELETE_PROJECT, UPDATE_PROJECT } from '../../apollo/mutations'
 //Queries
 import { GET_PROJECTS } from '../../apollo/queries'
 //Utils
+import formatDate from '../../utils/formatDate'
 import countTicketsByStatus from '../../utils/countTicketsStatus'
+import { isEmpty } from '../../utils/objectIsEmpty'
 //Types
 import { Project, ValidatorForm } from '../../types'
-import Modal from '../common/modal/Modal'
-import register from '../../pages/register'
-import { isEmpty } from '../../utils/objectIsEmpty'
-import Button from '../common/Button'
-import { InputGroup } from '../common/form/input/InputGroup'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import TextareaGroup from '../common/form/TextareaGroup'
+//Config
+import { GUARD_ROUTES } from '../../GuardConfig'
 
 
 interface ProjectsProps {
@@ -31,6 +33,7 @@ interface ProjectsProps {
 }
 
 export default function Projects({ projects, setIsOpenModal }: ProjectsProps) {
+	const authCtx = useContext(AuthContext);
 	
 	const { projectView } = useContext(StoreContext)
   const [currentProjectEdit, setcurrentProjectEdit] = useState<Project>()
@@ -84,7 +87,19 @@ export default function Projects({ projects, setIsOpenModal }: ProjectsProps) {
 	}
 
 	const [isOpenModalEdit, setIsOpenModalEdit] = useState<boolean>(false)
-	
+
+	function tableActionByRoles(){
+		//Si pas de user ou pas de droit pour delete et edit on retourne
+		if((!authCtx?.authUser || !GUARD_ROUTES.project.actions.update.includes(authCtx?.authUser.roles)) 
+		&& (!authCtx?.authUser || !GUARD_ROUTES.project.actions.delete.includes(authCtx?.authUser.roles))){
+			return null
+		}
+		return	{
+			edit: (authCtx?.authUser && GUARD_ROUTES.project.actions.update.includes(authCtx?.authUser.roles)) ? true : false,
+			delete:(authCtx?.authUser && GUARD_ROUTES.project.actions.delete.includes(authCtx?.authUser.roles)) ? true : false,
+			handleClick:(_:MouseEvent, action:"delete" | "edit", id:string)=>handleActionInTable(_,action, id)
+		 }
+	}
 
 	return (
 		<>
@@ -104,11 +119,7 @@ export default function Projects({ projects, setIsOpenModal }: ProjectsProps) {
 						rowLinkPath={rowLinkPath}
 						noResultContent={<NoResultProjectTable setIsOpenModal={setIsOpenModal}/>}
 						actions={
-							{
-							edit:true,
-							delete:true,
-							handleClick:(_:MouseEvent, action:"delete" | "edit", id:string)=>handleActionInTable(_,action, id)
-						 }
+							tableActionByRoles()
 						}
 					/>
 				</section>
@@ -136,24 +147,18 @@ function UpdateProjectModal({ setIsOpenModal, isOpen, currentProject }: UpdatePr
 		handleSubmit,
 	  watch,
 		formState: { errors },
-	} = useForm<EditProjectForm>({ mode: 'onTouched', defaultValues:{
-																																		title: currentProject?.title, 
-																																		subject: currentProject?.subject
-																																	}})
+	} = useForm<EditProjectForm>({
+		mode: 'onTouched',
+		defaultValues:{
+			title: currentProject?.title, 
+			subject: currentProject?.subject
+			}
+		})
 
-	const UPDATE_PROJECT = gql`
-	mutation UpdateProject($data: ProjectUpdateInput!, $where: ProjectWhereUniqueInput!) {
-		updateProject(data: $data, where: $where) {
-			id
-			title
-			subject
-		}
-	}
-	`
 
 	const [EditProject] = useMutation(UPDATE_PROJECT, {
 		onCompleted: ()=> setIsOpenModal(false),
-		onError: ()=> {throw new Error(`Impossible de mettre à jour le projet ${currentProject?.title}`)}
+		onError: (e)=> {throw new Error(`Impossible de mettre à jour le projet ${currentProject?.title}`)}
 	})
 
 	function close(){
@@ -182,12 +187,20 @@ function UpdateProjectModal({ setIsOpenModal, isOpen, currentProject }: UpdatePr
 			required: {
 				value: true,
 				message: 'Le titre est requis'
+			},
+			maxLength: {
+				value: 70,
+				message: 'Le titre ne doit pas dépasser 70 caractères'
 			}
 		},
 		subject: {
 			required: {
 				value: true,
 				message: 'Le sujet est requis'
+			},
+			maxLength: {
+				value: 255,
+				message: 'Le sujet ne doit pas dépasser 255 caractères'
 			}
 		},
 	}
@@ -200,6 +213,7 @@ function UpdateProjectModal({ setIsOpenModal, isOpen, currentProject }: UpdatePr
 					label='Titre'
 					type='text'
 					field='title'
+					helper="Ceci est un helper"
 					register={register}
 					errors={errors}
 					validator={validators}
@@ -210,6 +224,8 @@ function UpdateProjectModal({ setIsOpenModal, isOpen, currentProject }: UpdatePr
 					name="subject"
 					placeholder="Veuillez saisir un sujet"
 					register={register}
+					validator={validators}
+					errors={errors}
 					watch={watch}
 				/>
 				<div className="mt-4 flex justify-end gap-4">

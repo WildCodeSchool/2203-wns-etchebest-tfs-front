@@ -28,7 +28,7 @@ const mocks = [
 	}
 ]
 
-describe('Project', () => {
+describe.skip('Project', () => {
 	it('Should display the subject once', async () => {
 		render(
 			<MockedProvider mocks={mocks} addTypename={false}>

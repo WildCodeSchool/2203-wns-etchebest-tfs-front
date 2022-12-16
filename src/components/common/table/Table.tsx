@@ -8,7 +8,7 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
 interface TableProps {
   headerItems: string[]
   rowItems: any[][] | undefined //A FAIRE ! typer tableau string | number
-  actions?: {edit:boolean, delete:boolean, handleClick:Function}
+  actions?: {edit:boolean, delete:boolean, handleClick:Function} | null
   rowLinkPath?: string[]
   noResultContent: string | JSX.Element
 }
@@ -29,6 +29,16 @@ export default function Table({headerItems, rowItems, actions, rowLinkPath, noRe
   throw new Error("The number of rowItems and rowLinkPath must be the same")
  }
 
+ //Supprime la colonne ACTION si aucune action n'est définie
+  function removeActionColumn(){
+    if(!actions){
+      return headerItems.filter((item)=> item !== "ACTION")
+    }
+    return headerItems
+  }
+
+  console.log(removeActionColumn())
+  
  //L'id sert unique
   let rowItemsWithoutId
   if(rowItems){
@@ -44,7 +54,7 @@ export default function Table({headerItems, rowItems, actions, rowLinkPath, noRe
     const [id] = rowItems[i]
 
     return (
-    <td className={styles.table_content_cell__action}>
+    <td className={styles.table_content_cell__action} data-testid="table-structure-actions">
       {actions.edit &&
       <button
         className='bg-secondary text-white p-2 rounded-sm hover:bg-primary'
@@ -54,6 +64,7 @@ export default function Table({headerItems, rowItems, actions, rowLinkPath, noRe
           actions.handleClick(e, "edit", id )
          }
         }
+        data-testid="table-structure-action"
       >
         <PencilIcon className='h-4'/>
       </button>
@@ -68,6 +79,7 @@ export default function Table({headerItems, rowItems, actions, rowLinkPath, noRe
           actions.handleClick(e, "delete", id)
          }
         }
+        data-testid="table-structure-action"
       >
         <TrashIcon className='h-4'/>
       </button>
@@ -77,11 +89,11 @@ export default function Table({headerItems, rowItems, actions, rowLinkPath, noRe
   }
 
   return (
-    <div className="overflow-x-auto relative rounded-sm border border-grey-300">
-      <table className={styles.table}>
+    <div data-testid="table-structure" className="overflow-x-auto relative rounded-sm border border-grey-300">
+      <table  className={styles.table}>
         <thead className={styles.table_header}>
           <tr>
-            {headerItems.map((item, index) => {
+            {removeActionColumn().map((item, index) => {
               return (
                 <th key={index} className={styles.table_header_cell}>
                   {item}
@@ -95,7 +107,7 @@ export default function Table({headerItems, rowItems, actions, rowLinkPath, noRe
           { rowLinkPath ? rowItemsWithoutId?.map((item, i) => {
             return (
               <Link key={i} href={rowLinkPath[i]}>
-              <tr key={i} className={styles.table_content_row}>
+              <tr data-testid="table-structure-row" key={i} className={styles.table_content_row}>
                 {item.map((item, i) => {
                   return (
                     <td key={i} className={styles.table_content_cell}>
@@ -113,7 +125,7 @@ export default function Table({headerItems, rowItems, actions, rowLinkPath, noRe
 
           rowItemsWithoutId?.map((item, i) => {    {/* //Retourne chaque lignes du tableau sans lien */}
             return (
-              <tr key={i} className={styles.table_content_row}>
+              <tr data-testid="table-structure-row" key={i} className={styles.table_content_row}>
                 {item.map((item, i) => {
                   return (
                     <td key={i} className={styles.table_content_cell}>
@@ -132,11 +144,3 @@ export default function Table({headerItems, rowItems, actions, rowLinkPath, noRe
     </div>
   )
 }
-
-
-
-
-
-
-
-
