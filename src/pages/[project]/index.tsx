@@ -30,7 +30,7 @@ import { useGuardByRoles } from '../../hooks/useGuardByRoles'
 import { GUARD_ROUTES } from '../../GuardConfig'
 
 const ProjectPage: NextPage = () => {
-	const {authedUser,isAllow} = useGuardByRoles(GUARD_ROUTES.project.page, "/login")
+	const { authedUser, isAllow } = useGuardByRoles(GUARD_ROUTES.project.page, '/login')
 	//Status de la modal de création de ticket
 	const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
 
@@ -38,23 +38,27 @@ const ProjectPage: NextPage = () => {
 	const router = useRouter()
 	const { project: projectId } = router.query
 	//---------  Mutation pour supprimer le projet  ------------
-	const [deleteProject, {loading: loadingDeleteProject}] = useMutation(DELETE_PROJECT, {
+	const [deleteProject, { loading: loadingDeleteProject }] = useMutation(DELETE_PROJECT, {
 		onCompleted: () => router.push(`/`),
-		onError: ()=> {throw new Error(`Impossible de supprimer le projet`)},
-		})
+		onError: () => {
+			throw new Error(`Impossible de supprimer le projet`)
+		}
+	})
 	//---------  Mutation pour supprimer un ticket  ------------
-	const [deleteTicket] = useMutation(DELETE_TICKET, { refetchQueries:[
-		{
-			query: GET_PROJECT,
-			variables: {
-				where: {
-					id: Number(projectId)
+	const [deleteTicket] = useMutation(DELETE_TICKET, {
+		refetchQueries: [
+			{
+				query: GET_PROJECT,
+				variables: {
+					where: {
+						id: Number(projectId)
+					}
 				}
 			}
-		}
-	]})
+		]
+	})
 	//---------  Récupération des données du projet  ------------
-	const [getProject,{ data }] = useLazyQuery<ProjectData>(GET_PROJECT, {
+	const [getProject, { data }] = useLazyQuery<ProjectData>(GET_PROJECT, {
 		variables: {
 			where: {
 				id: Number(projectId)
@@ -66,7 +70,7 @@ const ProjectPage: NextPage = () => {
 		console.log('test')
 		getProject()
 	}, [])
-	
+
 	//---------  Comptage des tickets par status  ------------
 	const statusCount = {
 		open: countTicketsByStatus(data?.project.tickets, Status.OPEN),
@@ -74,7 +78,7 @@ const ProjectPage: NextPage = () => {
 		review: countTicketsByStatus(data?.project.tickets, Status.REVIEW),
 		done: countTicketsByStatus(data?.project.tickets, Status.CLOSED)
 	}
-	
+
 	//---------  Creation des data pour le tableau de tickets  ------------
 	const tableHeaderItems = [
 		'PRIORITY',
@@ -118,14 +122,16 @@ const ProjectPage: NextPage = () => {
 	})
 
 	//---------  Gestion des actions effectuées dans le tableau de projets  ------------
-	function handleActionInTable(_:MouseEvent, action: "delete" | "edit", id: string){
-		
+	function handleActionInTable(_: MouseEvent, action: 'delete' | 'edit', id: string) {
 		switch (action) {
-			case "edit": console.log("edit")
-				break;
-			case "delete": deleteTicket({variables:{where: {id:Number(id)}}})
-				break;
-			default: throw new Error(`L'action '${action}' dans le tableau est inconnu`);
+			case 'edit':
+				console.log('edit')
+				break
+			case 'delete':
+				deleteTicket({ variables: { where: { id: Number(id) } } })
+				break
+			default:
+				throw new Error(`L'action '${action}' dans le tableau est inconnu`)
 		}
 	}
 
@@ -139,80 +145,88 @@ const ProjectPage: NextPage = () => {
 		}
 		return (
 			<>
-				{
-					(authedUser && GUARD_ROUTES.project.actions.delete.includes(authedUser?.roles)) && 
-						<Button 
-							outlined 
-							alert
-							onClick={() => deleteProject(variable)}
-							loading={loadingDeleteProject}
-							icon={<TrashIcon className='h-5'/>}
-						>
-								Supprimer ce projet
-						</Button>
-				}
-				{
-					(authedUser && GUARD_ROUTES.ticket.actions.create.includes(authedUser?.roles)) &&
-						<Button onClick={() => setIsOpenModal(true)} icon={<PlusSmIcon className='h-5' />}>Ajouter un Ticket</Button>
-				}
+				{authedUser && GUARD_ROUTES.project.actions.delete.includes(authedUser?.roles) && (
+					<Button
+						outlined
+						alert
+						onClick={() => deleteProject(variable)}
+						loading={loadingDeleteProject}
+						icon={<TrashIcon className='h-5' />}
+					>
+						Supprimer ce projet
+					</Button>
+				)}
+				{authedUser && GUARD_ROUTES.ticket.actions.create.includes(authedUser?.roles) && (
+					<Button
+						onClick={() => setIsOpenModal(true)}
+						icon={<PlusSmIcon className='h-5' />}
+					>
+						Ajouter un Ticket
+					</Button>
+				)}
 			</>
 		)
 	}
 
-	function tableActionByRoles(){
+	function tableActionByRoles() {
 		//Si pas de user ou pas de droit pour delete et edit on retourne
-		if((!authedUser|| !GUARD_ROUTES.ticket.actions.update.includes(authedUser.roles)) 
-		&& (!authedUser || !GUARD_ROUTES.ticket.actions.delete.includes(authedUser.roles))){
+		if (
+			(!authedUser || !GUARD_ROUTES.ticket.actions.update.includes(authedUser.roles)) &&
+			(!authedUser || !GUARD_ROUTES.ticket.actions.delete.includes(authedUser.roles))
+		) {
 			return null
 		}
-		return	{
-			edit: (authedUser && GUARD_ROUTES.ticket.actions.update.includes(authedUser.roles)) ? true : false,
-			delete:(authedUser && GUARD_ROUTES.ticket.actions.delete.includes(authedUser.roles)) ? true : false,
-			handleClick:(_:MouseEvent, action:"delete" | "edit", id:string)=>handleActionInTable(_,action, id)
-		 }
+		return {
+			edit:
+				authedUser && GUARD_ROUTES.ticket.actions.update.includes(authedUser.roles)
+					? true
+					: false,
+			delete:
+				authedUser && GUARD_ROUTES.ticket.actions.delete.includes(authedUser.roles)
+					? true
+					: false,
+			handleClick: (_: MouseEvent, action: 'delete' | 'edit', id: string) =>
+				handleActionInTable(_, action, id)
+		}
 	}
 
 	return (
 		<div className={'bg-gray-50 flex min-h-screen flex-col justify-between'}>
-			{isAllow && 
-			<>
-			<Head>
-				<title>{data?.project.title}</title>
-			</Head>
-			<BaseLayout
-				name={'Projet/' + data?.project.title || ''}
-				button={
-					renderBtnActionByRole()
-				}
-			>
+			{isAllow && (
 				<>
-				{/* <CreateOrAddLabel/> */}
-					<ProjectItemOverview
-						opened={statusCount.open}
-						wip={statusCount.wip}
-						review={statusCount.review}
-						done={statusCount.done}
-						subject={data?.project.subject || ''}
-					/>
-					<h2 className={'mb-2 mt-8 font-medium uppercase text-secondary'}>Tickets</h2>
-					<section className='relative' id='table-project'>
-						<TicketListFilters />
-						<Table 
-						actions={tableActionByRoles()}
-						headerItems={tableHeaderItems}
-						rowItems={rowItems}
-						rowLinkPath={rowLinkPath}
-						noResultContent={
-							<NoResultTicketTable
-								projectName={data?.project.title}
-								setIsOpenModal={setIsOpenModal}
+					<Head>
+						<title>{data?.project.title}</title>
+					</Head>
+					<BaseLayout
+						name={'Projet/' + data?.project.title || ''}
+						button={renderBtnActionByRole()}
+					>
+						<ProjectItemOverview
+							opened={statusCount.open}
+							wip={statusCount.wip}
+							review={statusCount.review}
+							done={statusCount.done}
+							subject={data?.project.subject || ''}
+						/>
+						<h2 className={'mb-2 mt-8 font-medium uppercase text-secondary'}>Tickets</h2>
+						<section className='relative' id='table-project'>
+							<TicketListFilters />
+							<Table
+								actions={tableActionByRoles()}
+								headerItems={tableHeaderItems}
+								rowItems={rowItems}
+								rowLinkPath={rowLinkPath}
+								noResultContent={
+									<NoResultTicketTable
+										projectName={data?.project.title}
+										setIsOpenModal={setIsOpenModal}
+									/>
+								}
 							/>
-						}
-					/>
+						</section>
+					</BaseLayout>
 				</>
-			</BaseLayout>
-			</>
-			}
+			)}
 		</div>
 	)
 }
