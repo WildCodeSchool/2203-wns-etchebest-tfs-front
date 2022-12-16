@@ -224,6 +224,11 @@ const ProjectPage: NextPage = () => {
 								}
 							/>
 						</section>
+						<CreateTicketModal
+							setIsOpenModal={setIsOpenModal}
+							projectId={projectId as string}
+							isOpen={isOpenModal}
+						/>
 					</BaseLayout>
 				</>
 			)}
