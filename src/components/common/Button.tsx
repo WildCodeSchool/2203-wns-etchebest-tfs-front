@@ -31,8 +31,6 @@ export default function Button(props: Properties): ReactElement {
 		classes = classNames(classes, 'w-full')
 	}
 	if(loading) {
-		//Permet de garder le bouton de la même taille.
-		//Le loader est positionné en absolute par dessus le text.
 		classes = classNames(classes, 'text-transparent')
 	}
 	if(alert && !outlined){

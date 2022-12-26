@@ -1,11 +1,9 @@
 import {HTMLProps, useEffect, useRef} from "react"
 import { FieldError, UseFormRegister, UseFormWatch } from "react-hook-form"
-//Styles
-import styles from "./input/InputGroup.module.css"
-//Types
 import { ValidatorForm } from "../../../types"
 import { ErrorInput } from "./input/ErrorInput"
 import { ExclamationCircleIcon } from "@heroicons/react/outline"
+import styles from "./input/InputGroup.module.css"
 
 interface TextareaGroupProps extends HTMLProps<HTMLTextAreaElement> {
   label?: string

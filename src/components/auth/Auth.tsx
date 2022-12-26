@@ -10,7 +10,7 @@ interface IAuthProps {
   subtitle: string,
   authType: 'login' | 'register'
 }
-//Wrapper pour les formulaires de login et register
+//Wrapper for Login & Register forms
 export function Auth({children, title, subtitle, authType}:IAuthProps) {
   return (
 
@@ -26,7 +26,7 @@ export function Auth({children, title, subtitle, authType}:IAuthProps) {
             className='mx-auto mb-10 bg-secondary text-xs'
           />
         </div>
-       {/* Change la ponctuation en fin de phrase (. ou !) dans le pseudo élément after */}
+       {/* Use "." or "!" in pseudo-element after */}
        { authType === 'register' ?
          <h1 className='text-center mb-1 text-4xl font-bold after:content-["."] after:text-secondary'>
          {title}

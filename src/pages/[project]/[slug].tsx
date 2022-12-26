@@ -25,7 +25,7 @@ const ProjectTicketPage: NextPage = () => {
 	console.log(router)
 	const ticketID = router.query.slug
 
-	//------ Call API --------------------------
+	//------ API CALL --------------------------
 	const [getTicket, { data, loading, error }] = useLazyQuery<TicketData>(GET_TICKET)
 	const [deleteTicket, { loading: deleteTicketLoading }] = useMutation(DELETE_TICKET, {
 		onCompleted: () => router.push(`/${router.query.project}`)

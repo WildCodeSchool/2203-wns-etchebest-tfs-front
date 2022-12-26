@@ -1,11 +1,7 @@
 import { useState } from 'react'
-//Components
-import Badge from '../common/badge/Badge'
-//Libraries
 import { PlusSmIcon, SearchIcon } from '@heroicons/react/outline'
-//Types
 import { Status } from '../../types'
-
+import Badge from '../common/badge/Badge'
 
 interface Filters {
 	own: boolean
