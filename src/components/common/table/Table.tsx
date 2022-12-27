@@ -1,35 +1,32 @@
 import React from 'react'
 import Link from 'next/link';
-
-import styles from './Table.module.css';
 import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
+import styles from './Table.module.css';
 
 
 interface TableProps {
   headerItems: string[]
-  rowItems: any[][] | undefined //A FAIRE ! typer tableau string | number
+  rowItems: any[][] | undefined //TODO ! type array string | number
   actions?: {edit:boolean, delete:boolean, handleClick:Function} | null
   rowLinkPath?: string[]
   noResultContent: string | JSX.Element
 }
 
 /**
- * @param headerItems Tableau de string qui contient les titres des colonnes [col1, col2, col3]
- * @param rowItems Tableau de tableau de string qui contient les données à afficher 
- * dans le tableau [[row1col1, row1col2, row1col3], [row2col1, row2col2, row2col3]]
- * @param rowLinkPath Tableau de string qui contient les liens pour chaque ligne du tableau
- * @param noResultContent Contenu à afficher si le tableau est vide
- * @return Retourne un tableau html
- */
+ * @param headerItems Array of strings - columns titles [col1, col2, col3]
+ * @param rowItems Array of array of strings - datas to display in table: [[row1col1, row1col2, row1col3], [row2col1, row2col2, row2col3]]
+ * @param rowLinkPath Array of strings - contains link for each row of the table
+ * @param noResultContent Contntent to display if no result
+ * @return Returns html table
+*/
 
 export default function Table({headerItems, rowItems, actions, rowLinkPath, noResultContent}:TableProps) {
 
-  //Le nombre de ligne doit correspondre au nombre de chemin (path)
  if(rowLinkPath && (rowItems?.length !== rowLinkPath?.length)) {
   throw new Error("The number of rowItems and rowLinkPath must be the same")
  }
 
- //Supprime la colonne ACTION si aucune action n'est définie
+ //if no action defined, remove "ACTION" column
   function removeActionColumn(){
     if(!actions){
       return headerItems.filter((item)=> item !== "ACTION")
@@ -39,7 +36,7 @@ export default function Table({headerItems, rowItems, actions, rowLinkPath, noRe
 
   console.log(removeActionColumn())
   
- //L'id sert unique
+  //remove id from rowItems
   let rowItemsWithoutId
   if(rowItems){
     rowItemsWithoutId = rowItems.map((row)=>{
@@ -103,7 +100,7 @@ export default function Table({headerItems, rowItems, actions, rowLinkPath, noRe
           </tr>
         </thead>
         <tbody>
-          {/* //Retourne chaque lignes du tableau entourées d'un lien */}
+          {/* Transforms each row of the table into a link */}
           { rowLinkPath ? rowItemsWithoutId?.map((item, i) => {
             return (
               <Link key={i} href={rowLinkPath[i]}>
@@ -123,7 +120,7 @@ export default function Table({headerItems, rowItems, actions, rowLinkPath, noRe
           
           :
 
-          rowItemsWithoutId?.map((item, i) => {    {/* //Retourne chaque lignes du tableau sans lien */}
+          rowItemsWithoutId?.map((item, i) => {    {/* Rows are not links */}
             return (
               <tr data-testid="table-structure-row" key={i} className={styles.table_content_row}>
                 {item.map((item, i) => {

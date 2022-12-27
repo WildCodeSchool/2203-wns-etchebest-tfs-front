@@ -1,10 +1,7 @@
 import { useState } from 'react'
 import { ApolloError, gql, useLazyQuery, useMutation } from '@apollo/client'
-//Librairies
 import { CheckIcon } from '@heroicons/react/solid'
-//Queries
 import { GET_TICKET } from '../../apollo/queries'
-// utils
 import delay from '../../utils/delay'
 
 interface UserData {
@@ -25,9 +22,9 @@ export default function Combobox({ assignee, users, ticketId }: ComboboxProps) {
 
 	const [touched, setTouched] = useState(false)
 
-	// ---------------- Mise à jour de l'assigné ---------------
+	// ---------------- Update from assigned user ---------------
 
-	const UPDATE_USER_ASSIGN = gql`
+	const UPDATE_USER_ASSIGNED = gql`
 		mutation updateUserAssignId(
 			$data: TicketUpdateInput!
 			$where: TicketWhereUniqueInput!
@@ -46,7 +43,7 @@ export default function Combobox({ assignee, users, ticketId }: ComboboxProps) {
 		}
 	}
 
-	const [updateUserAssign, { loading }] = useMutation(UPDATE_USER_ASSIGN, {
+	const [updateUserAssign, { loading }] = useMutation(UPDATE_USER_ASSIGNED, {
 		onError: error => handleOnError(error),
 		refetchQueries: [
 			{
@@ -60,7 +57,7 @@ export default function Combobox({ assignee, users, ticketId }: ComboboxProps) {
 		]
 	})
 
-	// ---------------- Gestion de la recherche de l'utilisateur ---------------
+	// ---------------- Handle user search ---------------
 
 	const editQuery = (query: string) => {
 		setTouched(true)

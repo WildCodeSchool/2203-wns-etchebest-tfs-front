@@ -1,20 +1,13 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-//Libraries
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useLazyQuery, useMutation } from '@apollo/client'
-//Component
-import Button from '../common/Button'
-//Queries
 import { IS_EXIST_USER } from '../../apollo/queries'
-//Mutations
 import { REGISTER_USER } from '../../apollo/mutations'
-//Utils
 import { isEmpty } from '../../utils/objectIsEmpty'
 import { InputGroup } from '../common/form/input/InputGroup'
-//Types
+import Button from '../common/Button'
 import type { User, ValidatorForm } from '../../types'
-
 
 interface RegisterFormData extends Pick<User, "firstname" | "lastname" | "email" | "password"> {
 	confirmPassword: string
@@ -25,7 +18,6 @@ type ValidatorRegister = ValidatorForm<keyof RegisterFormData>
 export function RegisterForm() {
 	const [getisExistUser] = useLazyQuery<{isExistUser:boolean}>(IS_EXIST_USER)
 
-	//Form
 	const {
 		register,
 		handleSubmit,
@@ -184,7 +176,7 @@ export function RegisterForm() {
 				/>
 			</div>
 
-			{/* Confirm passwors */}
+			{/* Confirm password */}
 			<div className='col-span-2 mb-5'>
 				<InputGroup
 					label='Confirmation de passe'

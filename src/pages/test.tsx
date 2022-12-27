@@ -1,8 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-//Components
 import BaseLayout from '../layout/BaseLayout';
-//hooks
 import { useGuardByRoles } from '../hooks/useGuardByRoles';
 import { GUARD_ROUTES } from '../GuardConfig';
 import { NextRouter, useRouter } from 'next/router';

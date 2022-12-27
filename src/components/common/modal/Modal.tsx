@@ -2,6 +2,7 @@ import React, { useEffect, useState, PropsWithChildren } from 'react'
 import { createPortal } from 'react-dom'
 
 interface ModalProps extends PropsWithChildren {
+  children?: React.ReactNode | undefined
   close:Function
 }
 

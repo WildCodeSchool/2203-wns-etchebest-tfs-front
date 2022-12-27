@@ -1,15 +1,9 @@
-
 import React from 'react';
-//Librairies
 import { FieldError, UseFormRegister } from 'react-hook-form';
 import { ExclamationCircleIcon } from '@heroicons/react/outline'
-//Components
 import { ErrorInput } from './ErrorInput';
-//Styles
-import styles from "../input/InputGroup.module.css"
-//Types
 import { ValidatorForm } from '../../../../types';
-
+import styles from "../input/InputGroup.module.css"
 
 interface InputGroupProps  {
 	label: string

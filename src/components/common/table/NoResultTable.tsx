@@ -3,7 +3,7 @@ import { FolderOpenIcon } from '@heroicons/react/outline'
 
 
 interface NoResultTicketTableProps extends PropsWithChildren{
-  
+  children?: React.ReactNode | undefined
 }
 
 export function NoResultTicketTable({children}: NoResultTicketTableProps) {

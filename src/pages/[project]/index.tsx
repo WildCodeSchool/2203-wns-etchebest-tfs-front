@@ -31,20 +31,21 @@ import { GUARD_ROUTES } from '../../GuardConfig'
 
 const ProjectPage: NextPage = () => {
 	const { authedUser, isAllow } = useGuardByRoles(GUARD_ROUTES.project.page, '/login')
-	//Status de la modal de création de ticket
+	// Add ticket modal state
 	const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
 
-	// Récupération de l'id du projet dans l'url
+	// Get project ID from URL
 	const router = useRouter()
 	const { project: projectId } = router.query
-	//---------  Mutation pour supprimer le projet  ------------
+	
+	//---------  Delete project  ------------
 	const [deleteProject, { loading: loadingDeleteProject }] = useMutation(DELETE_PROJECT, {
 		onCompleted: () => router.push(`/`),
 		onError: () => {
 			throw new Error(`Impossible de supprimer le projet`)
 		}
 	})
-	//---------  Mutation pour supprimer un ticket  ------------
+	//---------  Delete ticket  ------------
 	const [deleteTicket] = useMutation(DELETE_TICKET, {
 		refetchQueries: [
 			{
@@ -57,7 +58,7 @@ const ProjectPage: NextPage = () => {
 			}
 		]
 	})
-	//---------  Récupération des données du projet  ------------
+	//---------  Project datas  ------------
 	const [getProject, { data }] = useLazyQuery<ProjectData>(GET_PROJECT, {
 		variables: {
 			where: {
@@ -71,7 +72,7 @@ const ProjectPage: NextPage = () => {
 		getProject()
 	}, [])
 
-	//---------  Comptage des tickets par status  ------------
+	//---------  Number of tickets by status  ------------
 	const statusCount = {
 		open: countTicketsByStatus(data?.project.tickets, Status.OPEN),
 		wip: countTicketsByStatus(data?.project.tickets, Status.IN_PROGRESS),
@@ -79,7 +80,7 @@ const ProjectPage: NextPage = () => {
 		done: countTicketsByStatus(data?.project.tickets, Status.CLOSED)
 	}
 
-	//---------  Creation des data pour le tableau de tickets  ------------
+	//---------  Datas for tickets table  ------------
 	const tableHeaderItems = [
 		'PRIORITY',
 		'TITLE',
@@ -113,7 +114,6 @@ const ProjectPage: NextPage = () => {
 		]
 	})
 
-	// Tableau qui fournie les liens pour chaque ligne du tableau
 	// return "/[projectId}/[ticketId]"
 	const rowLinkPath = data?.project.tickets.map(ticket => {
 		const { id: ticketId } = ticket
@@ -121,7 +121,7 @@ const ProjectPage: NextPage = () => {
 		return path
 	})
 
-	//---------  Gestion des actions effectuées dans le tableau de projets  ------------
+	//---------  Handle actions in projects table  ------------
 	function handleActionInTable(_: MouseEvent, action: 'delete' | 'edit', id: string) {
 		switch (action) {
 			case 'edit':
@@ -169,13 +169,15 @@ const ProjectPage: NextPage = () => {
 	}
 
 	function tableActionByRoles() {
-		//Si pas de user ou pas de droit pour delete et edit on retourne
+		// if unauthorized
 		if (
 			(!authedUser || !GUARD_ROUTES.ticket.actions.update.includes(authedUser.roles)) &&
 			(!authedUser || !GUARD_ROUTES.ticket.actions.delete.includes(authedUser.roles))
 		) {
 			return null
 		}
+
+		// if authorized
 		return {
 			edit:
 				authedUser && GUARD_ROUTES.ticket.actions.update.includes(authedUser.roles)

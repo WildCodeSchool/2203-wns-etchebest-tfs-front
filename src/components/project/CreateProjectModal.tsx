@@ -1,20 +1,14 @@
 import { Dispatch, SetStateAction, useState } from "react"
-//Librairies
 import { useForm, SubmitHandler } from "react-hook-form"
 import { CheckCircleIcon } from "@heroicons/react/outline"
 import { useLazyQuery, useMutation } from "@apollo/client"
-//Components
 import Button from "../common/Button"
 import Modal from "../common/modal/Modal"
 import { InputGroup } from "../common/form/input/InputGroup"
-//Queries
 import { CREATE_PROJECT } from "../../apollo/mutations"
-//mutations
 import { GET_ME, GET_PROJECTS } from "../../apollo/queries"
 import { isEmpty } from "../../utils/objectIsEmpty"
-//Types
 import { Project, ValidatorForm, MeData } from "../../types"
-
 
 
 interface CreateProjectModalProps {

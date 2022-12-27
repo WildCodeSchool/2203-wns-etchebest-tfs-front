@@ -1,17 +1,13 @@
-
-//Test libraries
 import { MockedProvider } from "@apollo/client/testing";
 import { fireEvent, render } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-//queries
-import { LOGIN_MUTATION } from "../../apollo/queries";
-//components
-import  LoginForm from "./LoginForm";
+import { LOGIN_QUERY } from "../../apollo/queries";
 
+import  LoginForm from "./LoginForm";
 
 const loginMock = [{
   request: {
-    query: LOGIN_MUTATION,
+    query: LOGIN_QUERY,
     variables: {data:{ email: "email@test.com", password: "password" }},
   },
   result: {
@@ -20,7 +16,6 @@ const loginMock = [{
     }
   }
 }]
-
 
  describe("LoginForm", () => {
 

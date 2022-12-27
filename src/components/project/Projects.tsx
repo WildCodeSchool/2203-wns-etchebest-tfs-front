@@ -83,7 +83,7 @@ export default function Projects({ projects, setIsOpenModal }: ProjectsProps) {
 			setIsOpenModalEdit(true)
 			return
 		}
-		throw new Error(`L'action '${action}' dans le tableau est inconnu`);
+		throw new Error(`L'action '${action}' dans le tableau est inconnue`);
 	}
 
 	const [isOpenModalEdit, setIsOpenModalEdit] = useState<boolean>(false)

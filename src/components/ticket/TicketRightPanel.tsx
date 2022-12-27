@@ -1,18 +1,14 @@
 import { ChangeEvent } from 'react'
 import { ApolloError, gql, useMutation, useQuery } from '@apollo/client'
-// Queries / Mutations
 import { GET_USERS } from '../../apollo/queries'
-// Types
 import { Status, Ticket } from '../../types'
-// Utils
 import { castPriorityToEmoji } from '../../utils/castPriorityToEmoji'
 import formatDate from '../../utils/formatDate'
 import { statusTrad } from '../../utils/statusTrad'
-// Components
 import Badge from '../common/badge/Badge'
-import styles from '../common/form/input/InputGroup.module.css'
 import { Loader } from '../common/Loader'
 import Combobox from './Combobox'
+import styles from '../common/form/input/InputGroup.module.css'
 
 const classes = {
 	titles: 'text-grey-500 font-medium uppercase',
@@ -44,7 +40,7 @@ interface TicketLeftPanelProps {
 export default function TicketRightPanel({ ticket }: TicketLeftPanelProps) {
 	const authorFullName = `${ticket.user_author.firstname} ${ticket.user_author.lastname}`
 
-	// ---------------- Mise à jour du statut ---------------
+	// ---------------- update status ---------------
 	const UPDATE_STATUS = gql`
 		mutation UpdateStatus($data: TicketUpdateInput!, $where: TicketWhereUniqueInput!) {
 			updateTicket(data: $data, where: $where) {
@@ -81,10 +77,7 @@ export default function TicketRightPanel({ ticket }: TicketLeftPanelProps) {
 		})
 	}
 
-	// --------------------------------------------
-
-	// Fourni les options du select
-	// Récupère les status de l'enum Status et créé un tableau <option>{status}</option>
+	// get status and create <option>{status}</option> 
 	type StatusKeys = keyof typeof Status
 	const selectOptions = (Object.keys(Status) as StatusKeys[]).map(
 		(statusKey, i): JSX.Element => {
