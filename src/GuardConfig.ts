@@ -2,28 +2,28 @@ import { Role } from "./types";
 
 export const GUARD_ROUTES = {
   profil: {
-    page:[Role.ADMIN,Role.USER]
+    page:[Role.ADMIN,Role.DEV]
   },
   test: {
     page:[Role.LEAD,Role.ADMIN]
   },
   projects: {
-    page: [Role.ADMIN,Role.LEAD,Role.USER,Role.INTERN],
+    page: [Role.ADMIN,Role.LEAD,Role.DEV,Role.INTERN],
   },
   project: {
-    page: [Role.ADMIN,Role.LEAD,Role.USER,Role.INTERN],
+    page: [Role.ADMIN,Role.LEAD,Role.DEV,Role.INTERN],
     actions: {
       create: [Role.ADMIN,Role.LEAD],
       delete: [Role.ADMIN,Role.LEAD],
-      update: [Role.ADMIN,Role.LEAD, Role.USER],
+      update: [Role.ADMIN,Role.LEAD, Role.DEV],
     }
   },
   ticket: {
-    page: [Role.ADMIN,Role.LEAD,Role.USER,Role.INTERN],
+    page: [Role.ADMIN,Role.LEAD,Role.DEV,Role.INTERN],
     actions: {
-      create: [Role.ADMIN,Role.LEAD, Role.USER],
+      create: [Role.ADMIN,Role.LEAD, Role.DEV],
       delete: [Role.ADMIN,Role.LEAD],
-      update: [Role.ADMIN,Role.LEAD,Role.USER],
+      update: [Role.ADMIN,Role.LEAD,Role.DEV],
     }
   },
 }
