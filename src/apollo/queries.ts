@@ -85,6 +85,10 @@ export const GET_PROJECT = gql`
 					firstname
 					lastname
 				}
+				user_assign {
+					firstname
+					lastname
+				}
 			}
 		}
 	}

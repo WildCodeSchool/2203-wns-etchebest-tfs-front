@@ -88,10 +88,12 @@ const ProjectPage: NextPage = () => {
 		'STATUS',
 		'DERNIÈRE MÀJ',
 		'AUTEUR',
+		'ASSIGNÉ À',
 		'ACTION'
 	]
 
 	const rowItems = data?.project.tickets.map(ticket => {
+		console.log(ticket)
 		const {
 			id,
 			priority,
@@ -99,9 +101,10 @@ const ProjectPage: NextPage = () => {
 			status,
 			labels,
 			updatedAt,
-			user_author: { firstname }
+			user_author: { firstname },
 		} = ticket
 		const badges = labels.map((label, i) => <Badge key={i}>{label.name}</Badge>)
+
 
 		return [
 			id,
@@ -110,7 +113,9 @@ const ProjectPage: NextPage = () => {
 			badges,
 			statusTrad(status),
 			formatDate(updatedAt),
-			firstname
+			firstname,
+			ticket.user_assign ? `${ticket.user_assign.firstname + ' ' + ticket.user_assign.lastname}` : 'N/A' ,
+
 		]
 	})
 
