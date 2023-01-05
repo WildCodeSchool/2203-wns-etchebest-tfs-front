@@ -14,7 +14,7 @@ export const GET_TICKETS = gql`
 `
 
 export const GET_TICKET = gql`
-	query Query($where: TicketWhereUniqueInput!) {
+	query Ticket($where: TicketWhereUniqueInput!) {
 		ticket(where: $where) {
 			id
 			title
@@ -66,7 +66,7 @@ export const GET_PROJECTS = gql`
 `
 
 export const GET_PROJECT = gql`
-	query GetProject($where: ProjectWhereUniqueInput!) {
+	query Project($where: ProjectWhereUniqueInput!) {
 		project(where: $where) {
 			id
 			code
@@ -103,7 +103,7 @@ export const GET_ME = gql`
 `
 
 export const GET_USERS = gql`
-	query User {
+	query Users {
 		users {
 			id
 			firstname
