@@ -57,4 +57,16 @@ mutation DeleteProject($where: ProjectWhereUniqueInput!) {
     id
   }
 }
-` 
+`
+
+//--------------- USER ----------------
+
+export const DELETE_USER = gql`
+mutation DeleteUser($where: UserWhereUniqueInput!) {
+  deleteUser(where: $where) {
+    id
+    firstname
+    lastname
+  }
+}
+`

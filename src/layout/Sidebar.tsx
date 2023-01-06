@@ -1,20 +1,17 @@
 import {
 	CogIcon,
 	LogoutIcon,
-	UserIcon
 } from '@heroicons/react/outline'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useLayoutEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { GUARD_ROUTES } from '../GuardConfig'
-import { useGuardByRoles } from '../hooks/useGuardByRoles'
-import { Role } from '../types'
 import { AuthContext } from '../UserContext'
 import classNames from '../utils/classNames'
 
 const links = [
-	{ name: 'Paramètres', href: '/test', icon: CogIcon, roles: GUARD_ROUTES.test.page },
+	{ name: 'Paramètres', href: '/admin', icon: CogIcon, roles: GUARD_ROUTES.admin.page },
 ]
 
 export default function Sidebar() {

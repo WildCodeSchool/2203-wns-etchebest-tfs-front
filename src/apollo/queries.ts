@@ -112,6 +112,7 @@ export const GET_USERS = gql`
 			id
 			firstname
 			lastname
+			roles
 		}
 	}
 `
