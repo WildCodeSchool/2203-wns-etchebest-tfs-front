@@ -128,19 +128,24 @@ export interface MeData {
 	me: User
 }
 
-/* For query "GET_TICKET"  ex: useQuery<MeData>(GET_TICKET) */
+/* For query "GET_TICKET"  ex: useQuery<TicketData>(GET_TICKET) */
 export interface TicketData {
 	ticket: Ticket
 }
 
-/* For query "GET_TICKET_COMMENTS"  ex: useQuery<MeData>(GET_TICKET_COMMENTS) */
+/* For query "GET_TICKET_COMMENTS"  ex: useQuery<CommentsData>(GET_TICKET_COMMENTS) */
 export interface CommentsData {
 	comments: Comment[]
 }
 
-/* For query "UPDATE_STATUS"  ex: useMuattation<MeData>(UPDATE_STATUS) */
+/* For query "UPDATE_STATUS"  ex: useMuattation<UpdateStatusData>(UPDATE_STATUS) */
 export interface UpdateStatusData {
 	updateTicket: Pick<Ticket, "id" | "status">
 }
 
+
+/* For query "GET_USERS"  ex: useMuattation<UsersData>(UPDATE_PRIORITY) */
+export interface UsersData {
+	users: Pick<User, "id" | "firstname" | "lastname" | "roles">[]
+}
 

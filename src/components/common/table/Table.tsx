@@ -34,8 +34,6 @@ export default function Table({headerItems, rowItems, actions, rowLinkPath, noRe
     return headerItems
   }
 
-  console.log(removeActionColumn())
-  
   //remove id from rowItems
   let rowItemsWithoutId
   if(rowItems){

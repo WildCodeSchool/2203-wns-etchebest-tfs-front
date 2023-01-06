@@ -4,7 +4,7 @@ export const GUARD_ROUTES = {
   profil: {
     page:[Role.ADMIN,Role.DEV]
   },
-  test: {
+  admin: {
     page:[Role.LEAD,Role.ADMIN]
   },
   projects: {
