@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 
 interface IAuthProps {
@@ -9,7 +10,7 @@ interface IAuthProps {
   subtitle: string,
   authType: 'login' | 'register'
 }
-//Wrapper pour les formulaires de login et register
+//Wrapper for Login & Register forms
 export function Auth({children, title, subtitle, authType}:IAuthProps) {
   return (
 
@@ -25,7 +26,7 @@ export function Auth({children, title, subtitle, authType}:IAuthProps) {
             className='mx-auto mb-10 bg-secondary text-xs'
           />
         </div>
-       {/* Change la ponctuation en fin de phrase (. ou !) dans le pseudo élément after */}
+       {/* Use "." or "!" in pseudo-element after */}
        { authType === 'register' ?
          <h1 className='text-center mb-1 text-4xl font-bold after:content-["."] after:text-secondary'>
          {title}
@@ -39,6 +40,13 @@ export function Auth({children, title, subtitle, authType}:IAuthProps) {
         <p className='text-center text-xs uppercase text-gray-300'>{subtitle}</p>
       </header>
       { children }
+      <span className='flex justify-center text-[0.75rem] mt-2 text-grey-400 mx-auto w-full hover:text-de'>
+        { authType === "register" ?
+         <Link className="mx-auto hover:text-primary" href='/login'>Déjà un compte ? Se connecter</Link>
+         :
+         <Link className="mx-auto hover:text-primary" href='/register'>Pas encore de compte ? S'inscrire</Link>
+         }
+        </span>
     </div>
   )
 }

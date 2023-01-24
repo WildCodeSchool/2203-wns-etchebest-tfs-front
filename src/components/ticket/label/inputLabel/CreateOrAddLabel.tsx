@@ -1,9 +1,6 @@
 import { useState, ChangeEvent } from "react"
-//Librairies
 import { gql, useLazyQuery } from "@apollo/client"
-//Components
 import Badge from "../../../common/badge/Badge"
-//Types
 import { Label } from "../../../../types"
 
 export function CreateOrAddLabel() {

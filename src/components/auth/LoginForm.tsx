@@ -1,16 +1,11 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-//Librarie
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useLazyQuery } from '@apollo/client'
-//Component
-import Button from '../../components/common/Button'
 import { InputGroup } from '../common/form/input/InputGroup'
-//Utiles
+import Button from '../../components/common/Button'
 import { isEmpty } from '../../utils/objectIsEmpty'
-// Queries
 import { LOGIN_QUERY } from '../../apollo/queries'
-//Types
 import type {User, ValidatorForm} from '../../types/index'
 
 
@@ -18,7 +13,6 @@ type LoginFormData = Pick<User, "email" | "password">;
 type ValidatorLogin = ValidatorForm<keyof LoginFormData>
 
 export default function LoginForm() {
-	//Form
 	const {
 		register,
 		handleSubmit,

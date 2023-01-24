@@ -33,11 +33,10 @@ export default function TicketLeftPanel({ ticket }:TicketLeftPanelProps) {
 	}
 	const {data, loading, error} = useQuery<CommentsData>(GET_TICKET_COMMENTS, variables)
 
-
 	return (
-		<div className={'w-7/12 border-r border-grey-300 h-full overflow-auto pr-12 flex flex-col justify-between'}>
-			<h2 className={'text-primary font-medium text-2xl'}>{ticket.title}</h2>
-			<div className={'mt-8'}>
+		<div className={'w-7/12 border-r border-grey-300 h-full overflow-auto pr-12 flex flex-col '}>
+			<h2 className={'text-primary font-bold text-[2.5rem]'}>{ticket.title}</h2>
+			<div className='grow'>
 				<h3 className={classes.titles}>Sujet</h3>
 				{ticket.description && <p className={'text-primary'}>{ticket.description}</p>}
 				{!ticket.description && 
@@ -46,16 +45,16 @@ export default function TicketLeftPanel({ ticket }:TicketLeftPanelProps) {
 					</div>
 				}
 			</div>
-			{/* --------- Pièces Jointes --------- */}
+			{/* --------- Upload file --------- */}
 			<div className={'mt-8'}>
 				<h3 className={classes.titles}>Pièces Jointes</h3>
-				<div className={'rounded flex flex-col items-center justify-center p-8 outline-dashed outline-2 outline-grey-500 mx-1 mt-4'}>
+				<div className={'rounded flex flex-col items-center justify-center p-8 outline-dashed outline-2 outline-grey-300 mx-1 mt-4'}>
 					<PhotographIcon className={'text-grey-200 h-16 w-16 mb-5'} />
 					<Button outlined={true}><DocumentAddIcon className={'w-5 mr-1'} /> Ajouter un fichier </Button>
 				</div>
 			</div>
-			{/* --------- fin Pièces Jointes --------- */}
-			{/* --------- Commentaires --------- */}
+			{/* --------- End Upload file --------- */}
+			{/* --------- Comments --------- */}
 			<div className={'mt-8 space-y-4'}>
 				<h3 className={classes.titles}>Commentaires</h3>
 				{loading && 
@@ -81,7 +80,7 @@ export default function TicketLeftPanel({ ticket }:TicketLeftPanelProps) {
           placeholder="Ajouter un commentaire"
         />
 			</div>
-			{/* ---------Fin Commentaires --------- */}
+			{/* ---------End Comments --------- */}
 		</div>
 	)
 }

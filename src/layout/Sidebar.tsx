@@ -1,20 +1,23 @@
 import {
 	CogIcon,
-	LogoutIcon
+	LogoutIcon,
 } from '@heroicons/react/outline'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { GUARD_ROUTES } from '../GuardConfig'
+import { AuthContext } from '../UserContext'
 import classNames from '../utils/classNames'
 
 const links = [
-	{ name: 'Paramètres', href: '/test', icon: CogIcon }
+	{ name: 'Paramètres', href: '/admin', icon: CogIcon, roles: GUARD_ROUTES.admin.page },
 ]
 
 export default function Sidebar() {
 
 	const router = useRouter()
+	const authCtx = useContext(AuthContext);
 
 	const [active, setActive] = useState(false)
 
@@ -36,6 +39,7 @@ export default function Sidebar() {
 				<nav>
 					<ul className='mt-2 flex flex-col gap-3'>
 						{links.map(item => (
+							authCtx?.authUser && item.roles.includes(authCtx?.authUser.roles) ?
 							<li key={item.name} className={'flex justify-center px-4 cursor-pointer'}>
 								<Link href={item.href} className={'flex justify-center'}>
 									<item.icon
@@ -48,14 +52,16 @@ export default function Sidebar() {
 									/>
 								</Link>
 							</li>
+							: null
 						))}
 					</ul>
 				</nav>
-				<div 
+				<div
 					className={'avatar absolute bottom-0 left-0 flex w-full items-center justify-center gap-2 border-t-2 border-secondary justif px-2 py-4 h-16'}>
-					<div 
-						className={'h-10 w-10 rounded-full bg-grey-300 box-border cursor-pointer'} 
+					<div className={'flex items-center justify-center h-10 w-10 font-medium text-white rounded-full bg-secondary box-border cursor-pointer'} 
 						onClick={() => {setActive(!active)}}>
+						<span>{authCtx?.authUser?.firstname[0]}</span>
+						<span>{authCtx?.authUser?.lastname[0]}</span>
 					</div>
 				</div>
 				

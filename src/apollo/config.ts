@@ -1,5 +1,3 @@
-// config APOLLO Client
-
 import {
 	ApolloClient,
 	InMemoryCache,
@@ -7,13 +5,12 @@ import {
 } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 
-// fourni url backend
 const httpLink = createHttpLink({
 	uri: process.env.NEXT_PUBLIC_API_URI,
 	credentials: 'same-origin'
 })
 
-// A chaque requềte, récupère le token stocké dans le local storage
+// pull the login token from localStorage every time a request is sent:
 const authLink = setContext((_, { headers }) => {
 	const token = localStorage.getItem('token')
 	return {
