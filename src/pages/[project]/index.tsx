@@ -37,7 +37,7 @@ const ProjectPage: NextPage = () => {
 	// Get project ID from URL
 	const router = useRouter()
 	const { project: projectId } = router.query
-	
+
 	//---------  Delete project  ------------
 	const [deleteProject, { loading: loadingDeleteProject }] = useMutation(DELETE_PROJECT, {
 		onCompleted: () => router.push(`/`),
@@ -101,10 +101,9 @@ const ProjectPage: NextPage = () => {
 			status,
 			labels,
 			updatedAt,
-			user_author: { firstname },
+			user_author: { firstname }
 		} = ticket
 		const badges = labels.map((label, i) => <Badge key={i}>{label.name}</Badge>)
-
 
 		return [
 			id,
@@ -114,8 +113,9 @@ const ProjectPage: NextPage = () => {
 			statusTrad(status),
 			formatDate(updatedAt),
 			firstname,
-			ticket.user_assign ? `${ticket.user_assign.firstname + ' ' + ticket.user_assign.lastname}` : 'N/A' ,
-
+			ticket.user_assign
+				? `${ticket.user_assign.firstname + ' ' + ticket.user_assign.lastname}`
+				: 'N/A'
 		]
 	})
 
@@ -150,7 +150,7 @@ const ProjectPage: NextPage = () => {
 		}
 		return (
 			<>
-				{authedUser && GUARD_ROUTES.project.actions.delete.includes(authedUser?.roles) && (
+				{authedUser && GUARD_ROUTES.project.actions.delete.includes(authedUser?.role) && (
 					<Button
 						outlined
 						alert
@@ -161,7 +161,7 @@ const ProjectPage: NextPage = () => {
 						Supprimer ce projet
 					</Button>
 				)}
-				{authedUser && GUARD_ROUTES.ticket.actions.create.includes(authedUser?.roles) && (
+				{authedUser && GUARD_ROUTES.ticket.actions.create.includes(authedUser?.role) && (
 					<Button
 						onClick={() => setIsOpenModal(true)}
 						icon={<PlusSmIcon className='h-5' />}
@@ -176,8 +176,8 @@ const ProjectPage: NextPage = () => {
 	function tableActionByRoles() {
 		// if unauthorized
 		if (
-			(!authedUser || !GUARD_ROUTES.ticket.actions.update.includes(authedUser.roles)) &&
-			(!authedUser || !GUARD_ROUTES.ticket.actions.delete.includes(authedUser.roles))
+			(!authedUser || !GUARD_ROUTES.ticket.actions.update.includes(authedUser.role)) &&
+			(!authedUser || !GUARD_ROUTES.ticket.actions.delete.includes(authedUser.role))
 		) {
 			return null
 		}
@@ -185,11 +185,11 @@ const ProjectPage: NextPage = () => {
 		// if authorized
 		return {
 			edit:
-				authedUser && GUARD_ROUTES.ticket.actions.update.includes(authedUser.roles)
+				authedUser && GUARD_ROUTES.ticket.actions.update.includes(authedUser.role)
 					? true
 					: false,
 			delete:
-				authedUser && GUARD_ROUTES.ticket.actions.delete.includes(authedUser.roles)
+				authedUser && GUARD_ROUTES.ticket.actions.delete.includes(authedUser.role)
 					? true
 					: false,
 			handleClick: (_: MouseEvent, action: 'delete' | 'edit', id: string) =>

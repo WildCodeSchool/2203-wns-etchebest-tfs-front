@@ -6,10 +6,9 @@ import { InputGroup } from '../common/form/input/InputGroup'
 import Button from '../../components/common/Button'
 import { isEmpty } from '../../utils/objectIsEmpty'
 import { LOGIN_QUERY } from '../../apollo/queries'
-import type {User, ValidatorForm} from '../../types/index'
+import type { User, ValidatorForm } from '../../types/index'
 
-
-type LoginFormData = Pick<User, "email" | "password">;
+type LoginFormData = Pick<User, 'email' | 'password'>
 type ValidatorLogin = ValidatorForm<keyof LoginFormData>
 
 export default function LoginForm() {
@@ -89,7 +88,7 @@ export default function LoginForm() {
 				Connexion
 			</Button>
 			{ApolloError && (
-				<p className='rounded-sm bg-alert px-4 py-2 mt-4 text-sm font-medium text-white'>
+				<p className='mt-4 rounded-sm bg-alert px-4 py-2 text-sm font-medium text-white'>
 					{ApolloError.message}
 				</p>
 			)}
