@@ -3,7 +3,6 @@ FROM node:lts-alpine
 RUN mkdir /app
 WORKDIR /app
 COPY package.json ./
-COPY yarn.lock ./
 RUN yarn install --pure-lockfile
 COPY . ./
 EXPOSE 3000
