@@ -20,11 +20,8 @@ import { useGuardByRoles } from '../hooks/useGuardByRoles'
 //config
 import { GUARD_ROUTES } from '../GuardConfig'
 
-
-
-
 const ProjectsPage: NextPage = () => {
- 	const {authedUser,isAllow} = useGuardByRoles(GUARD_ROUTES.projects.page, "/login")
+	const { authedUser, isAllow } = useGuardByRoles(GUARD_ROUTES.projects.page, '/login')
 	const { loading, data } = useQuery<ProjectsData>(GET_PROJECTS)
 	const [searchValue, setSearchValue] = useState<string | null>(null)
 	//Status de la modal de création de ticket
@@ -45,11 +42,12 @@ const ProjectsPage: NextPage = () => {
 	}
 
 	function renderTopBtn() {
-		if (authedUser &&
+		if (
+			authedUser &&
 			GUARD_ROUTES.project.actions &&
 			GUARD_ROUTES.project.actions.create &&
-			GUARD_ROUTES.project.actions.create.includes(authedUser?.roles)
-			) {
+			GUARD_ROUTES.project.actions.create.includes(authedUser?.role)
+		) {
 			return (
 				<Button
 					onClick={() => setIsOpenModal(true)}
@@ -63,28 +61,28 @@ const ProjectsPage: NextPage = () => {
 
 	return (
 		<div className={'bg-gray-50 flex min-h-screen flex-col justify-between'}>
-			{	isAllow && 
-			<>
-				<Head>
-					<title>Projets</title>
-				</Head>
-				<BaseLayout
-					name={'Projets'}
-					button={ renderTopBtn() }
-				>
-					<>
-						<ProjectHeader handleSearch={handleSearch} />
-						{loading && (
-							<Loader className='absolute top-1/2 left-1/2 h-20 -translate-x-1/2 -translate-y-1/2 text-primary' />
-						)}
-						{!loading && data?.projects && (
-							<Projects projects={filterProjects(data.projects)} setIsOpenModal={setIsOpenModal} />
-						)}
-						<CreateProjectModal setIsOpenModal={setIsOpenModal} isOpen={isOpenModal} />
-					</>
-				</BaseLayout>
-			</>
-			}
+			{isAllow && (
+				<>
+					<Head>
+						<title>Projets</title>
+					</Head>
+					<BaseLayout name={'Projets'} button={renderTopBtn()}>
+						<>
+							<ProjectHeader handleSearch={handleSearch} />
+							{loading && (
+								<Loader className='absolute top-1/2 left-1/2 h-20 -translate-x-1/2 -translate-y-1/2 text-primary' />
+							)}
+							{!loading && data?.projects && (
+								<Projects
+									projects={filterProjects(data.projects)}
+									setIsOpenModal={setIsOpenModal}
+								/>
+							)}
+							<CreateProjectModal setIsOpenModal={setIsOpenModal} isOpen={isOpenModal} />
+						</>
+					</BaseLayout>
+				</>
+			)}
 		</div>
 	)
 }

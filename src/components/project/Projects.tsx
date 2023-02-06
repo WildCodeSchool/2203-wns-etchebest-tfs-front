@@ -26,44 +26,53 @@ import { Project, ValidatorForm } from '../../types'
 //Config
 import { GUARD_ROUTES } from '../../GuardConfig'
 
-
 interface ProjectsProps {
 	projects: Project[]
-  setIsOpenModal: Dispatch<SetStateAction<boolean>>
+	setIsOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
 export default function Projects({ projects, setIsOpenModal }: ProjectsProps) {
-	const authCtx = useContext(AuthContext);
-	
+	const authCtx = useContext(AuthContext)
+
 	const { projectView } = useContext(StoreContext)
-  const [currentProjectEdit, setcurrentProjectEdit] = useState<Project>()
-	const [deleteProject] = useMutation(DELETE_PROJECT, { refetchQueries:[{query: GET_PROJECTS}, "Projects"]})
+	const [currentProjectEdit, setcurrentProjectEdit] = useState<Project>()
+	const [deleteProject] = useMutation(DELETE_PROJECT, {
+		refetchQueries: [{ query: GET_PROJECTS }, 'Projects']
+	})
 
 	// ---------- Element et manipulation du tableau de projet -------------------------
 	//Nom des colonnes
-	const tableHeaderItems = ["NOM","MEMBRES","DERNIÈRE MÀJ","TICKETS OUVERT","TICKETS EN COURS", "TICKETS TERMINÉS", "ACTION"]
+	const tableHeaderItems = [
+		'NOM',
+		'MEMBRES',
+		'DERNIÈRE MÀJ',
+		'TICKETS OUVERT',
+		'TICKETS EN COURS',
+		'TICKETS TERMINÉS',
+		'ACTION'
+	]
 
 	//Retourne un tableau imbriqué
-  const tableRowItems = projects.map((project) => {
-    const {id, title, members, updatedAt, tickets } = project
-		
+	const tableRowItems = projects.map(project => {
+		const { id, title, members, updatedAt, tickets } = project
+
 		const lastUpdate = formatDate(updatedAt)
-		
-		const open = countTicketsByStatus(tickets, "OPEN")
-		const inProgress = countTicketsByStatus(tickets, "IN_PROGRESS")
-		const closed = countTicketsByStatus(tickets, "CLOSED")
 
-    return [id, title, members.length, lastUpdate, open, inProgress, closed]
-  })
+		const open = countTicketsByStatus(tickets, 'OPEN')
+		const inProgress = countTicketsByStatus(tickets, 'IN_PROGRESS')
+		const closed = countTicketsByStatus(tickets, 'CLOSED')
 
-  // Tableau qui fournie les liens pour chaque ligne du tableau
-  const rowLinkPath = projects.map((project) => {
-    const {id } = project
-    return String(id)
-  })
+		return [id, title, members.length, lastUpdate, open, inProgress, closed]
+	})
 
-	function handleActionInTable(_:MouseEvent, action: "delete" | "edit", id: string){
-		if(action === "delete") {
+	// Tableau qui fournie les liens pour chaque ligne du tableau
+	const rowLinkPath = projects.map(project => {
+		const { id } = project
+		return String(id)
+	})
+
+	function handleActionInTable(_: MouseEvent, action: 'delete' | 'edit', id: string) {
+		if (action === 'delete') {
 			deleteProject({
 				variables: {
 					where: {
@@ -72,33 +81,45 @@ export default function Projects({ projects, setIsOpenModal }: ProjectsProps) {
 				}
 			})
 			return
-		}
-		else if((action === "edit")) {
-			const currentProject = projects.find(p=> p.id === Number(id))
-			if(!currentProject) {
+		} else if (action === 'edit') {
+			const currentProject = projects.find(p => p.id === Number(id))
+			if (!currentProject) {
 				setIsOpenModalEdit(false)
-				throw new Error("Impossible de récupérer les données pour ce project")
+				throw new Error('Impossible de récupérer les données pour ce project')
 			}
 			setcurrentProjectEdit(currentProject)
 			setIsOpenModalEdit(true)
 			return
 		}
-		throw new Error(`L'action '${action}' dans le tableau est inconnue`);
+		throw new Error(`L'action '${action}' dans le tableau est inconnue`)
 	}
 
 	const [isOpenModalEdit, setIsOpenModalEdit] = useState<boolean>(false)
 
-	function tableActionByRoles(){
+	function tableActionByRoles() {
 		//Si pas de user ou pas de droit pour delete et edit on retourne
-		if((!authCtx?.authUser || !GUARD_ROUTES.project.actions.update.includes(authCtx?.authUser.roles)) 
-		&& (!authCtx?.authUser || !GUARD_ROUTES.project.actions.delete.includes(authCtx?.authUser.roles))){
+		if (
+			(!authCtx?.authUser ||
+				!GUARD_ROUTES.project.actions.update.includes(authCtx?.authUser.role)) &&
+			(!authCtx?.authUser ||
+				!GUARD_ROUTES.project.actions.delete.includes(authCtx?.authUser.role))
+		) {
 			return null
 		}
-		return	{
-			edit: (authCtx?.authUser && GUARD_ROUTES.project.actions.update.includes(authCtx?.authUser.roles)) ? true : false,
-			delete:(authCtx?.authUser && GUARD_ROUTES.project.actions.delete.includes(authCtx?.authUser.roles)) ? true : false,
-			handleClick:(_:MouseEvent, action:"delete" | "edit", id:string)=>handleActionInTable(_,action, id)
-		 }
+		return {
+			edit:
+				authCtx?.authUser &&
+				GUARD_ROUTES.project.actions.update.includes(authCtx?.authUser.role)
+					? true
+					: false,
+			delete:
+				authCtx?.authUser &&
+				GUARD_ROUTES.project.actions.delete.includes(authCtx?.authUser.role)
+					? true
+					: false,
+			handleClick: (_: MouseEvent, action: 'delete' | 'edit', id: string) =>
+				handleActionInTable(_, action, id)
+		}
 	}
 
 	return (
@@ -109,24 +130,24 @@ export default function Projects({ projects, setIsOpenModal }: ProjectsProps) {
 						<ProjectGridElement key={i} data={project} />
 					))}
 				</section>
-			)
-			:
-			(
+			) : (
 				<section className='mt-4 min-h-full '>
 					<Table
 						headerItems={tableHeaderItems}
 						rowItems={tableRowItems}
 						rowLinkPath={rowLinkPath}
-						noResultContent={<NoResultProjectTable setIsOpenModal={setIsOpenModal}/>}
-						actions={
-							tableActionByRoles()
-						}
+						noResultContent={<NoResultProjectTable setIsOpenModal={setIsOpenModal} />}
+						actions={tableActionByRoles()}
 					/>
 				</section>
 			)}
-			{isOpenModalEdit &&
-			<UpdateProjectModal setIsOpenModal={ setIsOpenModalEdit} isOpen={isOpenModalEdit} currentProject={currentProjectEdit}/>
-			}
+			{isOpenModalEdit && (
+				<UpdateProjectModal
+					setIsOpenModal={setIsOpenModalEdit}
+					isOpen={isOpenModalEdit}
+					currentProject={currentProjectEdit}
+				/>
+			)}
 		</>
 	)
 }
@@ -137,49 +158,54 @@ interface UpdateProjectModalProps {
 	currentProject: Project | undefined
 }
 
-type EditProjectForm = Pick<Project, 'title'| 'subject'>
+type EditProjectForm = Pick<Project, 'title' | 'subject'>
 type ValidatorProjectForm = ValidatorForm<keyof EditProjectForm>
 
-function UpdateProjectModal({ setIsOpenModal, isOpen, currentProject }: UpdateProjectModalProps) {
-
+function UpdateProjectModal({
+	setIsOpenModal,
+	isOpen,
+	currentProject
+}: UpdateProjectModalProps) {
 	const {
 		register,
 		handleSubmit,
-	  watch,
-		formState: { errors },
+		watch,
+		formState: { errors }
 	} = useForm<EditProjectForm>({
 		mode: 'onTouched',
-		defaultValues:{
-			title: currentProject?.title, 
+		defaultValues: {
+			title: currentProject?.title,
 			subject: currentProject?.subject
-			}
-		})
-
-
-	const [EditProject] = useMutation(UPDATE_PROJECT, {
-		onCompleted: ()=> setIsOpenModal(false),
-		onError: (e)=> {throw new Error(`Impossible de mettre à jour le projet ${currentProject?.title}`)}
+		}
 	})
 
-	function close(){
+	const [EditProject] = useMutation(UPDATE_PROJECT, {
+		onCompleted: () => setIsOpenModal(false),
+		onError: e => {
+			throw new Error(`Impossible de mettre à jour le projet ${currentProject?.title}`)
+		}
+	})
+
+	function close() {
 		setIsOpenModal(false)
 	}
 
-	const onSubmit: SubmitHandler<EditProjectForm> = async(payload)=>{
- 		await EditProject({variables: {
-			where: {
-				id: currentProject?.id
-			},
-			data: {
-				subject: {
-					set: payload.subject
+	const onSubmit: SubmitHandler<EditProjectForm> = async payload => {
+		await EditProject({
+			variables: {
+				where: {
+					id: currentProject?.id
 				},
-				title: {
-					set: payload.title
+				data: {
+					subject: {
+						set: payload.subject
+					},
+					title: {
+						set: payload.title
+					}
 				}
 			}
-		}
-	})
+		})
 	}
 
 	const validators: ValidatorProjectForm = {
@@ -202,39 +228,45 @@ function UpdateProjectModal({ setIsOpenModal, isOpen, currentProject }: UpdatePr
 				value: 255,
 				message: 'Le sujet ne doit pas dépasser 255 caractères'
 			}
-		},
+		}
 	}
 
-
-	return ( isOpen ?
-		(<Modal close={close}>
+	return isOpen ? (
+		<Modal close={close}>
 			<form onSubmit={handleSubmit(onSubmit)} className='mt-8'>
 				<InputGroup
 					label='Titre'
 					type='text'
 					field='title'
-					helper="Ceci est un helper"
+					helper='Ceci est un helper'
 					register={register}
 					errors={errors}
 					validator={validators}
 					placeholder='Ajouter un titre'
 				/>
 				<TextareaGroup
-					label="Sujet"
-					name="subject"
-					placeholder="Veuillez saisir un sujet"
+					label='Sujet'
+					name='subject'
+					placeholder='Veuillez saisir un sujet'
 					register={register}
 					validator={validators}
 					errors={errors}
 					watch={watch}
 				/>
-				<div className="mt-4 flex justify-end gap-4">
-					<Button outlined onClick={() => {setIsOpenModal(false)}}>
-							Annuler
+				<div className='mt-4 flex justify-end gap-4'>
+					<Button
+						outlined
+						onClick={() => {
+							setIsOpenModal(false)
+						}}
+					>
+						Annuler
 					</Button>
-					<Button disabled={!isEmpty(errors)} type='submit' >Editer le projet</Button>
+					<Button disabled={!isEmpty(errors)} type='submit'>
+						Editer le projet
+					</Button>
 				</div>
 			</form>
-		</Modal>) : null
-	)
+		</Modal>
+	) : null
 }

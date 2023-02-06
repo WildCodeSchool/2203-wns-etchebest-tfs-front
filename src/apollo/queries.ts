@@ -101,7 +101,7 @@ export const GET_ME = gql`
 			firstname
 			lastname
 			email
-			roles
+			role
 		}
 	}
 `
@@ -112,7 +112,7 @@ export const GET_USERS = gql`
 			id
 			firstname
 			lastname
-			roles
+			role
 		}
 	}
 `

@@ -49,7 +49,7 @@ const ProjectTicketPage: NextPage = () => {
 	}
 
 	function btnDelete() {
-		if (!authedUser || !GUARD_ROUTES.ticket.actions.delete.includes(authedUser?.roles))
+		if (!authedUser || !GUARD_ROUTES.ticket.actions.delete.includes(authedUser?.role))
 			return
 		return (
 			<Button

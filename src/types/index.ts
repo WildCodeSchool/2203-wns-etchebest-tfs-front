@@ -12,7 +12,7 @@ export interface User {
 	comments: Comment[]
 	tickets_author: Ticket[]
 	tickets_assign: Ticket[]
-	roles: Role
+	role: Role
 	projects: Project[]
 	projects_author: Project[]
 }
@@ -81,30 +81,29 @@ export interface Label {
 }
 
 export enum Role {
-	ADMIN = "ADMIN",
-  LEAD = "LEAD",
-  DEV = "DEV",
-  INTERN = "INTERN"
+	ADMIN = 'ADMIN',
+	LEAD = 'LEAD',
+	DEV = 'DEV',
+	INTERN = 'INTERN'
 }
 
 export enum Status {
-	OPEN = "OPEN",
-	IN_PROGRESS = "IN_PROGRESS",
-	REVIEW = "REVIEW",
-	CLOSED = "CLOSED"
+	OPEN = 'OPEN',
+	IN_PROGRESS = 'IN_PROGRESS',
+	REVIEW = 'REVIEW',
+	CLOSED = 'CLOSED'
 }
 
 export enum Priority {
-	LOW = "LOW",
-	MEDIUM = "MEDIUM",
-	HIGH = "HIGH"
+	LOW = 'LOW',
+	MEDIUM = 'MEDIUM',
+	HIGH = 'HIGH'
 }
 
 // ----------------- FORM --------------------------
 
 // Exemple : type ValidatorFormLogin = ValidatorForm<"email" | "password">
 export type ValidatorForm<K extends string> = Record<K, RegisterOptions>
-
 
 // -------------------  API RESPONSE ------------------------
 
@@ -115,12 +114,12 @@ export interface TicketsData {
 
 /* For query "GET_PROJECTS"  ex: useQuery<ProjectsData>(GET_PROJECTS) */
 export interface ProjectsData {
-  projects: Project[]
+	projects: Project[]
 }
 
 /* For query "GET_PROJECT"  ex: useQuery<ProjectData>(GET_PROJECT) */
 export interface ProjectData {
-  project: Project
+	project: Project
 }
 
 /* For query "GET_ME"  ex: useQuery<MeData>(GET_ME) */
@@ -140,12 +139,10 @@ export interface CommentsData {
 
 /* For query "UPDATE_STATUS"  ex: useMuattation<UpdateStatusData>(UPDATE_STATUS) */
 export interface UpdateStatusData {
-	updateTicket: Pick<Ticket, "id" | "status">
+	updateTicket: Pick<Ticket, 'id' | 'status'>
 }
-
 
 /* For query "GET_USERS"  ex: useMuattation<UsersData>(UPDATE_PRIORITY) */
 export interface UsersData {
-	users: Pick<User, "id" | "firstname" | "lastname" | "roles">[]
+	users: Pick<User, 'id' | 'firstname' | 'lastname' | 'role'>[]
 }
-
